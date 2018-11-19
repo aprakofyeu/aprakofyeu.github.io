@@ -6,6 +6,19 @@
     <title></title>
 </head>
 <body>
-<p>Test page</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://vk.com/js/api/xd_connection.js?2" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        VK.init(function() {
+                alert("all ok");
+            },
+            function() {
+                // API initialization failed
+                // Can reload page here
+            },
+            '5.87');
+    });
+</script>
 </body>
 </html>
