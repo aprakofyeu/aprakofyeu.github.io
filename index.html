@@ -11,7 +11,11 @@
 <script type="text/javascript">
     $(function() {
         VK.init(function() {
-                alert("all ok");
+            VK.api("account.getInfo", function (data) {
+
+                debugger;
+
+            });
             },
             function() {
                 // API initialization failed
