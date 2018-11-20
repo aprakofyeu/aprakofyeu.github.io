@@ -21,6 +21,18 @@
             apiId: 6757014
         });
 
+
+        VK.Api.call('users.get', { user_ids: 34545583, v:"5.73"}, function(r) {
+            if(r.response) {
+                alert('Привет, ' + r.response[0].first_name);
+            }
+        });
+
+
+        VK.Api.call('account.getInfo', function(r) {
+            debugger;
+        });
+
 //        VK.init(function() {
 //            VK.api("account.getInfo", function (data) {
 //
