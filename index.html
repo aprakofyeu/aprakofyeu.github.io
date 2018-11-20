@@ -12,23 +12,24 @@
 <script type="text/javascript">
     $(function () {
 
-        if (window.location.href.indexOf("code") <= 0) {
+        if (window.location.href.indexOf("access_token") <= 0) {
             window.location.replace("https://oauth.vk.com/authorize?client_id=6757014&display=page&redirect_uri=https://aprakofyeu.github.io/index.html&scope=friends&response_type=token&v=5.87&state=123456");
+            return;
         }
 
 
         VK.init({
             apiId: 6757014
         });
+    });
 
-
+    function getUserInfo() {
         VK.Api.call('users.get', { user_ids: 34545583, v:"5.73"}, function(r) {
             if(r.response) {
                 alert('Привет, ' + r.response[0].first_name);
             }
         });
-
-    });
+    }
 
     function getProfileInfo() {
         VK.Api.call('account.getProfileInfo', { v: "5.73" }, function(r) {
@@ -37,7 +38,8 @@
     }
 </script>
 <div>
-    <button onclick="getProfileInfo()">getProfileInfo</button>
+    <button onclick="getUserInfo()">test users.get</button>
+    <button onclick="getProfileInfo()">test account.getProfileInfo</button>
 </div>
 </body>
 </html>
