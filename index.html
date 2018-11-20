@@ -28,24 +28,16 @@
             }
         });
 
+    });
 
-        VK.Api.call('account.getInfo', function(r) {
+    function getProfileInfo() {
+        VK.Api.call('account.getProfileInfo', { v: "5.73" }, function(r) {
             debugger;
         });
-
-//        VK.init(function() {
-//            VK.api("account.getInfo", function (data) {
-//
-//                debugger;
-//
-//            });
-//            },
-//            function() {
-//                // API initialization failed
-//                // Can reload page here
-//            },
-//            '5.87');
-    });
+    }
 </script>
+<div>
+    <button onclick="getProfileInfo()">getProfileInfo</button>
+</div>
 </body>
 </html>
