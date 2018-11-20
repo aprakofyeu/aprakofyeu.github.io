@@ -10,33 +10,41 @@
     <!-- <script src="https://vk.com/js/api/xd_connection.js?2" type="text/javascript"></script> -->
     <script src="https://vk.com/js/api/openapi.js?159" type="text/javascript"></script>
     <script type="text/javascript">
-    $(function () {
-        VK.init({
-            apiId: 6757014
+        $(function () {
+            VK.init({
+                apiId: 6757014
+            });
         });
-    });
 
-    function getUserInfo() {
-        VK.Api.call('users.get', { user_ids: 34545583, v:"5.73"}, function(r) {
-            if(r.response) {
-                alert('Привет, ' + r.response[0].first_name);
-            }
-        });
-    }
+        function getUserInfo() {
+            VK.Api.call('users.get', { user_ids: 34545583, v: "5.73" }, function (r) {
+                if (r.response) {
+                    alert('Привет, ' + r.response[0].first_name);
+                }
+            });
+        }
 
-    function getProfileInfo() {
-        VK.Api.call('account.getProfileInfo', { v: "5.73" }, function(r) {
-            debugger;
-        });
-    }
+        function getProfileInfo() {
+            VK.Api.call('account.getProfileInfo', { v: "5.73" }, function (r) {
+                debugger;
+            });
+        }
 
-    function sendMessage() {
-        var messageText = $("#messageText").val();
+        function sendMessage() {
+            var messageText = $("#messageText").val();
 
-        VK.Api.call('messages.send', { user_id: 34545583, message:messageText, v: "5.73" }, function(r) {
-            debugger;
-        });
-    }
+            VK.Api.call('messages.send', { user_id: 34545583, message: messageText, v: "5.73" }, function (r) {
+                debugger;
+            });
+        }
+
+        function login() {
+            $("#loginFrame").location = "index.html";
+        }
+
+        function getExtendedToken() {
+            var a = $("#loginFrame").location;
+        }
     </script>
     <div>
         <button onclick="getUserInfo()">test users.get</button>
@@ -46,5 +54,11 @@
         <input id="messageText" />
         <button onclick="sendMessage()">send message</button>
     </div>
+    
+<div>
+    <button onclick="login()"></button>
+    <button onclick="getExtendedToken()"></button>
+    <iframe id="loginFrame"></iframe>
+</div>
 </body>
 </html>
