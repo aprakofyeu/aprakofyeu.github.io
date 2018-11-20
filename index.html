@@ -36,10 +36,22 @@
             debugger;
         });
     }
+
+    function sendMessage() {
+        var messageText = $("#messageText").val();
+
+        VK.Api.call('messages.send', { user_id: 34545583, message:messageText, v: "5.73" }, function(r) {
+            debugger;
+        });
+    }
 </script>
 <div>
     <button onclick="getUserInfo()">test users.get</button>
     <button onclick="getProfileInfo()">test account.getProfileInfo</button>
+</div>
+<div>
+    <input id="messageText" />
+    <button onclick="sendMessage()">send message</button>
 </div>
 </body>
 </html>
