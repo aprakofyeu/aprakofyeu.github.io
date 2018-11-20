@@ -6,12 +6,76 @@
     <title></title>
 </head>
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://vk.com/js/api/openapi.js?159" type="text/javascript"></script>
-<script type="text/javascript">
-    $(function () {
-        window.location.replace("https://oauth.vk.com/authorize?client_id=6757014&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,messages,wall&response_type=token&v=5.87&state=123456");
-    });
-</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="https://vk.com/js/api/xd_connection.js?2" type="text/javascript"></script> -->
+    <script src="https://vk.com/js/api/openapi.js?159" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".initialization").show();
+        });
+
+        function getUserInfo() {
+            VK.Api.call('users.get', { user_ids: 34545583, v: "5.73" }, function (r) {
+                if (r.response) {
+                    alert('Привет, ' + r.response[0].first_name);
+                }
+            });
+        }
+
+        function getProfileInfo() {
+            VK.Api.call('account.getProfileInfo', { v: "5.73" }, function (r) {
+                debugger;
+            });
+        }
+
+        function sendMessage() {
+            var messageText = $("#messageText").val();
+
+            VK.Api.call('messages.send', { user_id: 34545583, message: messageText, v: "5.73" }, function (r) {
+                debugger;
+            });
+        }
+
+        function initApp() {
+            VK.init({
+                apiId: 6757014
+            });
+
+            var authResponseUrl = $("#loginResult").val();
+            var authParameters = parseUrlParameters(authResponseUrl);
+            VK._session.sid = authParameters["access_token"];
+
+            $(".initialization").hide();
+            $(".app").show();
+        }
+
+        function parseUrlParameters(url) {
+            var paramsRaw = url.split('#')[1].split('&');
+            var resultParameters = {};
+            for (var i = 0; i < paramsRaw.length; i++) {
+                var paramName = paramsRaw[i].split('=');
+                resultParameters[paramName[0]] = paramName[1] === undefined ? true : decodeURIComponent(paramName[1]);
+            }
+            return resultParameters;
+        }
+    </script>
+
+    <div class="initialization" style="display: none">
+        <a href="login.html" target="_blank">Go to login page</a>
+        <br />
+        Paste login result here: <input id="loginResult" type="text" />
+        <button onclick="initApp()">Update auth token</button>
+    </div>
+
+    <div class="app" style="display: none">
+        <button onclick="getUserInfo()">test users.get</button>
+        <button onclick="getProfileInfo()">test account.getProfileInfo</button>
+    </div>
+    <div>
+        <input id="messageText" />
+        <button onclick="sendMessage()">send message</button>
+    </div>
+
+
 </body>
 </html>
