@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>v4.6.2</TargetFramework>
+  </PropertyGroup>
+</Project>
