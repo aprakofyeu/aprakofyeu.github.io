@@ -1,4 +1,9 @@
 ﻿function VkApp(urlHelper, callService, view, eventBroker) {
+    function getUsersInfo(usersIds){
+        return callService.call("users.get", { user_ids: usersIds.join(',') });
+    }
+
+
     function getLikesForPost(postUrl) {
         var postInfo = urlHelper.parsePostUrl(postUrl);
 
@@ -9,7 +14,9 @@
                 item_id: postInfo.itemId
             })
             .then(function (likes) {
-                debugger;
+                getUsersInfo(likes.items).then(function (users) {
+                    debugger;
+                });
             });
     }
 
