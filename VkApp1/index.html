@@ -20,7 +20,8 @@
             var view = new AppView();
             var urlHelper = new UrlHelper();
             var callService = new CallService();
-            var app = new VkApp(urlHelper, callService, view);
+            var eventBroker = new EventBroker();
+            var app = new VkApp(urlHelper, callService, view, eventBroker);
 
             $("#initAppButton").click(function () {
                 var authResponseUrl = $("#loginResult").val();
