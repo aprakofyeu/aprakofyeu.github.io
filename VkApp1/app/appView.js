@@ -25,7 +25,7 @@
                 usersHtml += "<div class='user-info' userId='" + user.id + "'><img src='" + user.photo_50 + "'/><label>" + user.first_name + " " + user.last_name + "</label></div>";
             }
 
-            $("#likes-result").html(usersHtml);
+            $(".likes-result").html(usersHtml);
         },
 
         showMessagePanel: function () {
