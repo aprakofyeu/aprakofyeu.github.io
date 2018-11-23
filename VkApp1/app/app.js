@@ -31,8 +31,8 @@
 
         for (var i = 0; i < usersIds.length; i++) {
             callService.call("messages.send", { user_id: usersIds[i], message: message })
-                .then(function () {
-                    debugger;
+                .then(function (userId) {
+                    view.markAsMessageSent(userId);
                 });
         }
     }

@@ -38,6 +38,10 @@
 
         getSelectedUserIds: function () {
             return $(".user-info").map(function () { return $(this).attr("userId"); });
+        },
+
+        markAsMessageSent: function (userId) {
+            $(".user-info[userId=" + userId + "]").append("<label>sent</label>");
         }
     };
 }
