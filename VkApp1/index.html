@@ -34,11 +34,6 @@
             view.switchToInitializationMode();
         });
 
-        function getProfileInfo() {
-            VK.Api.call('account.getProfileInfo', { v: "5.73" }, function (r) {
-                debugger;
-            });
-        }
 
         function sendMessage() {
             var messageText = $("#messageText").val();
@@ -47,15 +42,6 @@
                 debugger;
             });
         }
-
-        function getLikesWhichLiked() {
-            VK.Api.call('likes.getList', { v: "5.73", type: 'post', owner_id: '-140835265', item_id: '11896' }, function (r) {
-                VK.Api.call('users.get', { user_ids: r.items, v: "5.73" }, function (resp) {
-                    debugger;
-                });
-            });
-        }
-
 
     </script>
 
@@ -74,12 +60,10 @@
         <div class="likes-result">
 
         </div>
-        <div>
-            <input id="messageText" />
-            <button onclick="sendMessage()">send message</button>
-        </div>
-        <div>
-            <button onclick="sendMessage()">send message</button>
+
+        <div class="message-panel" style="display:none">
+            <input type="text" id="message" />
+            <button id="sendMessageButton">Send message</button>
         </div>
     </div>
 

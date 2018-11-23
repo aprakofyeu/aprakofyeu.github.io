@@ -1,3 +1,4 @@
 ﻿VkAppEvents = {
-    getLikesForPost: "getLikesForPost"
+    getLikesForPost: "getLikesForPost",
+    sendMessageToAllUsers: "sendMessageToAllUsers"
 }

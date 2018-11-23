@@ -1,6 +1,6 @@
 ﻿function VkApp(urlHelper, callService, view, eventBroker) {
     function getUsersInfo(usersIds){
-        return callService.call("users.get", { user_ids: usersIds.join(',') });
+        return callService.call("users.get", { user_ids: usersIds.join(','), fields:'photo_50' });
     }
 
 
@@ -15,14 +15,32 @@
             })
             .then(function (likes) {
                 getUsersInfo(likes.items).then(function (users) {
-                    debugger;
+                    view.renderUsersList(users);
+                    view.showMessagePanel();
                 });
             });
     }
 
+    function sendMessageToAllUsers() {
+        var message = view.getMessage();
+        if (!message) {
+            return;
+        }
+
+        var usersIds = view.getSelectedUserIds();
+
+        for (var i = 0; i < usersIds.length; i++) {
+            callService.call("messages.send", { user_id: usersIds[i], message: message })
+                .then(function () {
+                    debugger;
+                });
+        }
+    }
 
     function initEvents() {
         eventBroker.subscribe("getLikesForPost", getLikesForPost);
+        eventBroker.subscribe("sendMessageToAllUsers", sendMessageToAllUsers);
+
     }
 
 
