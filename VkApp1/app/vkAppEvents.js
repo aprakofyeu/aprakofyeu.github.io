@@ -1,0 +1,3 @@
+﻿VkAppEvents = {
+    getLikesForPost: "getLikesForPost"
+}

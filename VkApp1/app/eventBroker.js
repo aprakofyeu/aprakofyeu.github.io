@@ -60,13 +60,12 @@ Event.prototype = {
     }
 };
 
-
-function EventBroker(eventSet) {
+function EventBroker() {
     var self = this, eventName, key;
     this.eventMap = {};
-    for (key in eventSet) {
-        if (eventSet.hasOwnProperty(key)) {
-            eventName = eventSet[key];
+    for (key in VkAppEvents) {
+        if (VkAppEvents.hasOwnProperty(key)) {
+            eventName = VkAppEvents[key];
             self.eventMap[eventName] = new Event();
         }
     }
