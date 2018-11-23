@@ -235,12 +235,6 @@ _Pvt_Extensions
 # Tabs Studio files
 src/*.tss
 
-# Connect-specific rules until the end of this file
-.sass-cache
-config_complemented.yml
-/tools/nodejs/JsLint/_last_lint_time
-/tools/nodejs/ESLint/_last_lint_time
-
 *.bak
 castle_msbuildlog
 /results
@@ -254,8 +248,6 @@ castle_msbuildlog
 /src/DataBrowser/wwwroot
 /src/DataBrowser/typings
 
-# Unignore temporarily index.js for connect-yaml-loader
-!/src/DataBrowser/scripts/connect-yaml-loader/index.js
 
 aot
 assets
