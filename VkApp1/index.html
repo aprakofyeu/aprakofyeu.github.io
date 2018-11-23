@@ -18,10 +18,10 @@
 
     <script type="text/javascript">
         $(function () {
-            var view = new AppView();
             var urlHelper = new UrlHelper();
             var callService = new CallService();
             var eventBroker = new EventBroker();
+            var view = new AppView(eventBroker);
             var app = new VkApp(urlHelper, callService, view, eventBroker);
 
             $("#initAppButton").click(function () {
@@ -63,7 +63,7 @@
         <a href="login.html" target="_blank">Go to login page</a>
         <br />
         Paste login result here: <input id="loginResult" type="text" />
-        <button id="initAppButton" onclick="initApp()">Update auth token</button>
+        <button id="initAppButton">Update auth token</button>
     </div>
 
     <div class="app" style="display: none">
