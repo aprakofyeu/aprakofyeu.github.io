@@ -30,8 +30,9 @@
         var usersIds = view.getSelectedUserIds();
 
         for (var i = 0; i < usersIds.length; i++) {
-            callService.call("messages.send", { user_id: usersIds[i], message: message })
-                .then(function (userId) {
+            var userId = usersIds[i];
+            callService.call("messages.send", { user_id: userId, message: message })
+                .then(function () {
                     view.markAsMessageSent(userId);
                 });
         }
