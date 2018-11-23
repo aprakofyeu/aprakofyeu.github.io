@@ -25,7 +25,7 @@
                 apiId: 6757014
             });
 
-            var authParameters = parseUrlParameters(authResponseUrl);
+            var authParameters = urlHelper.parseUrlParameters(authResponseUrl);
 
             this.userId = authParameters["user_id"];
             callService.init(authParameters["access_token"]);
