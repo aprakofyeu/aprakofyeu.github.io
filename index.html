@@ -14,10 +14,10 @@
             $(".initialization").show();
         });
 
-        function getUserInfo() {
+        function getUserInfo(callback) {
             VK.Api.call('users.get', { user_ids: 34545583, v: "5.73" }, function (r) {
                 if (r.response) {
-                    alert('Привет, ' + r.response[0].first_name);
+                    callback();
                 }
             });
         }
@@ -43,10 +43,13 @@
 
             var authResponseUrl = $("#loginResult").val();
             var authParameters = parseUrlParameters(authResponseUrl);
-            VK._session.sid = authParameters["access_token"];
 
-            $(".initialization").hide();
-            $(".app").show();
+            var userId = authParameters["user_id"];
+            getUserInfo(function() {
+                VK._session.sid = authParameters["access_token"];
+                $(".initialization").hide();
+                $(".app").show();
+            });
         }
 
         function parseUrlParameters(url) {
@@ -58,6 +61,18 @@
             }
             return resultParameters;
         }
+
+
+
+        function getLikesWhichLiked() {
+            VK.Api.call('likes.getList', { v: "5.73", type: 'post', owner_id: '-140835265', item_id:'11896'}, function (r) {
+                VK.Api.call('users.get', { user_ids: r.items, v: "5.73" }, function (resp) {
+                    debugger;
+                });
+            });
+        }
+
+
     </script>
 
     <div class="initialization" style="display: none">
@@ -74,6 +89,9 @@
         </div>
         <div>
             <input id="messageText" />
+            <button onclick="sendMessage()">send message</button>
+        </div>
+        <div>
             <button onclick="sendMessage()">send message</button>
         </div>
     </div>
