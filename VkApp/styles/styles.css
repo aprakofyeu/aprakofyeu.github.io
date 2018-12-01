@@ -1,0 +1,33 @@
+﻿body {
+    background-color: #EDEEF0;
+}
+
+.panel {
+    display: block;
+    border: 1px solid #E3E4E8;
+    background-color: #FFF;
+    margin: 10px;
+    padding: 20px;
+}
+
+    .panel .title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: block;
+        color: #777;
+    }
+
+    .panel .row {
+        margin: 10px 0;
+        display: block;
+    }
+
+        .panel .row.disabled {
+            color: #BBB;
+        }
+
+        .panel .row.buttons {
+            border-top: solid 1px #EEE; 
+            margin: 10px 0 0 0;
+            padding-top: 10px;
+        }
