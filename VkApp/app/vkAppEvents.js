@@ -2,5 +2,8 @@
     authenticationCompleted: "authenticationCompleted",
 
     search: "search",
-    searchCompleted: "searchCompleted"
-}
+    searchCompleted: "searchCompleted",
+
+    sendMessageOk: "sendMessageOk",
+    sendMessageFailed: "sendMessageFailed"
+};

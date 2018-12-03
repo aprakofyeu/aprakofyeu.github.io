@@ -1,20 +1,12 @@
-﻿function VkApp(urlHelper, callService, eventBroker) {
-    function sendMessageToAllUsers() {
-        var message = view.getMessage();
-        if (!message) {
-            return;
-        }
+﻿function VkApp() {
+    var urlHelper = new UrlHelper();
+    var callService = new CallService();
+    var eventBroker = new EventBroker();
+    var filtersController = new FiltersController(urlHelper, eventBroker);
+    var searchService = new SearchService(callService, eventBroker);
+    var resultsController = new ResultsController(eventBroker);
+    var messagesController = new MessagesController(callService, eventBroker);
 
-        var usersIds = view.getSelectedUserIds();
-
-        for (var i = 0; i < usersIds.length; i++) {
-            var userId = usersIds[i];
-            callService.call("messages.send", { user_id: userId, message: message })
-                .then(function () {
-                    view.markAsMessageSent(userId);
-                });
-        }
-    }
 
     return {
         init: function (authResponseUrl) {

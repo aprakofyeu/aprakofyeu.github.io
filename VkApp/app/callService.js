@@ -15,6 +15,11 @@
             VK.Api.call(method, params, function (r) {
                 if (r.response) {
                     deferred.resolve(r.response);
+                    return;
+                }
+
+                if (r.error) {
+                    deferred.reject(r.error.error_msg);
                 }
             });
 

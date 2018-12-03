@@ -1,6 +1,24 @@
 ﻿body {
     background-color: #EDEEF0;
+    color: #2A5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+    font-weight: 400;
+    line-height: 27px;
+    font-size: 16px;
+    text-overflow: ellipsis;
 }
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
+    color: #2A5885;
+    font-weight: 700;
+}
+
+
 
 .panel {
     display: block;
@@ -23,11 +41,64 @@
     }
 
         .panel .row.disabled {
-            color: #BBB;
+            color: #A0AFBC;
         }
 
         .panel .row.buttons {
-            border-top: solid 1px #EEE; 
+            border-top: solid 1px #EEE;
             margin: 10px 0 0 0;
             padding-top: 10px;
         }
+
+.user {
+    padding: 5px;
+    vertical-align: center;
+    height: 50px;
+}
+
+    .user.disabled,
+    .user.disabled a {
+        background-color: #fcfcfc;
+        color: #A0AFBC;
+    }
+
+    .user .info-panel {
+        font-weight: bold;
+    }
+
+    .user .avatar {
+        display: inline-block;
+        width: 70px;
+    }
+
+    .user .info-panel,
+    .user .status-panel {
+        vertical-align: top;
+        padding-top: 12px;
+        display: inline-block;
+        width: 300px;
+    }
+
+        .user .status-panel div {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+        }
+
+        .user .status-panel .disabled {
+            background: url(./icons.png) -40px -8px;
+        }
+
+        .user .status-panel .ok {
+            background: url(./icons.png) -72px -10px;
+        }
+
+        .user .status-panel .fail {
+            background: url(./icons.png) -10px -10px;
+        }
+
+.message-panel textarea {
+    display: block;
+    height: 200px;
+    width: 500px;
+}

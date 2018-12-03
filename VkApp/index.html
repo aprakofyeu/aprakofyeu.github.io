@@ -18,17 +18,12 @@
     <script src="app/urlHelper.js" type="text/javascript"></script>
     <script src="app/resultsController.js" type="text/javascript"></script>
     <script src="app/filtersController.js" type="text/javascript"></script>
+    <script src="app/messagesController.js" type="text/javascript"></script>
     <script src="app/app.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {
-            var urlHelper = new UrlHelper();
-            var callService = new CallService();
-            var eventBroker = new EventBroker();
-            var filtersController = new FiltersController(urlHelper, eventBroker);
-            var searchService = new SearchService(callService, eventBroker);
-            var resultsController = new ResultsController(eventBroker);
-            var app = new VkApp(urlHelper, callService, eventBroker);
+            var app = new VkApp();
 
             $("#initAppButton").click(function () {
                 var authResponseUrl = $("#loginResult").val();
@@ -37,23 +32,11 @@
                 }
             });
         });
-
-
-        function login() {
-            window.w = window.open(
-                "https://oauth.vk.com/authorize?client_id=6757014&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,messages,wall&response_type=token&v=5.87",
-                "",
-                'height=600,width=800,toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,modal=yes');
-            window.w.onload = function () {
-                alert("load!");
-            }
-        }
-
     </script>
 
     <div class="panel initialization">
         <label class="title">Авторизация</label>
-        <label>Перейдите на страницу <a onclick="login()" href="#">авторизации</a></label>
+        <label>Перейдите на страницу <a  href="https://oauth.vk.com/authorize?client_id=6757014&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,messages,wall&response_type=token&v=5.87" target="_blank">авторизации</a></label>
         <br />
         И введите результат из адресной строки сюда: <input id="loginResult" type="text"/>
         <button id="initAppButton">Готово</button>
@@ -65,13 +48,13 @@
 
             <div class="row">
                 <label for="postId">Пставили лайк:</label>
-                <input type="text" id="postId" value="https://vk.com/id34545583?w=wall34545583_801%2Fall"/>
+                <input type="text" id="postId"/>
             </div>
             
             <div class="row">
                 <input type="checkbox" id="subscriptionEnabledCheckbox"/>
                 <label for="subscriptionEnabledCheckbox">не подписаны в группу</label>
-                <input type="text" id="subscriptionInput" style="display: none"/>
+                <input type="text" id="subscriptionInput" style="display: none" value="https://vk.com/aillion"/>
             </div>
             
             <div class="row">
@@ -108,8 +91,8 @@
 
         <div class="panel message-panel" style="display: none">
             <label class="title">Разослать сообщение</label>
-            <input type="text" id="message" />
-            <button id="sendMessageButton">Send message</button>
+            <textarea id="message"></textarea>
+            <button id="sendMessageButton">Отправить!</button>
         </div>
     </div>
 

@@ -11,6 +11,10 @@
 }
 
 SearchService.prototype.search = function (searchParams) {
+    function joinUserIds(users) {
+        return users.map(function(x) { return x.id }).join(",");
+    }
+
     var that = this;
     that.callService.call("likes.getList",
             {
@@ -37,7 +41,7 @@ SearchService.prototype.search = function (searchParams) {
             if (searchParams.withoutConversationsWithMe) {
                 return that.callService.call("messages.getConversationsById",
                         {
-                            peer_ids: users.map(function(x) { return x.id }).join(",")
+                            peer_ids: joinUserIds(users)
                         })
                     .then(function(conversations) {
                         var conversationsDict = {};
@@ -54,7 +58,24 @@ SearchService.prototype.search = function (searchParams) {
             return users;
         })
         .then(function (users) {
-            //TODO: filter by not subscribed to group
+            if (searchParams.notSubscribedToPublic) {
+                return that.callService.call("groups.isMember",
+                    {
+                        group_id: searchParams.notSubscribedToPublic,
+                        user_ids: joinUserIds(users)
+                        })
+                    .then(function (results) {
+                        var membersDict = {};
+                        for (var i = 0; i < results.length; i++) {
+                            if (results[i].member) {
+                                membersDict[results[i].user_id] = true;
+                            }
+                        }
+
+                        return users.filter(function (x) { return !membersDict[x.id]; });
+                    });
+            }
+
             return users;
         })
         .then(function (users) {

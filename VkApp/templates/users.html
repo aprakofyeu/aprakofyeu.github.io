@@ -1,8 +1,13 @@
-﻿
-
-    <div {{if !can_write_private_message}} disabled {{/if}}>
+﻿<div class="user {{if !can_write_private_message}}disabled{{/if}}" user-id="${id}">
+    <div class="avatar">
         <img src='${photo_50}'/>
-        <label>${first_name} ${last_name}</label>
     </div>
+    <div class="info-panel">
+        <a href="https://vk.com/id${id}">${first_name} ${last_name}</a>
+    </div>
+    <div class="status-panel">
+        {{if !can_write_private_message}}<div class="disabled"></div>{{/if}}
+    </div>
+</div>
 
 
