@@ -2,11 +2,8 @@
     var $panel = $(".results");
 
     function renderUsers(users) {
-        $.get("templates/users.html",
-            function (templateBody) {
-                $panel.empty();
-                $.tmpl(templateBody, users).appendTo('.results');
-            });
+        var $users = $("#usersTemplate").tmpl(users);
+        $panel.html($users);
     }
 
     function getUserStatusPanel(userId) {

@@ -89,11 +89,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\appContext.js" />
     <Content Include="app\callService.js" />
     <Content Include="app\eventBroker.js" />
     <Content Include="app\filtersController.js" />
     <Content Include="app\jquery.tmpl.js" />
     <Content Include="app\messagesController.js" />
+    <Content Include="app\messageSender.js" />
+    <Content Include="app\messagesFormatter.js" />
     <Content Include="app\resultsController.js" />
     <Content Include="app\searchService.js" />
     <Content Include="app\urlHelper.js" />

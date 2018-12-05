@@ -9,32 +9,46 @@
         return resultParameters;
     }
 
+    function runSafe(action) {
+        try {
+            return action();
+        } catch (error) {
+            return null;
+        }
+    }
+
     return {
         parseUrlParameters: function (url) {
-            return parseParameters(url, "#");
+            return runSafe(function() {
+                return parseParameters(url, "#");
+            });
         },
 
         parsePostUrl: function (postUrl) {
-            var parameters = parseParameters(postUrl, "?");
-            var postParametersRaw = parameters['w'];
+            return runSafe(function() {
+                var parameters = parseParameters(postUrl, "?");
+                var postParametersRaw = parameters['w'];
 
-            var splittedParams = postParametersRaw.replace("wall", "").split("_");
+                var splittedParams = postParametersRaw.replace("wall", "").split("_");
 
-            return {
-                ownerId: splittedParams[0],
-                itemId: splittedParams[1].split("/")[0]
-            };
+                return {
+                    ownerId: splittedParams[0],
+                    itemId: splittedParams[1].split("/")[0]
+                };
+            });
         },
 
         getPublicId: function (publicUrl) {
-            var splitted = publicUrl.split("/");
-            var publicId = splitted[splitted.length - 1];
+            return runSafe(function() {
+                var splitted = publicUrl.split("/");
+                var publicId = splitted[splitted.length - 1];
 
-            if (publicId.indexOf("club") === 0) {
-                publicId = publicId.replace("club", "");
-            }
+                if (publicId.indexOf("club") === 0) {
+                    publicId = publicId.replace("club", "");
+                }
 
-            return publicId;
+                return publicId;
+            });
         }
     };
 }

@@ -1,28 +1,43 @@
 ﻿function FiltersController(urlHelper, eventBroker) {
     var $panel;
 
+    function getPostParams() {
+        return urlHelper.parsePostUrl($panel.find("#postId").val());
+    }
+
+    function getSubscribedGroupId() {
+        return urlHelper.getPublicId($panel.find("#subscriptionInput").val());
+    }
+
+    function isChecked(checkboxSelector) {
+        return $panel.find(checkboxSelector)[0].checked;
+    }
+
+    function markAsInvalid(selector) {
+        $panel.find(selector).addClass("invalid");
+    }
+
     function buildSearchParameters() {
         var parameters = {
-            postInfo: urlHelper.parsePostUrl($("#postId").val()),
-            hits: parseInt($("#hitsCount").val())
+            postInfo: getPostParams(),
+            hits: parseInt($panel.find("#hitsCount").val())
         };
 
-        if ($("#withoutConversationsWithMe")[0].checked) {
+        if (isChecked("#withoutConversationsWithMe")) {
             parameters.withoutConversationsWithMe = true;
         }
 
-        if ($("#canSendMessage")[0].checked) {
+        if (isChecked("#canSendMessage")) {
             parameters.canSendMessageOnly = true;
         }
 
-        if ($("#subscriptionEnabledCheckbox")[0].checked) {
-
-            var publicId = urlHelper.getPublicId($("#subscriptionInput").val());
-            parameters.notSubscribedToPublic = publicId;
+        if (isChecked("#subscriptionEnabledCheckbox")) {
+            parameters.notSubscribedToPublic = getSubscribedGroupId();
         }
 
         return parameters;
     }
+
 
     function initView() {
         $panel = $(".panel.filter");
@@ -34,6 +49,19 @@
             } else {
                 row.addClass("disabled");
             }
+        }
+
+        function isValid() {
+            if (!getPostParams()) {
+                markAsInvalid("#postId");
+                return false;
+            }
+
+            if (isChecked("#withoutConversationsWithMe") && !getSubscribedGroupId()) {
+                markAsInvalid("#subscriptionInput");
+            }
+
+            return true;
         }
 
         function initRowDisabling(checkboxId) {
@@ -48,15 +76,16 @@
         initRowDisabling("withoutConversationsWithMe");
         initRowDisabling("canSendMessage");
 
-        $panel.find("#subscriptionEnabledCheckbox").on("change",
-            function () {
-                $panel.find("#subscriptionInput").toggle();
-            });
+        $panel.find("input").on("change", function() {
+            $(this).removeClass("invalid");
+        });
 
         $panel.find("#searchButton").on("click",
             function () {
-                var searchParameters = buildSearchParameters();
-                eventBroker.publish(VkAppEvents.search, searchParameters);
+                if (isValid()) {
+                    var searchParameters = buildSearchParameters();
+                    eventBroker.publish(VkAppEvents.search, searchParameters);
+                }
             });
     }
 

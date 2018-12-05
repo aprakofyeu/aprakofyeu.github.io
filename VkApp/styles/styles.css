@@ -18,7 +18,10 @@ a:active {
     font-weight: 700;
 }
 
-
+input.invalid {
+    background-color: antiquewhite;
+    border: 1px solid red;
+}
 
 .panel {
     display: block;
@@ -44,10 +47,24 @@ a:active {
             color: #A0AFBC;
         }
 
+        .panel .row .subscriptions-input {
+            display: inline-block;
+        }
+
+        .panel .row.disabled .subscriptions-input {
+            display: none;
+        }
+
         .panel .row.buttons {
             border-top: solid 1px #EEE;
             margin: 10px 0 0 0;
             padding-top: 10px;
+        }
+
+        .panel .row .column {
+            display: inline-block;
+            vertical-align: top;
+            padding: 0 5px;
         }
 
 .user {
@@ -102,3 +119,26 @@ a:active {
     height: 200px;
     width: 500px;
 }
+
+.message-panel .options-btn {
+    display: block;
+    width: 90px;
+    border: #2a5885 solid 1px;
+    background-color: aliceblue;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.attachments .attachment,
+.attachments .attachment div {
+    display: inline-block;
+}
+
+    .attachments .attachment remove-btn {
+        height: 12px;
+        width: 12px;
+        color: red !important;
+    }
