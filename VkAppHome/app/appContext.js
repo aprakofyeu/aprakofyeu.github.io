@@ -1,7 +1,11 @@
 ﻿function AppContext(eventBroker) {
-    var context = {};
+    var context = {
+        settings: {
+            messagesInterval: 0
+        }
+    };
 
-    eventBroker.subscribe(VkAppEvents.authenticationCompleted, function(user) {
+    eventBroker.subscribe(VkAppEvents.authenticationCompleted, function (user) {
         context.user = user;
         context.searchResult = {};
     });

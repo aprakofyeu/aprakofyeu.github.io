@@ -30,14 +30,14 @@
     $panel.find("#sendMessageButton").on("click",
         function () {
             sendMessage(function (message, attachments) {
-                messageSender.sendToAll(message, attachments)
+                messageSender.sendToAll(message, attachments);
             });
         });
 
     $panel.find("#sendMessageToMeButton").on("click",
         function () {
             sendMessage(function (message, attachments) {
-                messageSender.sendToMe(message, attachments)
+                messageSender.sendToMe(message, attachments);
             });
         });
 

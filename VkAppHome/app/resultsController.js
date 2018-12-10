@@ -12,13 +12,17 @@
 
     function markAsSent(userId) {
         if (userId === context.user.id) {
-            alert("Сообщение успешно отправлено себе.");
+            alert("Сообщение себе успешно отправлено.");
         }
 
         getUserStatusPanel(userId).append("<div class='ok'></div>");
     }
 
     function markAsFailed(userId, error) {
+        if (userId === context.user.id) {
+            alert("С отправкой сообщения себе что-то пошло не так :(\r\nError: " + error);
+        }
+
         getUserStatusPanel(userId).append("<div class='fail' title='" + error + "'></div>");
     }
 

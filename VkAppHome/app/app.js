@@ -1,6 +1,9 @@
 ﻿function VkApp() {
+    //dependency injection region
+
     var urlHelper = new UrlHelper();
-    var callService = new CallService();
+    var captchaService = new CaptchaService();
+    var callService = new CallService(captchaService);
     var eventBroker = new EventBroker();
     var context = new AppContext(eventBroker);
     var filtersController = new FiltersController(urlHelper, eventBroker);
@@ -9,6 +12,8 @@
     var formatter = new MessagesFormatter();
     var messageSender = new MessageSender(context, callService, formatter, eventBroker);
     var messagesController = new MessagesController(formatter, messageSender, formatter, urlHelper, eventBroker);
+
+    //end dependency injection
 
 
     return {

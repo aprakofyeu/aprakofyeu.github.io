@@ -17,6 +17,7 @@
     <script src="app/jquery.tmpl.js" type="text/javascript"></script>
     <script src="app/vkAppEvents.js" type="text/javascript"></script>
     <script src="app/eventBroker.js" type="text/javascript"></script>
+    <script src="app/captchaService.js" type="text/javascript"></script>
     <script src="app/callService.js" type="text/javascript"></script>
     <script src="app/searchService.js" type="text/javascript"></script>
     <script src="app/urlHelper.js" type="text/javascript"></script>
@@ -43,7 +44,7 @@
         <label class="title">Авторизация</label>
         <label>Перейдите на страницу <a href="https://oauth.vk.com/authorize?client_id=6757014&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,messages,wall&response_type=token&v=5.87" target="_blank">авторизации</a></label>
         <br />
-        И введите результат из адресной строки сюда: <input id="loginResult" class="url-input" type="text"/>
+        И введите результат из адресной строки сюда: <input id="loginResult" class="url-input" type="text" value="https://oauth.vk.com/blank.html#access_token=5b9b4e7649996d32b45e97ff989710acaec8a831bc094452cb2a6cfae65e1894bde7e7d3f1be63cd60aee&expires_in=86400&user_id=34545583" />
         <button id="initAppButton">Готово</button>
     </div>
 
@@ -53,7 +54,7 @@
 
             <div class="row">
                 <label for="postId">Пставили лайк:</label>
-                <input type="text" id="postId" class="url-input"/>
+                <input type="text" id="postId" class="url-input" value="https://vk.com/id34545583?w=wall34545583_801%2Fall" />
             </div>
 
             <div class="row">
@@ -122,7 +123,17 @@
 
     <div id="addByUrlDialog" style="display:none">
         <label>Вставьте URL:</label>
-        <input type="text" id="photoUrlInput" class="url-input"/>
+        <input type="text" id="photoUrlInput" class="url-input" />
+    </div>
+
+    <div id="captchaDialog" style="display:none">
+        <img class="captcha-img"></img>
+        <input type="text" id="captchaInput" />
+    </div>
+
+    <div id="messagedSendingStatusDialog">
+        <div id="progressbar"><div class="progress-label"></div></div>
+        <div class="summary"></div>
     </div>
 
     <script id="usersTemplate" type="text/x-jquery-tmpl">

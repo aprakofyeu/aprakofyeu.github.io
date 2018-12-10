@@ -150,3 +150,28 @@ input.url-input{
         color: red !important;
         cursor: pointer;
     }
+
+.ui-progressbar {
+    margin: 20px 0;
+    position: relative;
+}
+.progress-label {
+    position: absolute;
+    text-align: center;
+    top: 4px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.summary.sucess {
+    border: #2a5885 solid 1px;
+    background-color: aliceblue;
+    padding: 5px;
+    margin: 10px 0;
+}
+
+.summary.fail {
+    border: 1px solid red;
+    background-color: antiquewhite;
+    padding: 10px;
+}

@@ -70,6 +70,7 @@
     <Content Include="app\app.js" />
     <Content Include="app\appContext.js" />
     <Content Include="app\callService.js" />
+    <Content Include="app\captchaService.js" />
     <Content Include="app\eventBroker.js" />
     <Content Include="app\filtersController.js" />
     <Content Include="app\jquery.tmpl.js" />
