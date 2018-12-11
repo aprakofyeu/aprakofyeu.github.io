@@ -251,6 +251,7 @@ castle_msbuildlog
 
 aot
 assets
+dist
 dist_bundle
 /src/DataBrowser/Views/Shared/_Layout.cshtml
 !/src/DataBrowser.Contract/GeneratedScripts/dist

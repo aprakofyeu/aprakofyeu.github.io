@@ -133,7 +133,7 @@
   </Target>
   <PropertyGroup>
     <PreBuildEvent>cd $(TargetDir)..
-Bundler.exe ./app ./dist ./index.html
+Bundler.exe ./app ./bundles ./index.html
 </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
