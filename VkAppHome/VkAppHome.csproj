@@ -74,11 +74,13 @@
     <Content Include="app\eventBroker.js" />
     <Content Include="app\filtersController.js" />
     <Content Include="app\jquery.tmpl.js" />
+    <Content Include="app\messageProgressBar.js" />
     <Content Include="app\messagesController.js" />
     <Content Include="app\messageSender.js" />
     <Content Include="app\messagesFormatter.js" />
     <Content Include="app\resultsController.js" />
     <Content Include="app\searchService.js" />
+    <Content Include="app\settingsController.js" />
     <Content Include="app\urlHelper.js" />
     <Content Include="app\vkAppEvents.js" />
     <Content Include="index.html" />

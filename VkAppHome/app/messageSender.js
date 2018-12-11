@@ -1,79 +1,27 @@
-﻿function MessageSender(context, callService, formatter, eventBroker) {
-    var $dialog;
-
-    function showProgressBar(users) {
-        $dialog = $("#messagedSendingStatusDialog").dialog({
-            modal: true,
-            width: 500,
-            title: "Статус:",
-            open: function (event, ui) {
-                $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-                $(this).find(".summary").empty().removeClass("sucess").removeClass("fail");
-                var $progressbar = $(this).find("#progressbar").progressbar({
-                    max: users.length,
-                    value: 0,
-                    change: function () {
-                        $(this).find(".progress-label").text("Отправлено " + $progressbar.progressbar("value") + " из " + users.length);
-                    },
-                    complete: function () {
-                        $(this).find(".progress-label").text("Все сообщения успешно отправлены!");
-                    }
-                });
-            },
-            buttons: {
-                "Стоп!": function () {
-                    alert("not implemented!");
-                }
-            }
-        });
-    }
-
-    function refreshProgress() {
-        var $progressbar = $dialog.find("#progressbar");
-        var val = $progressbar.progressbar("value") || 0;
-        $progressbar.progressbar("value", val + 1);
-    }
-
-    function finishProgress(message, summaryClass) {
-        $dialog.find(".summary").addClass(summaryClass).text(message);
-        $dialog.dialog('option', 'buttons', { "Закрыть": function () { $dialog.dialog("close"); } });
-    }
-
-    function sucessProgressBar(message) {
-        finishProgress(message, "sucess");
-    }
-
-    function failProgressBar(message) {
-        finishProgress(message, "fail");
-    }
-
-
-
-
+﻿function MessageSender(context, callService, formatter, progressBar, eventBroker) {
 
     function sendMessage(message, attachments, users) {
+        var timeout, canceled, deferred;
         attachments = formatter.formatAttachments(attachments);
 
-        function send(users, deferred) {
-            if (!deferred) {
-                deferred = new $.Deferred();
-            }
-
+        function send(users) {
             var user = users[0];
             users = users.slice(1, users.length);
             var formattedMessage = formatter.format(message, user);
 
             callService.call("messages.send", { user_id: user.id, message: formattedMessage, attachment: attachments })
                 .then(function () {
-                    refreshProgress();
+                    progressBar.increase();
                     user.sent = true;
                     eventBroker.publish(VkAppEvents.sendMessageOk, user.id);
-                    if (users.length > 0) {
-                        setTimeout(function () {
-                            send(users, deferred);
-                        }, context.settings.messagesInterval * 1000);
-                    } else {
-                        deferred.resolve();
+                    if (!canceled) {
+                        if (users.length > 0) {
+                            timeout = setTimeout(function () {
+                                send(users, deferred);
+                            }, context.settings.messagesInterval * 1000);
+                        } else {
+                            deferred.resolve();
+                        }
                     }
                 },
                     function (error) {
@@ -85,12 +33,18 @@
         }
 
         if (users && users.length > 0) {
-            showProgressBar(users);
+            deferred = new $.Deferred();
+
+            progressBar.init(users, function () {
+                canceled = true;
+                clearTimeout(timeout);
+                deferred.reject("Отправка сообщений прервана.");
+            });
 
             send(users).then(function () {
-                sucessProgressBar("Все сообщения успешно отправлены!");
+                progressBar.finish();
             }, function (error) {
-                failProgressBar("Во время отправки сообщений что-то пошло не так :(<br/>Ошибка: " + error);
+                progressBar.finish("Во время отправки сообщений что-то пошло не так :(\r\nОшибка: " + error);
             });
         }
     };
@@ -102,7 +56,7 @@
         },
 
         sendToMe(message, attachments) {
-            sendMessage(message, attachments, [context.user, context.user, context.user, context.user, context.user, context.user, context.user, context.user, context.user, context.user, context.user, context.user, context.user, context.user, context.user, context.user]);
+            sendMessage(message, attachments, [context.user]);
         }
     };
 }

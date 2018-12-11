@@ -3,14 +3,16 @@
 
     var urlHelper = new UrlHelper();
     var captchaService = new CaptchaService();
-    var callService = new CallService(captchaService);
     var eventBroker = new EventBroker();
     var context = new AppContext(eventBroker);
+    var settingsController = new SettingsController(context);
+    var callService = new CallService(context, captchaService);
     var filtersController = new FiltersController(urlHelper, eventBroker);
     var searchService = new SearchService(callService, eventBroker);
     var resultsController = new ResultsController(context, eventBroker);
     var formatter = new MessagesFormatter();
-    var messageSender = new MessageSender(context, callService, formatter, eventBroker);
+    var progressBar = new MessageProgressBar(context);
+    var messageSender = new MessageSender(context, callService, formatter, progressBar, eventBroker);
     var messagesController = new MessagesController(formatter, messageSender, formatter, urlHelper, eventBroker);
 
     //end dependency injection

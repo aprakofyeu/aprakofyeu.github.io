@@ -1,4 +1,5 @@
-﻿body {
+﻿body,
+body .ui-widget-content {
     background-color: #EDEEF0;
     color: #2A5885;
     font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
@@ -8,11 +9,11 @@
     text-overflow: ellipsis;
 }
 
-a,
-a:link,
-a:visited,
-a:hover,
-a:active {
+    body .ui-widget-content {
+        background-color: #FFF;
+    }
+
+a, a:link, a:visited, a:hover, a:active {
     text-decoration: none;
     color: #2A5885;
     font-weight: 700;
@@ -23,7 +24,7 @@ input.invalid {
     border: 1px solid red;
 }
 
-input.url-input{
+input.url-input {
     width: 500px;
 }
 
@@ -35,10 +36,16 @@ input.url-input{
     padding: 20px;
 }
 
+    .panel .settings-btn{
+        display: inline-block;
+        float: right;
+        cursor: pointer;
+    }
+
     .panel .title {
         font-weight: bold;
         margin-bottom: 10px;
-        display: block;
+        display: inline-block;
         color: #777;
     }
 
@@ -128,7 +135,7 @@ input.url-input{
     display: block;
     width: 90px;
     border: #2a5885 solid 1px;
-    background-color: aliceblue;
+    background-color: #F0F8FF;
     cursor: pointer;
     margin: 5px;
     font-size: 12px;
@@ -137,12 +144,12 @@ input.url-input{
 }
 
 .attachments .attachment {
-    display:block;
+    display: block;
 }
 
-.attachments .attachment div {
-    display: inline-block;
-}
+    .attachments .attachment div {
+        display: inline-block;
+    }
 
     .attachments .attachment .remove-btn {
         height: 12px;
@@ -153,21 +160,47 @@ input.url-input{
 
 .ui-progressbar {
     margin: 20px 0;
+    border: #2a5885 solid 1px !important;
     position: relative;
 }
-.progress-label {
-    position: absolute;
-    text-align: center;
-    top: 4px;
-    font-weight: bold;
-    text-shadow: 1px 1px 0 #fff;
+
+    .ui-progressbar .ui-progressbar-value {
+        border: #2a5885 solid 1px;
+        background-color: #F0F8FF;
+        color: #2A5885;
+    }
+
+    .ui-progressbar .progress-label {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        line-height: 25px;
+        top: 4px;
+        font-weight: bold;
+        text-shadow: 1px 1px 0 #fff;
+        color: #2A5885;
+    }
+
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-tl,
+.ui-corner-right,
+.ui-corner-tr,
+.ui-corner-bottom,
+.ui-corner-left,
+.ui-corner-bl,
+.ui-corner-br {
+    border-radius: 0px;
 }
 
-.summary.sucess {
-    border: #2a5885 solid 1px;
-    background-color: aliceblue;
-    padding: 5px;
-    margin: 10px 0;
+.ui-dialog {
+    padding: 0;
+}
+
+.ui-widget-header,
+.ui-widget-header .ui-dialog-title {
+    border: 0px none;
+    color: #777;
 }
 
 .summary.fail {

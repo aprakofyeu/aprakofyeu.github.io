@@ -2,7 +2,7 @@
     return {
         handle: function (error, success, fail) {
             if (error.error_code === 14) {
-                var dialog = $("#captchaDialog").dialog({
+                var $dialog = $("#captchaDialog").dialog({
                     modal: true,
                     title: "Введите капчу:",
                     open: function (event, ui) {
@@ -14,11 +14,11 @@
                         "Ok": function () {
                             var captchakey = $(this).find("#captchaInput").val();
                             success({ sid: error.captcha_sid, key: captchakey });
-                            dialog.dialog("close");
+                            $dialog.dialog("close");
                         },
                         "Отмнена": function () {
                             fail();
-                            dialog.dialog("close");
+                            $dialog.dialog("close");
                         }
                     }
                 });

@@ -1,4 +1,4 @@
-﻿function CallService(captchaService) {
+﻿function CallService(context, captchaService) {
     function handleError(error, method, params, deferred) {
         if (error.error_code === 14) {
             captchaService.handle(error, function (captcha) {
@@ -13,7 +13,7 @@
             return;
         }
 
-        deferred.reject(r.error.error_msg);
+        deferred.reject(error.error_msg);
     }
 
     function call(method, params, deferred) {
@@ -42,7 +42,7 @@
                 VK._session.sid = this.accessToken;
             }
 
-            if (method === "messages.send") {
+            if (context.settings.debugMode && method === "messages.send") {
                 setTimeout(function () { deferred.resolve(); }, 1000);
             } else {
                 call(method, params, deferred);
