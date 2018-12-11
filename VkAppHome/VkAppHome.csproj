@@ -73,7 +73,7 @@
     <Content Include="app\captchaService.js" />
     <Content Include="app\eventBroker.js" />
     <Content Include="app\filtersController.js" />
-    <Content Include="app\jquery.tmpl.js" />
+    <Content Include="jquery\jquery.tmpl.js" />
     <Content Include="app\messageProgressBar.js" />
     <Content Include="app\messagesController.js" />
     <Content Include="app\messageSender.js" />
@@ -131,6 +131,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>cd $(TargetDir)..
+Bundler.exe ./app ./dist ./index.html
+</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
