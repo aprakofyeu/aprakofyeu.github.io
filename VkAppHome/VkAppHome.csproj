@@ -85,7 +85,8 @@
     <Content Include="app\vkAppEvents.js" />
     <Content Include="index.html" />
     <Content Include="styles\icons.png" />
-    <Content Include="styles\styles.css" />
+    <Content Include="styles\loading.gif" />
+    <Content Include="styles\styles.v1.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +100,9 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app\jquery-plugins\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

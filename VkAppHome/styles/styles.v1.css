@@ -36,7 +36,7 @@ input.url-input {
     padding: 20px;
 }
 
-    .panel .settings-btn{
+    .panel .settings-btn {
         display: inline-block;
         float: right;
         cursor: pointer;
@@ -207,4 +207,10 @@ input.url-input {
     border: 1px solid red;
     background-color: antiquewhite;
     padding: 10px;
+}
+
+.results .loader {
+    display: block;
+    height: 100px;
+    background: url(./loading.gif) 20px 0 no-repeat;
 }

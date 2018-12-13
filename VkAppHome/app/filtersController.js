@@ -1,5 +1,5 @@
-﻿function FiltersController(urlHelper, eventBroker) {
-    var $panel;
+﻿function FiltersController(urlHelper, searchService, eventBroker) {
+    var $panel, $searchButton;
 
     function getPostParams() {
         return urlHelper.parseWallUrl($panel.find("#postId").val());
@@ -38,9 +38,18 @@
         return parameters;
     }
 
+    function disableSearchButton() {
+        $searchButton.attr("disabled", "disabled");
+    }
+
+    function enableSearchButton() {
+        $searchButton.removeAttr("disabled");
+    }
+
 
     function initView() {
         $panel = $(".panel.filter");
+        $searchButton = $panel.find("#searchButton");
 
         function refreshRowForCheckbox($checkbox) {
             var row = $checkbox.closest(".row");
@@ -84,10 +93,17 @@
             function () {
                 if (isValid()) {
                     var searchParameters = buildSearchParameters();
-                    eventBroker.publish(VkAppEvents.search, searchParameters);
+                    searchService.search(searchParameters);
                 }
             });
     }
 
+    function initEvents() {
+        eventBroker.subscribe(VkAppEvents.search, function () { disableSearchButton(); });
+        eventBroker.subscribe(VkAppEvents.searchCompleted, function () { enableSearchButton(); });
+        eventBroker.subscribe(VkAppEvents.searchFailed, function () { enableSearchButton(); });
+    }
+
     initView();
+    initEvents();
 }

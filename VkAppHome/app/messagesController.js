@@ -135,4 +135,7 @@
         $panel.show();
     });
 
+    eventBroker.subscribe(VkAppEvents.search, function () {
+        $panel.hide();
+    });
 }

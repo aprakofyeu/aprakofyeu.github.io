@@ -1,92 +1,156 @@
 ﻿function SearchService(callService, eventBroker) {
-    var that = this;
-    that.eventBroker = eventBroker;
-    that.callService = callService;
+    var batchSize = 100;
 
-    function initEvents() {
-        eventBroker.subscribe(VkAppEvents.search, function (searchParams) { that.search(searchParams); });
+    function callWithDelay(action, delay) {
+        var deferred = new $.Deferred();
+
+        if (!delay) {
+            delay = 2000;
+        }
+
+        setTimeout(function () {
+            action().then(function (result) {
+                deferred.resolve(result);
+            }, function (error) {
+                deferred.reject(error);
+            });
+        }, delay);
+
+        return deferred.promise();
     }
 
-    initEvents();
-}
+    function distinct(users) {
+        if (users && users.length > 0) {
+            var usersDict = {};
+            var user, result = [];
+            for (var i = 0; i < users.length; i++) {
+                user = users[i];
+                if (!usersDict[user.id]) {
+                    result.push(user);
+                }
+                usersDict[user.id] = true;
+            }
+            return result;
+        }
+        return users;
+    }
 
-SearchService.prototype.search = function (searchParams) {
     function joinUserIds(users) {
-        return users.map(function(x) { return x.id }).join(",");
+        return users.map(function (x) { return x.id }).join(",");
     }
 
-    var that = this;
-    that.callService.call("likes.getList",
+    function searchInner(searchParameters, hits, offset) {
+        var totalLikesCount = 0;
+
+        return callService.call("likes.getList",
             {
                 type: 'post',
-                owner_id: searchParams.postInfo.ownerId,
-                item_id: searchParams.postInfo.itemId,
+                owner_id: searchParameters.postInfo.ownerId,
+                item_id: searchParameters.postInfo.itemId,
                 skip_own: 1,
-                count: 100
+                offset: offset,
+                count: batchSize
             })
-        .then(function(likes) {
-            return that.callService.call("users.get",
-                {
-                    user_ids: likes.items.join(','),
-                    fields: 'photo_50,can_write_private_message'
-                });
-        })
-        .then(function(users) {
-            if (searchParams.canSendMessageOnly) {
-                users = users.filter(function(x) { return x.can_write_private_message; });
-            }
-            return users;
-        })
-        .then(function(users) {
-            if (searchParams.withoutConversationsWithMe) {
-                return that.callService.call("messages.getConversationsById",
+            .then(function (likes) {
+                totalLikesCount = likes.count;
+                return callService.call("users.get",
+                    {
+                        user_ids: likes.items.join(','),
+                        fields: 'photo_50,can_write_private_message'
+                    });
+            })
+            .then(function (users) {
+                if (searchParameters.canSendMessageOnly) {
+                    users = users.filter(function (x) { return x.can_write_private_message; });
+                }
+                return users;
+            })
+            .then(function (users) {
+                if (searchParameters.withoutConversationsWithMe) {
+                    var userIds = joinUserIds(users);
+                    if (!userIds) {
+                        return users;
+                    }
+
+                    return callService.call("messages.getConversationsById",
                         {
                             peer_ids: joinUserIds(users)
                         })
-                    .then(function(conversations) {
-                        var conversationsDict = {};
-                        for (var i = 0; i < conversations.items.length; i++) {
-                            var conversationInfo = conversations.items[i];
-                            if (conversationInfo.in_read || conversationInfo.out_read || conversationInfo.last_message_id) {
-                                conversationsDict[conversationInfo.peer.id] = true;
+                        .then(function (conversations) {
+                            var conversationsDict = {};
+                            for (var i = 0; i < conversations.items.length; i++) {
+                                var conversationInfo = conversations.items[i];
+                                if (conversationInfo.in_read ||
+                                    conversationInfo.out_read ||
+                                    conversationInfo.last_message_id) {
+                                    conversationsDict[conversationInfo.peer.id] = true;
+                                }
                             }
-                        }
 
-                        return users.filter(function(x) { return !conversationsDict[x.id]; });
-                    });
-            }
-            return users;
-        })
-        .then(function (users) {
-            if (searchParams.notSubscribedToPublic) {
-                return that.callService.call("groups.isMember",
-                    {
-                        group_id: searchParams.notSubscribedToPublic,
-                        user_ids: joinUserIds(users)
+                            return users.filter(function (x) { return !conversationsDict[x.id]; });
+                        });
+                }
+                return users;
+            })
+            .then(function (users) {
+                if (searchParameters.notSubscribedToPublic) {
+                    var userIds = joinUserIds(users);
+                    if (!userIds) {
+                        return users;
+                    }
+
+                    return callService.call("groups.isMember",
+                        {
+                            group_id: searchParameters.notSubscribedToPublic,
+                            user_ids: userIds
                         })
-                    .then(function (results) {
-                        var membersDict = {};
-                        for (var i = 0; i < results.length; i++) {
-                            if (results[i].member) {
-                                membersDict[results[i].user_id] = true;
+                        .then(function (results) {
+                            var membersDict = {};
+                            for (var i = 0; i < results.length; i++) {
+                                if (results[i].member) {
+                                    membersDict[results[i].user_id] = true;
+                                }
                             }
-                        }
 
-                        return users.filter(function (x) { return !membersDict[x.id]; });
-                    });
-            }
+                            return users.filter(function (x) { return !membersDict[x.id]; });
+                        });
+                }
 
-            return users;
-        })
-        .then(function (users) {
-            if (users.length > searchParams.hits) {
-                return users.slice(0, searchParams.hits);
-            }
+                return users;
+            })
+            .then(function (users) {
+                if (users.length > hits) {
+                    return users.slice(0, hits);
+                }
 
-            //TODO: if users.length<searchParams.hits && total count > chunk size then call recursive this method to load more results and merge it
-            return users;
-        })
-        .then(function (users) {
-            that.eventBroker.publish(VkAppEvents.searchCompleted, users);
-        });
-};
+                if (users.length < hits) {
+                    var moreOffset = offset + batchSize;
+                    if (moreOffset < totalLikesCount) {
+
+                        return callWithDelay(function () {
+                            return searchInner(searchParameters, hits - users.length, moreOffset)
+                                .then(function (moreUsers) {
+                                    return users.concat(moreUsers);
+                                });
+                        });
+                    }
+                }
+
+                return users;
+            });
+    }
+
+
+    return {
+        search: function (searchParameters) {
+            eventBroker.publish(VkAppEvents.search, searchParameters);
+
+            searchInner(searchParameters, searchParameters.hits, 0)
+                .then(function (users) {
+                    eventBroker.publish(VkAppEvents.searchCompleted, distinct(users));
+                }, function (error) {
+                    eventBroker.publish(VkAppEvents.searchFailed, error);
+                });
+        }
+    };
+}

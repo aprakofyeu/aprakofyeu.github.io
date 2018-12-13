@@ -7,9 +7,9 @@
     var context = new AppContext(eventBroker);
     var settingsController = new SettingsController(context);
     var callService = new CallService(context, captchaService);
-    var filtersController = new FiltersController(urlHelper, eventBroker);
     var searchService = new SearchService(callService, eventBroker);
-    var resultsController = new ResultsController(context, eventBroker);
+    var filtersController = new FiltersController(urlHelper, searchService, eventBroker);
+    var resultsController = new ResultsController(eventBroker);
     var formatter = new MessagesFormatter();
     var progressBar = new MessageProgressBar(context);
     var messageSender = new MessageSender(context, callService, formatter, progressBar, eventBroker);
