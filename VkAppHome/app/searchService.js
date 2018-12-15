@@ -56,14 +56,14 @@
                 return callService.call("users.get",
                     {
                         user_ids: likes.items.join(','),
-                        fields: 'photo_50,can_write_private_message'
+                        fields: 'photo_50,can_write_private_message,online'
                     });
             })
             .then(function (users) {
-                if (searchParameters.canSendMessageOnly) {
-                    users = users.filter(function (x) { return x.can_write_private_message; });
-                }
-                return users;
+                return users.filter(function (x) {
+                    return (!searchParameters.canSendMessageOnly || x.can_write_private_message)
+                        && (!searchParameters.onlineOnly || x.online);
+                });
             })
             .then(function (users) {
                 if (searchParameters.withoutConversationsWithMe) {

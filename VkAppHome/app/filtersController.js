@@ -23,16 +23,20 @@
             hits: parseInt($panel.find("#hitsCount").val())
         };
 
-        if (isChecked("#withoutConversationsWithMe")) {
+        if (isChecked("#withoutConversationsWithMeCheckbox")) {
             parameters.withoutConversationsWithMe = true;
         }
 
-        if (isChecked("#canSendMessage")) {
+        if (isChecked("#canSendMessageCheckbox")) {
             parameters.canSendMessageOnly = true;
         }
 
         if (isChecked("#subscriptionEnabledCheckbox")) {
             parameters.notSubscribedToPublic = getSubscribedGroupId();
+        }
+
+        if (isChecked("#onlineOnlyCheckbox")) {
+            parameters.onlineOnly = true;
         }
 
         return parameters;
@@ -66,7 +70,7 @@
                 return false;
             }
 
-            if (isChecked("#withoutConversationsWithMe") && !getSubscribedGroupId()) {
+            if (isChecked("#subscriptionEnabledCheckbox") && !getSubscribedGroupId()) {
                 markAsInvalid("#subscriptionInput");
             }
 
@@ -82,8 +86,9 @@
         }
 
         initRowDisabling("subscriptionEnabledCheckbox");
-        initRowDisabling("withoutConversationsWithMe");
-        initRowDisabling("canSendMessage");
+        initRowDisabling("withoutConversationsWithMeCheckbox");
+        initRowDisabling("canSendMessageCheckbox");
+        initRowDisabling("onlineOnlyCheckbox");
 
         $panel.find("input").on("change", function() {
             $(this).removeClass("invalid");

@@ -107,23 +107,36 @@ input.url-input {
         width: 300px;
     }
 
-        .user .status-panel div {
-            display: inline-block;
-            width: 25px;
-            height: 25px;
+    .user .online-panel {
+        width: 20px;
+        height: 50px;
+        display: inline-block;
+    }
+
+        .user .online-panel .online {
+            height: 15px;
+            width: 15px;
+            margin-top: 18px;
+            background: url(./icons.png) -143px -15px;
         }
 
-        .user .status-panel .disabled {
-            background: url(./icons.png) -40px -8px;
-        }
+    .user .status-panel div {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+    }
 
-        .user .status-panel .ok {
-            background: url(./icons.png) -72px -10px;
-        }
+    .user .status-panel .disabled {
+        background: url(./icons.png) -40px -8px;
+    }
 
-        .user .status-panel .fail {
-            background: url(./icons.png) -10px -10px;
-        }
+    .user .status-panel .ok {
+        background: url(./icons.png) -72px -10px;
+    }
+
+    .user .status-panel .fail {
+        background: url(./icons.png) -10px -10px;
+    }
 
 .message-panel textarea {
     display: block;

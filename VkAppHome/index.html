@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,7 +14,7 @@
     <script src="./jquery/jquery.tmpl.js"></script>
     <script src="https://vk.com/js/api/openapi.js?159" type="text/javascript"></script>
 
-    <!--bundle--><script src='./bundles/bundle.e6edabbd-d160-4028-aae8-03d4dcc0895a.js' type='text/javascript'></script><!--bundle-->
+    <!--bundle--><script src='./bundles/bundle.6d6b9b37-0f65-4cc8-b480-6e7073c98026.js' type='text/javascript'></script><!--bundle-->
 
     <script type="text/javascript">
         $(function () {
@@ -29,9 +29,10 @@
 
     <div class="panel initialization">
         <label class="title">Авторизация</label>
+        <br />
         <label>Перейдите на страницу <a href="https://oauth.vk.com/authorize?client_id=6757014&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,messages,wall&response_type=token&v=5.87" target="_blank">авторизации</a></label>
         <br />
-        И введите результат из адресной строки сюда: <input id="loginResult" class="url-input" type="text"/>
+        И введите результат из адресной строки сюда: <input id="loginResult" class="url-input" type="text" />
         <button id="initAppButton">Готово</button>
     </div>
 
@@ -53,13 +54,18 @@
             </div>
 
             <div class="row">
-                <input type="checkbox" checked="checked" id="withoutConversationsWithMe" />
-                <label for="withoutConversationsWithMe">только те, у кого нет переписок со мной</label>
+                <input type="checkbox" checked="checked" id="withoutConversationsWithMeCheckbox" />
+                <label for="withoutConversationsWithMeCheckbox">только те, у кого нет переписок со мной</label>
             </div>
 
             <div class="row">
-                <input type="checkbox" checked="checked" id="canSendMessage" />
-                <label for="canSendMessage">только те, кому я могу отправлять сообщения</label>
+                <input type="checkbox" checked="checked" id="canSendMessageCheckbox" />
+                <label for="canSendMessageCheckbox">только те, кому я могу отправлять сообщения</label>
+            </div>
+
+            <div class="row">
+                <input type="checkbox" checked="checked" id="onlineOnlyCheckbox" />
+                <label for="onlineOnlyCheckbox">только те, кто сейчас 'online'</label>
             </div>
 
             <div class="row">
@@ -143,6 +149,9 @@
 
     <script id="usersTemplate" type="text/x-jquery-tmpl">
         <div class="user {{if !can_write_private_message}}disabled{{/if}}" user-id="${id}">
+            <div class="online-panel">
+                {{if online}}<div class="online" title="online"></div>{{/if}}
+            </div>
             <div class="avatar">
                 <img src='${photo_50}' />
             </div>

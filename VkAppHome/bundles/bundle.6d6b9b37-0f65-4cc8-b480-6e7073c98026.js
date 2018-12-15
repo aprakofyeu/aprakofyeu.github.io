@@ -263,16 +263,20 @@ function FiltersController(urlHelper, searchService, eventBroker) {
             hits: parseInt($panel.find("#hitsCount").val())
         };
 
-        if (isChecked("#withoutConversationsWithMe")) {
+        if (isChecked("#withoutConversationsWithMeCheckbox")) {
             parameters.withoutConversationsWithMe = true;
         }
 
-        if (isChecked("#canSendMessage")) {
+        if (isChecked("#canSendMessageCheckbox")) {
             parameters.canSendMessageOnly = true;
         }
 
         if (isChecked("#subscriptionEnabledCheckbox")) {
             parameters.notSubscribedToPublic = getSubscribedGroupId();
+        }
+
+        if (isChecked("#onlineOnlyCheckbox")) {
+            parameters.onlineOnly = true;
         }
 
         return parameters;
@@ -306,7 +310,7 @@ function FiltersController(urlHelper, searchService, eventBroker) {
                 return false;
             }
 
-            if (isChecked("#withoutConversationsWithMe") && !getSubscribedGroupId()) {
+            if (isChecked("#subscriptionEnabledCheckbox") && !getSubscribedGroupId()) {
                 markAsInvalid("#subscriptionInput");
             }
 
@@ -322,8 +326,9 @@ function FiltersController(urlHelper, searchService, eventBroker) {
         }
 
         initRowDisabling("subscriptionEnabledCheckbox");
-        initRowDisabling("withoutConversationsWithMe");
-        initRowDisabling("canSendMessage");
+        initRowDisabling("withoutConversationsWithMeCheckbox");
+        initRowDisabling("canSendMessageCheckbox");
+        initRowDisabling("onlineOnlyCheckbox");
 
         $panel.find("input").on("change", function() {
             $(this).removeClass("invalid");
@@ -763,14 +768,14 @@ function SearchService(callService, eventBroker) {
                 return callService.call("users.get",
                     {
                         user_ids: likes.items.join(','),
-                        fields: 'photo_50,can_write_private_message'
+                        fields: 'photo_50,can_write_private_message,online'
                     });
             })
             .then(function (users) {
-                if (searchParameters.canSendMessageOnly) {
-                    users = users.filter(function (x) { return x.can_write_private_message; });
-                }
-                return users;
+                return users.filter(function (x) {
+                    return (!searchParameters.canSendMessageOnly || x.can_write_private_message)
+                        && (!searchParameters.onlineOnly || x.online);
+                });
             })
             .then(function (users) {
                 if (searchParameters.withoutConversationsWithMe) {
