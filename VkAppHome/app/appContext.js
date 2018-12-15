@@ -1,7 +1,7 @@
 ﻿function AppContext(eventBroker) {
     var context = {
         settings: {
-            messagesInterval: 20,
+            messagesInterval: 30,
             debugMode: false
         }
     };
