@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="panel initialization">
+    <label class="title">Авторизация</label>
+    <br />
+    <label>Перейдите на страницу <a href="https://oauth.vk.com/authorize?client_id=6757014&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,messages,wall&response_type=token&v=5.87" target="_blank">авторизации</a></label>
+    <br />
+    И введите результат из адресной строки сюда: <input id="loginResult" class="url-input" type="text" />
+    <button id="initAppButton">Готово</button>
+</div>
+
+<div class="app" style="display: none">
+    <div class="panel filter">
+        <label class="title">Фильтр пользователей</label>
+
+        <span class="settings-btn">Настройки</span>
+
+        <div class="row">
+            <label for="postId">Пставили лайк:</label>
+            <input type="text" id="postId" class="url-input" />
+        </div>
+
+        <div class="row">
+            <input type="checkbox" checked="checked" id="subscriptionEnabledCheckbox" />
+            <label for="subscriptionEnabledCheckbox">не подписаны в группу</label>
+            <input type="text" id="subscriptionInput" class="hidable url-input" value="https://vk.com/aillion" />
+        </div>
+
+        <div class="row">
+            <input type="checkbox" checked="checked" id="withoutConversationsWithMeCheckbox" />
+            <label for="withoutConversationsWithMeCheckbox">только те, у кого нет переписок со мной</label>
+        </div>
+
+        <div class="row">
+            <input type="checkbox" checked="checked" id="canSendMessageCheckbox" />
+            <label for="canSendMessageCheckbox">только те, кому я могу отправлять сообщения</label>
+        </div>
+
+        <div class="row">
+            <input type="checkbox" checked="checked" id="onlineOnlyCheckbox" />
+            <label for="onlineOnlyCheckbox">только те, кто сейчас 'online'</label>
+        </div>
+
+        <div class="row">
+            <input type="checkbox" checked="checked" id="enableCountryCheckbox" />
+            <label for="enableCountryCheckbox">Страна:</label>
+            <select id="selectedCountry" class="hidable">
+                <option value="1">Россия</option>
+                <option value="3" selected="selected">Беларусь</option>
+                <option value="2">Украина</option>
+                <option value="4">Казахстан</option>
+                <option value="8">Израиль</option>
+                <option value="9">США</option>
+            </select>
+            <div class="row subrow">
+                <input type="checkbox" id="enableCityCheckbox" checked="checked" />
+                <label for="enableCityCheckbox">Город:</label>
+                <select id="selectedCity" class="hidable"></select>
+            </div>
+        </div>
+
+        <div class="row">
+            <label for="canSendMessage">Показать первых</label>
+            <select id="hitsCount">
+                <option value="5">5</option>
+                <option value="10" selected="selected">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+            <label for="canSendMessage">пользователей</label>
+        </div>
+
+        <div class="row buttons">
+            <button id="searchButton">Искать!</button>
+        </div>
+    </div>
+
+    <div class="panel ">
+        <label class="title">Результаты</label>
+        <div class="row results">
+        </div>
+    </div>
+
+    <div class="panel message-panel" style="display: none">
+        <label class="title">Разослать сообщение</label>
+        <div class="row">
+            <div class="column">
+                <textarea id="message"></textarea>
+            </div>
+            <div class="column">
+                <div class="options-btn first-name">Имя</div>
+                <div class="options-btn last-name">Фамилия</div>
+                <div class="options-btn attach-photo">+ Фото</div>
+                <div class="options-btn attach-video">+ Видео</div>
+            </div>
+        </div>
+        <div class="row">
+            <label class="title">Вложения:</label>
+            <div class="attachments" id="attachments">
+
+            </div>
+        </div>
+        <div class="row buttons">
+            <button id="sendMessageToMeButton">Отправить себе</button>
+            <button id="sendMessageButton">Отправить <b>всем!</b></button>
+        </div>
+    </div>
+</div>
+
+<div id="addByUrlDialog" style="display:none">
+    <label>Вставьте URL:</label>
+    <input type="text" id="photoUrlInput" class="url-input" />
+</div>
+
+<div id="captchaDialog" style="display:none">
+    <img class="captcha-img"></img>
+    <input type="text" id="captchaInput" />
+</div>
+
+<script id="messagesProgressDialogTemplate" type="text/x-jquery-tmpl">
+    <div id="messagesProgressDialog">
+        <div id="progressbar"><div class="progress-label">Отправка сообщений...</div></div>
+        <div class="summary fail" style="display:none"></div>
+    </div>
+</script>
+
+<script id="settingsDialogTemplate" type="text/x-jquery-tmpl">
+    <div id="settingsDialog" class="panel">
+        <div class="row">
+            <label for="timeInterval">Интервал между отправкой сообщений: </label>
+            <input type="number" id="timeInterval" value="${messagesInterval}" style="width: 50px;" maxlength="2" min="1" max="99" />
+            <label> ceк.</label>
+        </div>
+        <div class="row">
+            <label for="debugMode">DEBUG MODE (эмуляция):</label>
+            <input type="checkbox" id="debugMode" {{if debugMode}} checked="checked" {{/if}} />
+        </div>
+    </div>
+</script>
+
+<script id="usersTemplate" type="text/x-jquery-tmpl">
+    <div class="user {{if !can_write_private_message}}disabled{{/if}}" user-id="${id}">
+        <div class="online-panel">
+            {{if online}}<div class="online" title="online"></div>{{/if}}
+        </div>
+        <div class="avatar">
+            <img src='${photo_50}' />
+        </div>
+        <div class="info-panel">
+            <a href="https://vk.com/id${id}" target="_blank">${first_name} ${last_name}</a>
+            <div class="additional-info">
+                {{if city}}${city.title}, {{/if}}
+                {{if country}}${country.title}{{/if}}
+            </div>
+        </div>
+        <div class="status-panel">
+            {{if !can_write_private_message}}<div class="disabled"></div>{{/if}}
+        </div>
+    </div>
+</script>
+
+<script id="attachmentTemplate" type="text/x-jquery-tmpl">
+    <div class="attachment" attachment-id="${id}">
+        <div>${title} - <a href="${url}" target="_blank">${name}</a></div>
+        <div class="remove-btn">x</div>
+    </div>
+</script>
+
+@section scripts {
+    <script src="https://vk.com/js/api/openapi.js?159" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var app = new VkApp();
+
+            $("#initAppButton").click(function () {
+                var authResponseUrl = $("#loginResult").val();
+                app.init(authResponseUrl);
+            });
+        });
+    </script>
+}
+
