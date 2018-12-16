@@ -1,4 +1,4 @@
-﻿function FiltersController(urlHelper, searchService, eventBroker) {
+﻿function FiltersController(urlHelper, searchService, regionsProvider, eventBroker) {
     var $panel, $searchButton;
 
     function getPostParams() {
@@ -17,10 +17,14 @@
         $panel.find(selector).addClass("invalid");
     }
 
+    function getValue(checkbox) {
+        return parseInt($panel.find(checkbox).val());
+    }
+
     function buildSearchParameters() {
         var parameters = {
             postInfo: getPostParams(),
-            hits: parseInt($panel.find("#hitsCount").val())
+            hits: getValue("#hitsCount")
         };
 
         if (isChecked("#withoutConversationsWithMeCheckbox")) {
@@ -39,6 +43,13 @@
             parameters.onlineOnly = true;
         }
 
+        if (isChecked("#enableCountryCheckbox")) {
+            parameters.country = getValue("#selectedCountry");
+            if (isChecked("#enableCityCheckbox")) {
+                parameters.city = getValue("#selectedCity");
+            }
+        }
+
         return parameters;
     }
 
@@ -48,6 +59,25 @@
 
     function enableSearchButton() {
         $searchButton.removeAttr("disabled");
+    }
+
+    function initRegions() {
+        function refreshCities() {
+            var countryId = $panel.find("#selectedCountry").val();
+            regionsProvider.getCities(countryId).then(function (cities) {
+                var optionsHtml = cities.items.map(function (city) {
+                    return "<option value='" + city.id + "'" + (city.important ? " selected='selected'" : "") + ">" + city.title + "</option>";
+                }).join("");
+                $panel.find("#selectedCity").html(optionsHtml);
+            });
+        }
+
+        refreshCities();
+
+        $panel.find("#selectedCountry").on("change", function () {
+            refreshCities();
+        });
+
     }
 
 
@@ -89,8 +119,12 @@
         initRowDisabling("withoutConversationsWithMeCheckbox");
         initRowDisabling("canSendMessageCheckbox");
         initRowDisabling("onlineOnlyCheckbox");
+        initRowDisabling("enableCountryCheckbox");
+        initRowDisabling("enableCityCheckbox");
 
-        $panel.find("input").on("change", function() {
+        initRegions();
+
+        $panel.find("input").on("change", function () {
             $(this).removeClass("invalid");
         });
 

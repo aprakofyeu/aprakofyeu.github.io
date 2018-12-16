@@ -8,7 +8,8 @@ function VkApp() {
     var settingsController = new SettingsController(context);
     var callService = new CallService(context, captchaService);
     var searchService = new SearchService(callService, eventBroker);
-    var filtersController = new FiltersController(urlHelper, searchService, eventBroker);
+    var regionsProvider = new RegionsProvider(callService, eventBroker);
+    var filtersController = new FiltersController(urlHelper, searchService, regionsProvider, eventBroker);
     var resultsController = new ResultsController(eventBroker);
     var formatter = new MessagesFormatter();
     var progressBar = new MessageProgressBar(context);
@@ -50,7 +51,7 @@ function VkApp() {
 function AppContext(eventBroker) {
     var context = {
         settings: {
-            messagesInterval: 20,
+            messagesInterval: 30,
             debugMode: false
         }
     };
@@ -238,7 +239,7 @@ EventBroker.prototype = {
         this.eventMap[eventName].Unsubscribe(handler, context);
     }
 };
-function FiltersController(urlHelper, searchService, eventBroker) {
+function FiltersController(urlHelper, searchService, regionsProvider, eventBroker) {
     var $panel, $searchButton;
 
     function getPostParams() {
@@ -257,10 +258,14 @@ function FiltersController(urlHelper, searchService, eventBroker) {
         $panel.find(selector).addClass("invalid");
     }
 
+    function getValue(checkbox) {
+        return parseInt($panel.find(checkbox).val());
+    }
+
     function buildSearchParameters() {
         var parameters = {
             postInfo: getPostParams(),
-            hits: parseInt($panel.find("#hitsCount").val())
+            hits: getValue("#hitsCount")
         };
 
         if (isChecked("#withoutConversationsWithMeCheckbox")) {
@@ -279,6 +284,13 @@ function FiltersController(urlHelper, searchService, eventBroker) {
             parameters.onlineOnly = true;
         }
 
+        if (isChecked("#enableCountryCheckbox")) {
+            parameters.country = getValue("#selectedCountry");
+            if (isChecked("#enableCityCheckbox")) {
+                parameters.city = getValue("#selectedCity");
+            }
+        }
+
         return parameters;
     }
 
@@ -288,6 +300,25 @@ function FiltersController(urlHelper, searchService, eventBroker) {
 
     function enableSearchButton() {
         $searchButton.removeAttr("disabled");
+    }
+
+    function initRegions() {
+        function refreshCities() {
+            var countryId = $panel.find("#selectedCountry").val();
+            regionsProvider.getCities(countryId).then(function (cities) {
+                var optionsHtml = cities.items.map(function (city) {
+                    return "<option value='" + city.id + "'" + (city.important ? " selected='selected'" : "") + ">" + city.title + "</option>";
+                }).join("");
+                $panel.find("#selectedCity").html(optionsHtml);
+            });
+        }
+
+        refreshCities();
+
+        $panel.find("#selectedCountry").on("change", function () {
+            refreshCities();
+        });
+
     }
 
 
@@ -329,8 +360,12 @@ function FiltersController(urlHelper, searchService, eventBroker) {
         initRowDisabling("withoutConversationsWithMeCheckbox");
         initRowDisabling("canSendMessageCheckbox");
         initRowDisabling("onlineOnlyCheckbox");
+        initRowDisabling("enableCountryCheckbox");
+        initRowDisabling("enableCityCheckbox");
 
-        $panel.find("input").on("change", function() {
+        initRegions();
+
+        $panel.find("input").on("change", function () {
             $(this).removeClass("invalid");
         });
 
@@ -670,6 +705,33 @@ MessagesFormatter.prototype.insertAtCaret = function (txtarea, text) {
 
     txtarea.scrollTop = scrollPos;
 };
+function RegionsProvider(callService, eventBroker) {
+
+    cachedCities = {};
+
+    function loadCities(countryId) {
+        return callService.call("database.getCities",
+            {
+                country_id: countryId,
+                count: 1000
+            })
+            .then(function (cities) {
+                cachedCities[countryId] = cities;
+                return cities;
+            });
+    }
+
+    return {
+        getCities: function (countryId) {
+            if (cachedCities[cachedCities]) {
+                var deferred = new $.Deferred();
+                return deferred.resolve(cachedCities[cachedCities]);
+            }
+
+            return loadCities(countryId);
+        }
+    };
+}
 function ResultsController(eventBroker) {
     var $panel = $(".results");
 
@@ -717,7 +779,7 @@ function SearchService(callService, eventBroker) {
         var deferred = new $.Deferred();
 
         if (!delay) {
-            delay = 2000;
+            delay = 1000;
         }
 
         setTimeout(function () {
@@ -748,7 +810,7 @@ function SearchService(callService, eventBroker) {
     }
 
     function joinUserIds(users) {
-        return users.map(function (x) { return x.id }).join(",");
+        return users.map(function (x) { return x.id; }).join(",");
     }
 
     function searchInner(searchParameters, hits, offset) {
@@ -768,13 +830,15 @@ function SearchService(callService, eventBroker) {
                 return callService.call("users.get",
                     {
                         user_ids: likes.items.join(','),
-                        fields: 'photo_50,can_write_private_message,online'
+                        fields: 'photo_50,can_write_private_message,online,city,country'
                     });
             })
             .then(function (users) {
                 return users.filter(function (x) {
                     return (!searchParameters.canSendMessageOnly || x.can_write_private_message)
-                        && (!searchParameters.onlineOnly || x.online);
+                        && (!searchParameters.onlineOnly || x.online)
+                        && (!searchParameters.country || (x.country && x.country.id === searchParameters.country))
+                        && (!searchParameters.city || (x.city && x.city.id === searchParameters.city));
                 });
             })
             .then(function (users) {

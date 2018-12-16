@@ -54,15 +54,16 @@ input.url-input {
         display: block;
     }
 
+        .panel .row .subrow {
+            margin-left: 50px;
+        }
+
         .panel .row.disabled {
             color: #A0AFBC;
         }
 
-        .panel .row .subscriptions-input {
-            display: inline-block;
-        }
-
-        .panel .row.disabled .subscriptions-input {
+        .panel .row.disabled .hidable,
+        .panel .row.disabled .subrow {
             display: none;
         }
 
@@ -94,6 +95,13 @@ input.url-input {
         font-weight: bold;
     }
 
+        .user .info-panel .additional-info {
+            font-weight: 100;
+            font-size: 12px;
+            line-height: 12px;
+            color: #777;
+        }
+
     .user .avatar {
         display: inline-block;
         width: 70px;
@@ -102,7 +110,7 @@ input.url-input {
     .user .info-panel,
     .user .status-panel {
         vertical-align: top;
-        padding-top: 12px;
+        padding-top: 10px;
         display: inline-block;
         width: 300px;
     }

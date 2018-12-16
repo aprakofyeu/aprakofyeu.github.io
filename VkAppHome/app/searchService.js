@@ -5,7 +5,7 @@
         var deferred = new $.Deferred();
 
         if (!delay) {
-            delay = 2000;
+            delay = 1000;
         }
 
         setTimeout(function () {
@@ -36,7 +36,7 @@
     }
 
     function joinUserIds(users) {
-        return users.map(function (x) { return x.id }).join(",");
+        return users.map(function (x) { return x.id; }).join(",");
     }
 
     function searchInner(searchParameters, hits, offset) {
@@ -56,13 +56,15 @@
                 return callService.call("users.get",
                     {
                         user_ids: likes.items.join(','),
-                        fields: 'photo_50,can_write_private_message,online'
+                        fields: 'photo_50,can_write_private_message,online,city,country'
                     });
             })
             .then(function (users) {
                 return users.filter(function (x) {
                     return (!searchParameters.canSendMessageOnly || x.can_write_private_message)
-                        && (!searchParameters.onlineOnly || x.online);
+                        && (!searchParameters.onlineOnly || x.online)
+                        && (!searchParameters.country || (x.country && x.country.id === searchParameters.country))
+                        && (!searchParameters.city || (x.city && x.city.id === searchParameters.city));
                 });
             })
             .then(function (users) {

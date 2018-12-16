@@ -8,7 +8,8 @@
     var settingsController = new SettingsController(context);
     var callService = new CallService(context, captchaService);
     var searchService = new SearchService(callService, eventBroker);
-    var filtersController = new FiltersController(urlHelper, searchService, eventBroker);
+    var regionsProvider = new RegionsProvider(callService, eventBroker);
+    var filtersController = new FiltersController(urlHelper, searchService, regionsProvider, eventBroker);
     var resultsController = new ResultsController(eventBroker);
     var formatter = new MessagesFormatter();
     var progressBar = new MessageProgressBar(context);
