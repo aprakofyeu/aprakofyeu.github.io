@@ -126,8 +126,6 @@
         initRowDisabling("enableCountryCheckbox");
         initRowDisabling("enableCityCheckbox");
 
-        initRegions();
-
         $panel.find("input").on("change", function () {
             $(this).removeClass("invalid");
         });
@@ -145,6 +143,7 @@
         eventBroker.subscribe(VkAppEvents.search, function () { disableSearchButton(); });
         eventBroker.subscribe(VkAppEvents.searchCompleted, function () { enableSearchButton(); });
         eventBroker.subscribe(VkAppEvents.searchFailed, function () { enableSearchButton(); });
+        eventBroker.subscribe(VkAppEvents.authenticationCompleted, function () { initRegions(); });
     }
 
     initView();
