@@ -1,12 +1,20 @@
 ﻿function FiltersController(urlHelper, searchService, regionsProvider, eventBroker) {
     var $panel, $searchButton;
 
+    function getValue(checkbox) {
+        return $panel.find(checkbox).val();
+    }
+
+    function getIntValue(checkbox) {
+        return parseInt(getValue(checkbox));
+    }
+
     function getPostParams() {
-        return urlHelper.parseWallUrl($panel.find("#postId").val());
+        return urlHelper.parseWallUrl(getValue("#postId"));
     }
 
     function getSubscribedGroupId() {
-        return urlHelper.getPublicId($panel.find("#subscriptionInput").val());
+        return urlHelper.getPublicId(getValue("#subscriptionInput"));
     }
 
     function isChecked(checkboxSelector) {
@@ -17,14 +25,10 @@
         $panel.find(selector).addClass("invalid");
     }
 
-    function getValue(checkbox) {
-        return parseInt($panel.find(checkbox).val());
-    }
-
     function buildSearchParameters() {
         var parameters = {
             postInfo: getPostParams(),
-            hits: getValue("#hitsCount")
+            hits: getIntValue("#hitsCount")
         };
 
         if (isChecked("#withoutConversationsWithMeCheckbox")) {
@@ -44,9 +48,9 @@
         }
 
         if (isChecked("#enableCountryCheckbox")) {
-            parameters.country = getValue("#selectedCountry");
+            parameters.country = getIntValue("#selectedCountry");
             if (isChecked("#enableCityCheckbox")) {
-                parameters.city = getValue("#selectedCity");
+                parameters.city = getIntValue("#selectedCity");
             }
         }
 
@@ -63,7 +67,7 @@
 
     function initRegions() {
         function refreshCities() {
-            var countryId = $panel.find("#selectedCountry").val();
+            var countryId = getIntValue("#selectedCountry");
             regionsProvider.getCities(countryId).then(function (cities) {
                 var optionsHtml = cities.items.map(function (city) {
                     return "<option value='" + city.id + "'" + (city.important ? " selected='selected'" : "") + ">" + city.title + "</option>";
