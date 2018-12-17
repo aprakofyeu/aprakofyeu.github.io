@@ -1,0 +1,14 @@
+﻿@model  VkApp.Web.Models.ApplicationsView
+@{
+    ViewBag.Title = "Applications";
+}
+
+<h2>Applications</h2>
+
+@foreach (var application in Model.Applications)
+{
+    <div>
+        Id='<b>@application.VkAppId</b>'
+        Name='<b>@application.Name</b>'
+    </div>
+}

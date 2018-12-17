@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Microsoft.Practices.ServiceLocation;
+using NHibernate;
+using VkApp.Web.App_Start;
 
 namespace VkApp.Web
 {
@@ -22,6 +23,18 @@ namespace VkApp.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            var transaction = ServiceLocator.Current.GetInstance<ISession>().BeginTransaction();
+            HttpContext.Current.Items["NHibernateTransaction"] = transaction;
+        }
+
+        protected void Application_EndRequest(object sender, EventArgs e)
+        {
+            var transaction = (ITransaction) HttpContext.Current.Items["NHibernateTransaction"];
+            transaction?.Commit();
         }
     }
 }

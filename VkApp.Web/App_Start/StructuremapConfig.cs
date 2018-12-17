@@ -1,5 +1,6 @@
-﻿using CommonServiceLocator;
+﻿using System.Diagnostics;
 using CommonServiceLocator.StructureMapAdapter.Unofficial;
+using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 using VkApp.Web.DependencyResolution;
 using Resolver = System.Web.Mvc.DependencyResolver;
@@ -17,7 +18,12 @@ namespace VkApp.Web.App_Start
             RootContainer = new Container(new VkAppRegistry());
             StructureMapResolver = new StructureMapDependencyResolver(RootContainer);
             Resolver.SetResolver(StructureMapResolver);
-            ServiceLocator.SetLocatorProvider(() => new StructureMapServiceLocator(RootContainer));
+            ServiceLocator.SetLocatorProvider(CreateServiceLocator);
+        }
+
+        private static IServiceLocator CreateServiceLocator()
+        {
+            return new StructureMapServiceLocator(RootContainer);
         }
 
         public static void ShutDown()

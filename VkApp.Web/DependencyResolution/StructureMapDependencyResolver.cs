@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using CommonServiceLocator;
+using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 
 namespace VkApp.Web.DependencyResolution

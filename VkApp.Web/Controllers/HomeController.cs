@@ -9,9 +9,9 @@ namespace VkApp.Web.Controllers
 {
     public class HomeController : Controller
     {
+
         public ActionResult Index()
         {
-            ViewBag.TestData = new DataAccessor().GetData();
             return View();
         }
     }
