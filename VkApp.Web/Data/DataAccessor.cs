@@ -4,11 +4,17 @@ using System.Linq;
 using System.Configuration;
 using NHibernate;
 using FluentNHibernate.Cfg;
+using NHibernate.Linq;
 using VkApp.Web.Data.Model;
 
 namespace VkApp.Web.Data
 {
-    public class DataAccessor
+    interface IDataAccessor
+    {
+        string GetData();
+    }
+
+    public class DataAccessor: IDataAccessor
     {
         private static ISessionFactory CreateSessionFactory()
         {
@@ -27,9 +33,9 @@ namespace VkApp.Web.Data
             {
                 using (var transaction = session.BeginTransaction())
                 {
-                    var groups = session.Get<Groups>(1);
+                    var groups = session.Query<Groups>().ToList();
 
-                    return groups.Name;
+                    return groups.FirstOrDefault()?.Name;
                 }
             }
         }
