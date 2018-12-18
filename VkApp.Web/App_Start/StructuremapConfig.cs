@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using CommonServiceLocator.StructureMapAdapter.Unofficial;
+﻿using CommonServiceLocator.StructureMapAdapter.Unofficial;
 using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 using VkApp.Web.DependencyResolution;
@@ -31,5 +30,6 @@ namespace VkApp.Web.App_Start
             StructureMapResolver.Dispose();
             RootContainer.Dispose();
         }
+
     }
 }

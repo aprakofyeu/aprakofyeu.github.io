@@ -64,6 +64,9 @@
     <Reference Include="StructureMap, Version=4.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\StructureMap.4.7.0\lib\net45\StructureMap.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.web.4.0.0.315\lib\net40\StructureMap.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -160,6 +163,7 @@
     <Compile Include="Data\ApplicationsProvider.cs" />
     <Compile Include="Data\Model\Application.cs" />
     <Compile Include="Data\Model\Groups.cs" />
+    <Compile Include="Data\NHibernateContext.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="DependencyResolution\VkAppRegistry.cs" />
     <Compile Include="Global.asax.cs">

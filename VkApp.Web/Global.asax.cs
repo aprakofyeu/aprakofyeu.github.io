@@ -3,13 +3,13 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Microsoft.Practices.ServiceLocation;
-using NHibernate;
+using StructureMap.Web.Pipeline;
 using VkApp.Web.App_Start;
+using VkApp.Web.Data;
 
 namespace VkApp.Web
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -27,14 +27,24 @@ namespace VkApp.Web
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            var transaction = ServiceLocator.Current.GetInstance<ISession>().BeginTransaction();
-            HttpContext.Current.Items["NHibernateTransaction"] = transaction;
+            StructuremapConfig.StructureMapResolver.CreateNestedContainer();
         }
 
-        protected void Application_EndRequest(object sender, EventArgs e)
+        protected void Application_EndRequest()
         {
-            var transaction = (ITransaction) HttpContext.Current.Items["NHibernateTransaction"];
-            transaction?.Commit();
+            NHibernateContext.EndTransactions();
+            HttpContextLifecycle.DisposeAndClearAll();
+            StructuremapConfig.StructureMapResolver.DisposeNestedContainer();
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            NHibernateContext.EndTransactions();
+        }
+
+        protected void Application_End()
+        {
+            StructuremapConfig.ShutDown();
         }
     }
 }
