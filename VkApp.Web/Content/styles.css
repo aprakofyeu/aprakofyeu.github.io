@@ -1,5 +1,6 @@
 ﻿body,
-body .ui-widget-content {
+body .ui-widget-content,
+body .body-content {
     background-color: #EDEEF0;
     color: #2A5885;
     font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
@@ -13,12 +14,17 @@ body .ui-widget-content {
         background-color: #FFF;
     }
 
+footer p{
+    margin: 30px;
+}
+
 a, a:link, a:visited, a:hover, a:active {
     text-decoration: none;
     color: #2A5885;
     font-weight: 700;
 }
 
+select.invalid,
 input.invalid {
     background-color: antiquewhite;
     border: 1px solid red;
@@ -28,18 +34,33 @@ input.url-input {
     width: 500px;
 }
 
+.hidden {
+    display: none;
+}
+
 .panel {
     display: block;
     border: 1px solid #E3E4E8;
     background-color: #FFF;
-    margin: 10px;
+    margin: 10px 20px;
     padding: 20px;
 }
+
+    .panel.app {
+        background-color: #EDEEF0;
+        border: 0 none;
+        margin: 0;
+        padding: 0;
+    }
 
     .panel .settings-btn {
         display: inline-block;
         float: right;
         cursor: pointer;
+    }
+
+    .panel .groups-select {
+        min-width: 200px;
     }
 
     .panel .title {
@@ -49,6 +70,7 @@ input.url-input {
         color: #777;
     }
 
+    .row,
     .panel .row {
         margin: 10px 0;
         display: block;
@@ -62,10 +84,10 @@ input.url-input {
             color: #A0AFBC;
         }
 
-        .panel .row.disabled .hidable,
-        .panel .row.disabled .subrow {
-            display: none;
-        }
+            .panel .row.disabled .hidable,
+            .panel .row.disabled .subrow {
+                display: none;
+            }
 
         .panel .row.buttons {
             border-top: solid 1px #EEE;
@@ -125,25 +147,29 @@ input.url-input {
             height: 15px;
             width: 15px;
             margin-top: 18px;
-            background: url(./images/icons.png) -143px -15px;
+            background: url(./images/icons.v1.png) -143px -15px;
         }
 
     .user .status-panel div {
         display: inline-block;
-        width: 25px;
+        width: 30px;
         height: 25px;
     }
 
     .user .status-panel .disabled {
-        background: url(./images/icons.png) -40px -8px;
+        background: url(./images/icons.v1.png) -40px -8px;
     }
 
     .user .status-panel .ok {
-        background: url(./images/icons.png) -72px -10px;
+        background: url(./images/icons.v1.png) -72px -10px;
     }
 
     .user .status-panel .fail {
-        background: url(./images/icons.png) -10px -10px;
+        background: url(./images/icons.v1.png) -10px -10px;
+    }
+
+    .user .status-panel .warning {
+        background: url(./images/icons.v1.png) -165px -10px;
     }
 
 .message-panel textarea {
@@ -225,12 +251,24 @@ input.url-input {
 }
 
 .summary.fail {
+    display: none;
     border: 1px solid red;
-    background-color: antiquewhite;
+    color: red;
+    background-color: #faebd7;
     padding: 10px;
+    margin: 10px 0;
 }
 
-.results .loader {
+.summary.warning {
+    display: none;
+    border: 1px solid #ffa500;
+    color: #DB7F00;
+    background-color: #faebd7;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.result-users .loader {
     display: block;
     height: 100px;
     background: url(./images/loading.gif) 20px 0 no-repeat;

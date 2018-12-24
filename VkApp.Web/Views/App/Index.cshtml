@@ -1,0 +1,46 @@
+﻿@model  VkApp.Web.Models.AppView
+@{
+    ViewBag.Title = "VkApp";
+}
+
+<div id="vkApp">
+    @Html.Partial("~/app/view/authenticationPanel/authenticationPanel.cshtml")
+    @Html.Partial("~/app/view/initializationPanel/initializationPanel.cshtml")
+    @Html.Partial("~/app/view/initializationProgressPanel/initializationProgressPanel.cshtml")
+    @Html.Partial("~/app/view/appPanel/appPanel.cshtml")
+</div>
+
+<div id="addByUrlDialog" style="display:none">
+    <label>Вставьте URL:</label>
+    <input type="text" id="photoUrlInput" class="url-input" />
+</div>
+
+<div id="captchaDialog" style="display:none">
+    <img class="captcha-img"></img>
+    <input type="text" id="captchaInput" />
+</div>
+
+<script id="messagesProgressDialogTemplate" type="text/x-jquery-tmpl">
+    <div id="messagesProgressDialog">
+        <div id="progressbar"><div class="progress-label">Отправка сообщений...</div></div>
+        <div class="summary fail" style="display:none"></div>
+    </div>
+</script>
+
+<script id="attachmentTemplate" type="text/x-jquery-tmpl">
+    <div class="attachment" attachment-id="${id}">
+        <div>${title} - <a href="${url}" target="_blank">${name}</a></div>
+        <div class="remove-btn">x</div>
+    </div>
+</script>
+
+@section scripts {
+    <script src="https://vk.com/js/api/openapi.js?159" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            new VkApp(@Model.ApplicationId);
+        });
+    </script>
+}
+

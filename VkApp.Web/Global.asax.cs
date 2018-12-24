@@ -32,14 +32,19 @@ namespace VkApp.Web
 
         protected void Application_EndRequest()
         {
-            NHibernateContext.EndTransactions();
-            HttpContextLifecycle.DisposeAndClearAll();
-            StructuremapConfig.StructureMapResolver.DisposeNestedContainer();
+            ShutDown();
         }
 
         protected void Application_Error(object sender, EventArgs e)
         {
+            ShutDown();
+        }
+
+        private static void ShutDown()
+        {
             NHibernateContext.EndTransactions();
+            HttpContextLifecycle.DisposeAndClearAll();
+            StructuremapConfig.StructureMapResolver.DisposeNestedContainer();
         }
 
         protected void Application_End()

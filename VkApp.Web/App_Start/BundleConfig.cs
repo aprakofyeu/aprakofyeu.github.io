@@ -9,23 +9,13 @@ namespace VkApp.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery/jquery-{version}.js",
-                        "~/Scripts/jquery/jquery-ui.min.js",
-                        "~/Scripts/jquery/jquery.tmpl.js"));
+                "~/jquery/jquery-{version}.js",
+                "~/jquery/jquery-ui.min.js",
+                "~/jquery/jquery.tmpl.js",
+                "~/jquery/jquery.validate*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery/jquery.validate*"));
-
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/jquery/modernizr-*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/jquery/bootstrap.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                      "~/Scripts/app/*.js"));
+            bundles.Add(new ScriptBundle("~/bundles/app").IncludeDirectory(
+                      "~/app/", "*.js", true));
 
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
                       "~/Content/bootstrap.css"));

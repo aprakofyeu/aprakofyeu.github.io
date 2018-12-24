@@ -12,11 +12,15 @@ namespace VkApp.Web.DependencyResolution
             RegisterDb();
 
             For<IApplicationsProvider>().Use<ApplicationsProvider>();
+            For<IMessagesProvider>().Use<MessagesProvider>();
+            For<IGroupProvider>().Use<GroupProvider>();
+            For<IUserProvider>().Use<UserProvider>();
+            For<IInitializationService>().Use<InitializationService>();
         }
 
         private void RegisterDb()
         {
-            For<ISession>().HybridHttpOrThreadLocalScoped().Use(NHibernateContext.BeginSessionAndTransaction());
+            For<ISession>().HybridHttpOrThreadLocalScoped().Use(() => NHibernateContext.BeginSessionAndTransaction());
         }
     }
 }

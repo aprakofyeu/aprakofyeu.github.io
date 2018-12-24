@@ -16,7 +16,7 @@ namespace VkApp.Web.Data.Model
     {
         public ApplicationMap()
         {
-            Id(x => x.VkAppId);
+            Id(x => x.VkAppId).GeneratedBy.Assigned();
             Map(x => x.Name);
         }
     }
