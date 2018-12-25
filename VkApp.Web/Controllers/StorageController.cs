@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using VkApp.Data.DataProviders;
+using VkApp.Data.Model;
 using VkApp.Web.App_Start;
-using VkApp.Web.Data;
-using VkApp.Web.Data.Model;
 using VkApp.Web.Models;
 
 namespace VkApp.Web.Controllers

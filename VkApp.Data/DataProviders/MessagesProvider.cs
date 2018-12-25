@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
-using VkApp.Web.Data.Model;
+using VkApp.Data.Model;
 
-namespace VkApp.Web.Data
+namespace VkApp.Data.DataProviders
 {
     public interface IMessagesProvider
     {
@@ -16,7 +16,7 @@ namespace VkApp.Web.Data
         bool HaveUserMessagesByGroup(int targetGroupId, int targetUserId);
     }
 
-    public class MessagesProvider : IMessagesProvider
+    internal class MessagesProvider : IMessagesProvider
     {
         private readonly ISession _session;
 

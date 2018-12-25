@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using VkApp.Web.Data.Model;
+using VkApp.Data.Model;
 
 namespace VkApp.Web.Models
 {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
 using NHibernate.Linq;
-using VkApp.Web.Data.Model;
+using VkApp.Data.Model;
 
-namespace VkApp.Web.Data
+namespace VkApp.Data.DataProviders
 {
     public interface IApplicationsProvider
     {
@@ -16,7 +16,7 @@ namespace VkApp.Web.Data
         void IncreaseApplicationCount(int applicationId);
     }
 
-    class ApplicationsProvider : IApplicationsProvider
+    internal class ApplicationsProvider : IApplicationsProvider
     {
         private readonly ISession _session;
         private readonly Random _random;

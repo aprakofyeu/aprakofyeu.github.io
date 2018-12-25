@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Text;
 using System.Web.Mvc;
-using FluentNHibernate.Conventions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-
-namespace VkApp.Web.App_Start
+namespace VkApp.Web
 {
     public class JsonCamel : JsonResult
     {

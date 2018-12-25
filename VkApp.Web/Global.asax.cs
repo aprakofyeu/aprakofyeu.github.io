@@ -5,7 +5,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using StructureMap.Web.Pipeline;
 using VkApp.Web.App_Start;
-using VkApp.Web.Data;
+using NHibernateContext = VkApp.Web.DependencyResolution.NHibernateContext;
 
 namespace VkApp.Web
 {

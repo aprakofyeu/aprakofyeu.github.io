@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using VkApp.Web.Data.Model;
+using VkApp.Data.DataProviders;
+using VkApp.Data.Model;
 using VkApp.Web.Models;
 
-namespace VkApp.Web.Data
+namespace VkApp.Web
 {
     public interface IInitializationService
     {
@@ -19,7 +20,7 @@ namespace VkApp.Web.Data
         public int PreferredGroup { get; set; }
     }
 
-    public class InitializationService : IInitializationService
+    internal class InitializationService : IInitializationService
     {
         private readonly IMessagesProvider _messagesProvider;
         private readonly IUserProvider _userProvider;

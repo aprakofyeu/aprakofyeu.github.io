@@ -1,12 +1,12 @@
 ﻿using System.Web.Mvc;
-using VkApp.Web.Data;
+using VkApp.Data.DataProviders;
 using VkApp.Web.Models;
 
 namespace VkApp.Web.Controllers
 {
     public class AppController : Controller
     {
-        private IApplicationsProvider _applicationsProvider;
+        private readonly IApplicationsProvider _applicationsProvider;
 
         public AppController(IApplicationsProvider applicationsProvider)
         {

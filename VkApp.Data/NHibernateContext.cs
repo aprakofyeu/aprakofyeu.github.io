@@ -3,9 +3,9 @@ using System.Configuration;
 using System.Web;
 using FluentNHibernate.Cfg;
 using NHibernate;
-using VkApp.Web.DependencyResolution;
+using VkApp.Data;
 
-namespace VkApp.Web.Data
+namespace VkApp.Web.DependencyResolution
 {
     public static class NHibernateContext
     {
@@ -21,7 +21,7 @@ namespace VkApp.Web.Data
 
             var sessionFactory = Fluently.Configure()
                 .Database(FluentNHibernate.Cfg.Db.MsSqlConfiguration.MsSql2008.ConnectionString(connectionString))
-                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<VkAppRegistry>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<VkAppDataRegistry>())
                 .BuildSessionFactory();
 
             var session = sessionFactory.OpenSession();

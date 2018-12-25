@@ -1,6 +1,6 @@
 ﻿using FluentNHibernate.Mapping;
 
-namespace VkApp.Web.Data.Model
+namespace VkApp.Data.Model
 {
     public class Group
     {

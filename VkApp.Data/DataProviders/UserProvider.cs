@@ -1,14 +1,14 @@
 ﻿using NHibernate;
-using VkApp.Web.Data.Model;
+using VkApp.Data.Model;
 
-namespace VkApp.Web.Data
+namespace VkApp.Data.DataProviders
 {
     public interface IUserProvider
     {
         void AddUserSafe(User user);
     }
 
-    public class UserProvider: IUserProvider
+    internal class UserProvider: IUserProvider
     {
         private readonly ISession _session;
 

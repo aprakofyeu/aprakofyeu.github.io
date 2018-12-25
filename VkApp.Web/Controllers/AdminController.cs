@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using VkApp.Web.Data;
+using VkApp.Data.DataProviders;
 using VkApp.Web.Models;
 
 namespace VkApp.Web.Controllers

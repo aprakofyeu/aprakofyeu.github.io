@@ -1,7 +1,6 @@
-﻿using NHibernate;
-using StructureMap;
-using StructureMap.Web;
-using VkApp.Web.Data;
+﻿using StructureMap;
+using VkApp.Data;
+using VkApp.Data.DataProviders;
 
 namespace VkApp.Web.DependencyResolution
 {
@@ -9,18 +8,9 @@ namespace VkApp.Web.DependencyResolution
     {
         public VkAppRegistry()
         {
-            RegisterDb();
+            IncludeRegistry(new VkAppDataRegistry());
 
-            For<IApplicationsProvider>().Use<ApplicationsProvider>();
-            For<IMessagesProvider>().Use<MessagesProvider>();
-            For<IGroupProvider>().Use<GroupProvider>();
-            For<IUserProvider>().Use<UserProvider>();
             For<IInitializationService>().Use<InitializationService>();
-        }
-
-        private void RegisterDb()
-        {
-            For<ISession>().HybridHttpOrThreadLocalScoped().Use(() => NHibernateContext.BeginSessionAndTransaction());
         }
     }
 }

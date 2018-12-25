@@ -2,9 +2,9 @@
 using System.Linq;
 using NHibernate;
 using NHibernate.Linq;
-using VkApp.Web.Data.Model;
+using VkApp.Data.Model;
 
-namespace VkApp.Web.Data
+namespace VkApp.Data.DataProviders
 {
     public interface IGroupProvider
     {
@@ -12,7 +12,8 @@ namespace VkApp.Web.Data
         IEnumerable<Group> GetAll();
         int GetPreferredGroup(int userId);
     }
-    public class GroupProvider: IGroupProvider
+
+    internal class GroupProvider: IGroupProvider
     {
         private readonly ISession _session;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentNHibernate.Mapping;
 
-namespace VkApp.Web.Data.Model
+namespace VkApp.Data.Model
 {
     public class Message
     {

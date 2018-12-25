@@ -48,18 +48,12 @@
     <Reference Include="CommonServiceLocator.StructureMapAdapter.Unofficial, Version=3.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.StructureMapAdapter.Unofficial.3.0.5.0\lib\Net40\CommonServiceLocator.StructureMapAdapter.Unofficial.dll</HintPath>
     </Reference>
-    <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
-    </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=4.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\StructureMap.4.7.0\lib\net45\StructureMap.dll</HintPath>
@@ -123,15 +117,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.5.0.0\lib\net45\Unity.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Container, Version=5.0.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.5.0.0\lib\net45\Unity.Container.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ServiceLocation, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17ca40be30b3abc0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.ServiceLocation.5.0.0\lib\net45\Unity.ServiceLocation.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -161,21 +146,12 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\StorageController.cs" />
-    <Compile Include="Data\ApplicationsProvider.cs" />
-    <Compile Include="Data\GroupProvider.cs" />
-    <Compile Include="Data\MessagesProvider.cs" />
-    <Compile Include="Data\Model\Application.cs" />
-    <Compile Include="Data\Model\Group.cs" />
-    <Compile Include="Data\Model\Message.cs" />
-    <Compile Include="Data\Model\User.cs" />
-    <Compile Include="Data\NHibernateContext.cs" />
-    <Compile Include="Data\InitializationService.cs" />
-    <Compile Include="Data\UserProvider.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="DependencyResolution\VkAppRegistry.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InitializationService.cs" />
     <Compile Include="Models\ApplicationsView.cs" />
     <Compile Include="Models\AppView.cs" />
     <Compile Include="Models\MessagesView.cs" />
@@ -191,8 +167,6 @@
     <Content Include="Content\images\icons.v1.png" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\styles.css" />
-    <Content Include="Data\Database\dabase.sql" />
-    <Content Include="Data\Database\statistics.sql" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="app\app.js" />
@@ -258,7 +232,12 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\VkApp.Data\VkApp.Data.csproj">
+      <Project>{16997e20-9268-458a-b80e-5dd7b149280e}</Project>
+      <Name>VkApp.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="app\view\initializationPanel\initializationPanel.cshtml" />
     <Content Include="app\view\appPanel\appPanel.cshtml" />
