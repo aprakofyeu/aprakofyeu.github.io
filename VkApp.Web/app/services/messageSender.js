@@ -38,47 +38,64 @@
                 deferred.reject(error);
             }
 
-            storageService.haveMessagesByGroup(context.targetGroup.id, user.id)
-                .then(function (haveMessages) {
-                    if (!haveMessages) {
-                        return callService.call("messages.send",
-                            {
-                                user_id: user.id,
-                                message: formattedMessage,
-                                attachment: attachments
-                            })
-                            .then(function (messageId) {
-                                context.addConversationUserId(user.id);
-                                return storageService.saveMessage({
-                                    senderUserId: context.user.id,
-                                    targetGroupId: context.targetGroup.id,
-                                    targetUserId: user.id,
-                                    applicationId: context.applicationId
-                                }).then(function (result) {
+            if (user.id === context.user.id) {
+                callService.call("messages.send",
+                    {
+                        user_id: user.id,
+                        message: formattedMessage,
+                        attachment: attachments
+                    })
+                    .then(function () {
+                        markAsSentAndSendNext();
+                    },
+                        function (error) {
+                            reject(error);
+                        });
+            } else {
+                storageService.haveMessagesByGroup(context.targetGroup.id, user.id)
+                    .then(function (haveMessages) {
+                        if (!haveMessages) {
+                            return callService.call("messages.send",
+                                {
+                                    user_id: user.id,
+                                    message: formattedMessage,
+                                    attachment: attachments
+                                })
+                                .then(function (messageId) {
+                                    context.addConversationUserId(user.id);
+                                    return storageService.saveMessage({
+                                        senderUserId: context.user.id,
+                                        targetGroupId: context.targetGroup.id,
+                                        targetUserId: user.id,
+                                        applicationId: context.applicationId
+                                    }).then(function (result) {
 
-                                    if (result.success) {
-                                        eventBroker.publish(VkAppEvents.sendMessageOk, user.id);
-                                        markAsSentAndSendNext();
-                                    } else {
+                                        if (result.success) {
+                                            eventBroker.publish(VkAppEvents.sendMessageOk, user.id);
+                                            markAsSentAndSendNext();
+                                        } else {
+                                            deleteMessage(messageId);
+                                            reject(result.error);
+                                        }
+                                    }, function (error) {
                                         deleteMessage(messageId);
-                                        reject(result.error);
-                                    }
+                                        reject(error);
+                                    });
                                 }, function (error) {
-                                    deleteMessage(messageId);
                                     reject(error);
                                 });
-                            }, function (error) {
-                                reject(error);
-                            });
-                    }
+                        }
 
-                    progressBar.warning("Некоторые сообщения не были отправлены.");
-                    eventBroker.publish(VkAppEvents.sendMessageWarning, user.id, "Сообщение не было отправлено, так как это уже сделал кто-то другой.");
-                    markAsSentAndSendNext();
+                        progressBar.warning("Некоторые сообщения не были отправлены.");
+                        eventBroker.publish(VkAppEvents.sendMessageWarning,
+                            user.id,
+                            "Сообщение не было отправлено, так как это уже сделал кто-то другой.");
+                        markAsSentAndSendNext();
 
-                }, function (error) {
-                    reject(error);
-                });
+                    }, function (error) {
+                        reject(error);
+                    });
+            }
 
             return deferred.promise();
         }

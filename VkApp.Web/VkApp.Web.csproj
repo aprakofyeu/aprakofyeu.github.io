@@ -191,7 +191,8 @@
     <Content Include="Content\images\icons.v1.png" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\styles.css" />
-    <Content Include="Data\dabase.sql" />
+    <Content Include="Data\Database\dabase.sql" />
+    <Content Include="Data\Database\statistics.sql" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="app\app.js" />

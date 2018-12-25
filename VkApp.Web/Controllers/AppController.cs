@@ -16,7 +16,12 @@ namespace VkApp.Web.Controllers
         // GET: Legacy
         public ActionResult Index()
         {
-            var model = new AppView{ ApplicationId = _applicationsProvider.GetNextApplicationId()};
+            var applicationId = _applicationsProvider.GetNextApplicationId();
+            var model = new AppView
+            {
+                ApplicationId = applicationId,
+                AuthenticationUrl = $"https://oauth.vk.com/authorize?client_id={applicationId}&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,messages,wall&response_type=token&v=5.87"
+            };
             return View(model);
         }
     }

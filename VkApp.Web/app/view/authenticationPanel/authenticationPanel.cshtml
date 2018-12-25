@@ -1,14 +1,15 @@
-﻿<div class="panel authentication" step="authentication">
+﻿@model  VkApp.Web.Models.AppView
+<div class="panel authentication" step="authentication">
     <label class="title">Авторизация</label>
 
     <div class="row">
-        <label>Перейдите на страницу <a href="https://oauth.vk.com/authorize?client_id=6757014&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,messages,wall&response_type=token&v=5.87" target="_blank">авторизации</a></label>
+        <label>Перейдите на страницу <a href="@Model.AuthenticationUrl" target="_blank">авторизации</a></label>
     </div>
 
     <div class="row">
         И введите результат из адресной строки сюда: <input id="authResultInput" class="url-input" type="text" />
     </div>
-    
+
     <div class="row">
         <button id="initAppButton">Готово</button>
     </div>

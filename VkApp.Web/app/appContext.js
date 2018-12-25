@@ -5,7 +5,7 @@
         settings: {
             messagesInterval: 30,
             debugMode: false,
-            initializationStartPeriod: new Date(2018, 11, 19)//15 december 2018
+            initializationStartPeriod: new Date(2018, 11, 6)//6 december 2018
         },
         searchResult: {},
         conversations: {
