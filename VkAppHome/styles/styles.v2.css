@@ -1,0 +1,275 @@
+﻿body,
+body .ui-widget-content,
+body .body-content {
+    background-color: #EDEEF0;
+    color: #2A5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+    font-weight: 400;
+    line-height: 27px;
+    font-size: 16px;
+    text-overflow: ellipsis;
+}
+
+    body .ui-widget-content {
+        background-color: #FFF;
+    }
+
+footer p{
+    margin: 30px;
+}
+
+a, a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: #2A5885;
+    font-weight: 700;
+}
+
+select.invalid,
+input.invalid {
+    background-color: antiquewhite;
+    border: 1px solid red;
+}
+
+input.url-input {
+    width: 500px;
+}
+
+.hidden {
+    display: none;
+}
+
+.panel {
+    display: block;
+    border: 1px solid #E3E4E8;
+    background-color: #FFF;
+    margin: 10px 20px;
+    padding: 20px;
+}
+
+    .panel.app {
+        background-color: #EDEEF0;
+        border: 0 none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .panel .settings-btn {
+        display: inline-block;
+        float: right;
+        cursor: pointer;
+    }
+
+    .panel .groups-select {
+        min-width: 200px;
+    }
+
+    .panel .title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: inline-block;
+        color: #777;
+    }
+
+    .row,
+    .panel .row {
+        margin: 10px 0;
+        display: block;
+    }
+
+        .panel .row .subrow {
+            margin-left: 50px;
+        }
+
+        .panel .row.disabled {
+            color: #A0AFBC;
+        }
+
+            .panel .row.disabled .hidable,
+            .panel .row.disabled .subrow {
+                display: none;
+            }
+
+        .panel .row.buttons {
+            border-top: solid 1px #EEE;
+            margin: 10px 0 0 0;
+            padding-top: 10px;
+        }
+
+        .panel .row .column {
+            display: inline-block;
+            vertical-align: top;
+            padding: 0 5px;
+        }
+
+.user {
+    padding: 5px;
+    vertical-align: center;
+    height: 50px;
+}
+
+    .user.disabled,
+    .user.disabled a {
+        background-color: #fcfcfc;
+        color: #A0AFBC;
+    }
+
+    .user .info-panel {
+        font-weight: bold;
+    }
+
+        .user .info-panel .additional-info {
+            font-weight: 100;
+            font-size: 12px;
+            line-height: 12px;
+            color: #777;
+        }
+
+    .user .avatar {
+        display: inline-block;
+        width: 70px;
+    }
+
+    .user .info-panel,
+    .user .status-panel {
+        vertical-align: top;
+        padding-top: 10px;
+        display: inline-block;
+        width: 300px;
+    }
+
+    .user .online-panel {
+        width: 20px;
+        height: 50px;
+        display: inline-block;
+    }
+
+        .user .online-panel .online {
+            height: 15px;
+            width: 15px;
+            margin-top: 18px;
+            background: url(./images/icons.v1.png) -143px -15px;
+        }
+
+    .user .status-panel div {
+        display: inline-block;
+        width: 30px;
+        height: 25px;
+    }
+
+    .user .status-panel .disabled {
+        background: url(./images/icons.v1.png) -40px -8px;
+    }
+
+    .user .status-panel .ok {
+        background: url(./images/icons.v1.png) -72px -10px;
+    }
+
+    .user .status-panel .fail {
+        background: url(./images/icons.v1.png) -10px -10px;
+    }
+
+    .user .status-panel .warning {
+        background: url(./images/icons.v1.png) -165px -10px;
+    }
+
+.message-panel textarea {
+    display: block;
+    height: 200px;
+    width: 500px;
+}
+
+.message-panel .options-btn {
+    display: block;
+    width: 90px;
+    border: #2a5885 solid 1px;
+    background-color: #F0F8FF;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.attachments .attachment {
+    display: block;
+}
+
+    .attachments .attachment div {
+        display: inline-block;
+    }
+
+    .attachments .attachment .remove-btn {
+        height: 12px;
+        width: 12px;
+        color: red !important;
+        cursor: pointer;
+    }
+
+.ui-progressbar {
+    margin: 20px 0;
+    border: #2a5885 solid 1px !important;
+    position: relative;
+}
+
+    .ui-progressbar .ui-progressbar-value {
+        border: #2a5885 solid 1px;
+        background-color: #F0F8FF;
+        color: #2A5885;
+    }
+
+    .ui-progressbar .progress-label {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        line-height: 25px;
+        top: 4px;
+        font-weight: bold;
+        text-shadow: 1px 1px 0 #fff;
+        color: #2A5885;
+    }
+
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-tl,
+.ui-corner-right,
+.ui-corner-tr,
+.ui-corner-bottom,
+.ui-corner-left,
+.ui-corner-bl,
+.ui-corner-br {
+    border-radius: 0px;
+}
+
+.ui-dialog {
+    padding: 0;
+}
+
+.ui-widget-header,
+.ui-widget-header .ui-dialog-title {
+    border: 0px none;
+    color: #777;
+}
+
+.summary.fail {
+    display: none;
+    border: 1px solid red;
+    color: red;
+    background-color: #faebd7;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.summary.warning {
+    display: none;
+    border: 1px solid #ffa500;
+    color: #DB7F00;
+    background-color: #faebd7;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.result-users .loader {
+    display: block;
+    height: 100px;
+    background: url(./images/loading.gif) 20px 0 no-repeat;
+}
