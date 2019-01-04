@@ -9,15 +9,9 @@ namespace VkApp.Web
 {
     public interface IInitializationService
     {
-        UserInitializationInfo InitUser(UserInfo user);
+        UserSettings InitUser(InitUserRequest user);
         void InitGroup(GroupInfo group);
-        void InitMessagesLegacy(UserInfo user, GroupInfo group, IEnumerable<ConversationInfo> conversations);
-    }
-
-    public class UserInitializationInfo
-    {
-        public bool MessagesInitialized { get; set; }
-        public int PreferredGroup { get; set; }
+        void InitMessagesLegacy(int senderId, int targetGroupId, IEnumerable<ConversationInfo> conversations);
     }
 
     internal class InitializationService : IInitializationService
@@ -36,22 +30,31 @@ namespace VkApp.Web
             _groupProvider = groupProvider;
         }
 
-        public UserInitializationInfo InitUser(UserInfo user)
+        private User CreateNewUser(InitUserRequest userRequest)
         {
-            var dbUser = new User
+            return new User
             {
-                VkUserId = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName
+                VkUserId = userRequest.Id,
+                FirstName = userRequest.FirstName,
+                LastName = userRequest.LastName,
+                SendInterval = 30,
+                SaveLastMessage = true
             };
+        }
 
-            _userProvider.AddUserSafe(dbUser);
-            return new UserInitializationInfo
+        public UserSettings InitUser(InitUserRequest userRequest)
+        {
+            _userProvider.AddUserSafe(CreateNewUser(userRequest));
+
+            var user = _userProvider.GetUser(userRequest.Id);
+
+            return new UserSettings
             {
-                MessagesInitialized = _messagesProvider.IsUserMessagesInitialized(user.Id),
-                PreferredGroup = _groupProvider.GetPreferredGroup(user.Id)
+                MessagesInitialized = _messagesProvider.IsUserMessagesInitialized(user.VkUserId),
+                PreferredGroup = _groupProvider.GetPreferredGroup(user.VkUserId),
+                SaveLastMessage = user.SaveLastMessage,
+                SendInterval = user.SendInterval
             };
-
         }
 
         public void InitGroup(GroupInfo group)
@@ -65,12 +68,12 @@ namespace VkApp.Web
             _groupProvider.AddGroupSafe(dbGroup);
         }
 
-        public void InitMessagesLegacy(UserInfo user, GroupInfo group, IEnumerable<ConversationInfo> conversations)
+        public void InitMessagesLegacy(int senderId, int targetGroupId, IEnumerable<ConversationInfo> conversations)
         {
             var messages = conversations.Select(x => new Message
             {
-                VkSenderId = user.Id,
-                VkTargetGroupId = group.Id,
+                VkSenderId = senderId,
+                VkTargetGroupId = targetGroupId,
                 VkTargetUserId = x.TargetUserId,
                 SentDate = ParseDate(x.Date)
             }).ToList();

@@ -1,6 +1,9 @@
 ﻿<div class="panel message-panel" style="display: none">
     <label class="title">Разослать сообщение</label>
     <div class="row">
+        <div class='summary warning'></div>
+    </div>
+    <div class="row">
         <div class="column">
             <textarea id="message"></textarea>
         </div>
@@ -9,6 +12,7 @@
             <div class="options-btn last-name">Фамилия</div>
             <div class="options-btn attach-photo">+ Фото</div>
             <div class="options-btn attach-video">+ Видео</div>
+            <div class="options-btn attach-audio-playlist">+ Плэйлист</div>
         </div>
     </div>
     <div class="row">
@@ -18,10 +22,10 @@
         </div>
     </div>
     <div class="row buttons">
-        <button id="sendMessageToMeButton">Отправить себе</button>
-        <button id="sendMessageButton">Отправить <b>всем!</b></button>
+        <button id="sendMessageToMeButton" class="secondary-button">Отправить себе</button>
+        <button id="sendMessageButton" class="active-button">Отправить <b>всем!</b></button>
     </div>
-    
+
     <script id="messagesProgressDialogTemplate" type="text/x-jquery-tmpl">
         <div id="messagesProgressDialog">
             <div id="progressbar"><div class="progress-label">Отправка сообщений...</div></div>
@@ -29,4 +33,19 @@
             <div class="summary fail"></div>
         </div>
     </script>
+
+    <script id="messagesProgressDialogTemplate" type="text/x-jquery-tmpl">
+        <div id="messagesProgressDialog">
+            <div id="progressbar"><div class="progress-label">Отправка сообщений...</div></div>
+            <div class="summary fail" style="display:none"></div>
+        </div>
+    </script>
+
+    <script id="attachmentTemplate" type="text/x-jquery-tmpl">
+        <div class="attachment">
+            <div>${title} - <a href="${url}" target="_blank">${name}</a></div>
+            <div class="remove-btn">x</div>
+        </div>
+    </script>
+
 </div>

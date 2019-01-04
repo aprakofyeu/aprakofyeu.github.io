@@ -20,20 +20,6 @@
     <input type="text" id="captchaInput" />
 </div>
 
-<script id="messagesProgressDialogTemplate" type="text/x-jquery-tmpl">
-    <div id="messagesProgressDialog">
-        <div id="progressbar"><div class="progress-label">Отправка сообщений...</div></div>
-        <div class="summary fail" style="display:none"></div>
-    </div>
-</script>
-
-<script id="attachmentTemplate" type="text/x-jquery-tmpl">
-    <div class="attachment" attachment-id="${id}">
-        <div>${title} - <a href="${url}" target="_blank">${name}</a></div>
-        <div class="remove-btn">x</div>
-    </div>
-</script>
-
 @section scripts {
     <script src="https://vk.com/js/api/openapi.js?159" type="text/javascript"></script>
 

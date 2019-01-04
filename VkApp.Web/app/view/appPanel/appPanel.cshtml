@@ -1,5 +1,20 @@
 ﻿<div class="panel app" step="app">
-    @Html.Partial("~/app/view/appPanel/filters/filters.cshtml")
-    @Html.Partial("~/app/view/appPanel/results/results.cshtml")
-    @Html.Partial("~/app/view/appPanel/message/message.cshtml")
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Рассылка</a></li>
+            <li><a href="#tabs-2">Статистика</a></li>
+            <li><a href="#tabs-3">Настройки</a></li>
+        </ul>
+        <div id="tabs-1">
+            @Html.Partial("~/app/view/appPanel/filters/filters.cshtml")
+            @Html.Partial("~/app/view/appPanel/results/results.cshtml")
+            @Html.Partial("~/app/view/appPanel/message/message.cshtml")
+        </div>
+        <div id="tabs-2" on-activate-event="showStatistics">
+            @Html.Partial("~/app/view/appPanel/statistics/statisticsPanel.cshtml")
+        </div>
+        <div id="tabs-3">
+            @Html.Partial("~/app/view/appPanel/settings/settings.cshtml")
+        </div>
+    </div>
 </div>

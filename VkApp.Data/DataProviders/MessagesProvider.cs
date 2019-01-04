@@ -14,6 +14,7 @@ namespace VkApp.Data.DataProviders
         bool IsUserMessagesInitialized(int userId);
         IEnumerable<int> GetUsersWithoutMessagesByGroup(int targetGroupId, IEnumerable<int> userIds);
         bool HaveUserMessagesByGroup(int targetGroupId, int targetUserId);
+        IEnumerable<Message> GetAllMessagesByGroup(int targetGroupId);
     }
 
     internal class MessagesProvider : IMessagesProvider
@@ -120,6 +121,13 @@ namespace VkApp.Data.DataProviders
                 .UniqueResult<int>();
 
             return messagesCount > 0;
+        }
+
+        public IEnumerable<Message> GetAllMessagesByGroup(int targetGroupId)
+        {
+            return _session.QueryOver<Message>()
+                .Where(x => x.VkTargetGroupId == targetGroupId)
+                .List();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿function InitializationService(storageService, callService, context, dateFormatter, eventBroker) {
+﻿function InitializationService(apiService, callService, context, dateFormatter, eventBroker) {
     var conversationsBatchSize = 200;
     var initializationStartTime = dateFormatter.toNumber(context.settings.initializationStartPeriod);
 
@@ -23,7 +23,7 @@
                     var totalLoadedCount = result.items.length + offset;
                     reportInitializationStatus(totalLoadedCount, result.count);
                     if (totalLoadedCount < result.count) {
-                        return loadConversations(totalLoadedCount, 500)
+                        return loadConversations(totalLoadedCount, 250)
                             .then(function (moreItems) {
                                 return result.items.concat(moreItems);
                             });
@@ -81,18 +81,11 @@
                 });
             }).then(function (conversations) {
                 var data = {
-                    user: {
-                        id: context.user.id,
-                        firstName: context.user.first_name,
-                        lastName: context.user.last_name
-                    },
-                    group: {
-                        id: context.targetGroup.id,
-                        name: context.targetGroup.name
-                    },
+                    senderId: context.user.id,
+                    targetGroupId: context.targetGroup.id,
                     conversations: conversations
                 };
-                return storageService.initUserConversations(data);
+                return apiService.initUserConversations(data);
             });
     }
 
@@ -119,19 +112,19 @@
                             firstName: vkUser.first_name,
                             lastName: vkUser.last_name
                         };
-                        return storageService.initUser(user)
-                            .then(function (initializationInfo) {
+                        return apiService.initUser(user)
+                            .then(function (userSettings) {
                                 return {
                                     vkUser: response[0],
-                                    initializationInfo: initializationInfo
+                                    userSettings: userSettings
                                 };
                             }, function (error) {
                                 eventBroker.publish(VkAppEvents.authenticationError, error);
                             });
                     })
                     .then(function (userInfo) {
-                        context.setUser(userInfo.vkUser);
-                        context.setInitializationInfo(userInfo.initializationInfo);
+                        context.setUser(userInfo.vkUser, userInfo.userSettings);
+                        context.setSettings(userInfo.userSettings);
                         eventBroker.publish(VkAppEvents.authenticationCompleted);
                         eventBroker.publish(VkAppEvents.changeStep, VkAppSteps.initialization);
                     }, function (error) {
@@ -140,7 +133,7 @@
             });
         },
 
-        initTargetGroup: function(group) {
+        initTargetGroup: function (group) {
             context.setTargetGroup(group);
         },
 

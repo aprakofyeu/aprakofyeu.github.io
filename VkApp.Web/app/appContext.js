@@ -3,7 +3,8 @@
         baseUrl: "",
         applicationId: applicationId,
         settings: {
-            messagesInterval: 30,
+            sendInterval: 30,
+            saveLastMessage: true,
             debugMode: false,
             initializationStartPeriod: new Date(2018, 11, 6)//6 december 2018
         },
@@ -12,16 +13,17 @@
             users: {}
         },
 
-        setUser: function (user) {
+        setUser: function (user, userSettings) {
             this.user = user;
+
+            this.user.messagesInitialized = userSettings.messagesInitialized;
+            this.user.preferredGroup = userSettings.preferredGroup;
         },
 
-        setInitializationInfo: function (initializationInfo) {
-            this.user.messagesInitialized = initializationInfo.messagesInitialized;
-
-            if (initializationInfo.preferredGroup > 0) {
-                this.user.preferredGroup = initializationInfo.preferredGroup;
-            }
+        setSettings: function (settings) {
+            this.settings.sendInterval = settings.sendInterval;
+            this.settings.saveLastMessage = settings.saveLastMessage;
+            this.settings.debugMode = !!settings.debugMode;
         },
 
         setTargetGroup: function (group) {

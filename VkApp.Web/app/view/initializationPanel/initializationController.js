@@ -9,13 +9,12 @@
     }
 
     function renderGroups(groups) {
-
-        var options = inputsHelper.renderOptions(groups,
+        inputsHelper.renderOptions(
+            $panel.find("#selectGroup"),
+            groups,
             function (x) { return x.id; },
             function (x) { return x.name; },
             function (x) { return x.id === context.user.preferredGroup; });
-
-        $panel.find("#selectGroup").html(options);
     }
 
     function refreshTargetGroups() {

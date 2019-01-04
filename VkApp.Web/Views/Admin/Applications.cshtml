@@ -3,27 +3,57 @@
     ViewBag.Title = "Applications";
 }
 
-<h2>Applications</h2>
+<div class="panel">
+    <label class="title">Applications</label>
 
-<div>Error: @Model.Error</div>
+    @if (!string.IsNullOrEmpty(@Model.Error))
+    {
+        <div class="row">
+            <div class="summary fail visible">Error: @Model.Error</div>
+        </div>
+    }
 
-@foreach (var application in Model.Applications)
-{
-    <div>
-        Id='<b>@application.Id</b>'
-        Name='<b>@application.Name</b>'
-        @Html.ActionLink("Remove", "RemoveApplication", new { id = application.Id })
+    <div class="row">
+        <table class="grid">
+            <tr class="header">
+                <td style="width: 100px">Id</td>
+                <td style="width: 200px">Name</td>
+                <td style="width: 100px">Count</td>
+                <td style="width: 100px">Actions</td>
+            </tr>
+
+            @foreach (var application in Model.Applications)
+            {
+                <tr>
+                    <td><b>@application.Id</b></td>
+                    <td><b>@application.Name</b></td>
+                    <td><b>@application.Count</b></td>
+                    <td>@Html.ActionLink("Remove", "RemoveApplication", new {id = application.Id})</td>
+                </tr>
+            }
+        </table>
     </div>
-}
+    
+    <br/>
+    <label class="title">Add application:</label>
 
-@using (Html.BeginForm("AddApplication", "Admin", FormMethod.Post))
-{
-    @Html.TextBoxFor(m => m.NewApplication.Id)  
-    <label>Application Id</label>
-    <br />
-    <label>Name</label>
-    @Html.TextBoxFor(m => m.NewApplication.Name) 
-    <br />
+    <div class="row">
+        @using (Html.BeginForm("AddApplication", "Admin", FormMethod.Post))
+        {
+            <label>Application Id: </label>
+            @Html.TextBoxFor(m => m.NewApplication.Id)
+            <br />
+            <label>Name: </label>
+            @Html.TextBoxFor(m => m.NewApplication.Name)
+            <br />
 
-    <input type="submit" value="Add">
-}
+            <input type="submit" value="Add">
+        }
+    </div>
+</div>
+
+
+
+
+
+

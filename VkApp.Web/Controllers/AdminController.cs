@@ -16,6 +16,11 @@ namespace VkApp.Web.Controllers
             _applicationsProvider = applicationsProvider;
         }
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult Applications()
         {
             return View(new ApplicationsView { Applications = GetAllApplications() });

@@ -6,6 +6,7 @@ namespace VkApp.Data.Model
     {
         public virtual int VkAppId { get; set; }
         public virtual string Name { get; set; }
+        public virtual int MessagesCount { get; set; }
     }
 
     public class ApplicationMap : ClassMap<Application>
@@ -14,6 +15,7 @@ namespace VkApp.Data.Model
         {
             Id(x => x.VkAppId).GeneratedBy.Assigned();
             Map(x => x.Name);
+            Map(x => x.MessagesCount);
         }
     }
 }

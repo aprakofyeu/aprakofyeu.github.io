@@ -14,7 +14,7 @@ body .body-content {
         background-color: #FFF;
     }
 
-footer p{
+footer p {
     margin: 30px;
 }
 
@@ -46,60 +46,96 @@ input.url-input {
     padding: 20px;
 }
 
-    .panel.app {
-        background-color: #EDEEF0;
-        border: 0 none;
-        margin: 0;
-        padding: 0;
-    }
-
-    .panel .settings-btn {
-        display: inline-block;
-        float: right;
+    .panel button.active-button {
+        background-color: #2a5885;
+        border: solid 1px #2a5885;
+        color: #FFF;
+        padding: 5px 15px;
         cursor: pointer;
+        font-size: 16px;
+        font-weight: 700;
+        margin: 5px 10px 0 0;
     }
 
-    .panel .groups-select {
-        min-width: 200px;
+    .panel button.secondary-button {
+        border: #2a5885 solid 1px;
+        color: #2a5885;
+        background-color: #f0f8ff;
+        padding: 5px 15px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 400;
+        margin: 5px 10px 0 0;
     }
 
-    .panel .title {
-        font-weight: bold;
-        margin-bottom: 10px;
+        .panel button.secondary-button.small {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+
+.ui-tabs .panel {
+    margin: 0 0 10px 0;
+}
+
+.panel.app {
+    background-color: #EDEEF0;
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+}
+
+.panel .settings-btn {
+    display: inline-block;
+    float: right;
+    cursor: pointer;
+}
+
+.panel .groups-select {
+    min-width: 200px;
+    height: 23px;
+}
+
+.panel select {
+    font-size: 14px;
+}
+
+.panel .title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: inline-block;
+    color: #777;
+}
+
+.row,
+.panel .row {
+    margin: 10px 0;
+    display: block;
+}
+
+    .panel .row .subrow {
+        margin-left: 50px;
+    }
+
+    .panel .row.disabled {
+        color: #A0AFBC;
+    }
+
+        .panel .row.disabled .hidable,
+        .panel .row.disabled .subrow {
+            display: none;
+        }
+
+    .panel .row.buttons {
+        border-top: solid 1px #EEE;
+        margin: 10px 0 0 0;
+        padding-top: 10px;
+    }
+
+    .panel .row .column {
         display: inline-block;
-        color: #777;
+        vertical-align: top;
+        padding: 0 5px;
     }
-
-    .row,
-    .panel .row {
-        margin: 10px 0;
-        display: block;
-    }
-
-        .panel .row .subrow {
-            margin-left: 50px;
-        }
-
-        .panel .row.disabled {
-            color: #A0AFBC;
-        }
-
-            .panel .row.disabled .hidable,
-            .panel .row.disabled .subrow {
-                display: none;
-            }
-
-        .panel .row.buttons {
-            border-top: solid 1px #EEE;
-            margin: 10px 0 0 0;
-            padding-top: 10px;
-        }
-
-        .panel .row .column {
-            display: inline-block;
-            vertical-align: top;
-            padding: 0 5px;
-        }
 
 .user {
     padding: 5px;
@@ -268,8 +304,107 @@ input.url-input {
     margin: 10px 0;
 }
 
+    .summary.fail.visible,
+    .summary.warning.visible {
+        display: block;
+    }
+
 .result-users .loader {
     display: block;
     height: 100px;
     background: url(./images/loading.gif) 20px 0 no-repeat;
 }
+
+form {
+    margin: 0 10px;
+    padding: 15px;
+    display: inline-block;
+    border: 1px solid #E3E4E8;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+    table.grid {
+        border: 1px solid #E3E4E8;
+        margin: 10px;
+    }
+
+        table.grid td {
+            text-align: right;
+            padding: 2px 10px;
+        }
+
+        table.grid .header {
+            background-color: #edeef0;
+        }
+
+            table.grid td,
+            table.grid .header td {
+                text-align: center;
+            }
+
+                table.grid td.number {
+                    text-align: right;
+                }
+
+        table.grid td {
+            border: 1px solid #E3E4E8;
+        }
+
+
+
+.ui-tabs .ui-tabs-panel {
+    margin: 0;
+    padding: 0;
+    background-color: #EDEEF0;
+}
+
+.ui-tabs {
+    padding: 0;
+    margin: 10px 20px;
+}
+
+    .ui-tabs .ui-tabs-nav {
+        padding: 0;
+    }
+
+    .ui-tabs.ui-widget.ui-widget-content {
+        border: 0 none;
+    }
+
+    .ui-tabs .ui-tabs-nav li {
+        border: 0 none;
+    }
+
+    .ui-tabs .ui-widget-header {
+        background-color: #EDEEF0;
+        padding-bottom: 10px;
+    }
+
+    .ui-tabs .ui-state-default.ui-state-active {
+        background-color: #2a5885 !important;
+        padding: 0;
+    }
+
+        .ui-tabs .ui-state-default.ui-state-active a {
+            color: #FFF;
+        }
+
+    .ui-tabs .ui-tabs-nav li.ui-tabs-active {
+        padding: 0;
+    }
+
+    .ui-tabs .ui-state-default {
+        background-color: #FFF;
+    }
+
+    .ui-tabs .ui-tabs-nav li {
+        margin-right: 8px;
+    }
+
+    .ui-tabs .ui-state-default a {
+        color: #777;
+    }

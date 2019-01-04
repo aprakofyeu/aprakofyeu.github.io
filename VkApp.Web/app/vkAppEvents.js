@@ -16,6 +16,11 @@
     sendMessageFailed: "sendMessageFailed",
     sendMessageWarning: "sendMessageWarning",
 
+    saveUserMessageError: "saveUserMessageError",
+
+    showStatistics: "showStatistics",
+    statisticsStatus: "statisticsStatus",
+
     changeStep:"changeStep"
 };
 

@@ -1,32 +1,29 @@
-﻿function SettingsController(context) {
-    function updateSettings($dialog) {
-        var messagesInterval = parseInt($dialog.find("#timeInterval").val());
-        if (messagesInterval) {
-            context.settings.messagesInterval = messagesInterval;
-        }
+﻿function SettingsController(context, apiService, inputsHelper, eventBroker) {
+    $panel = $(".settings-panel");
+    var inputs = inputsHelper.for($panel);
 
-        context.settings.debugMode = !!$dialog.find("#debugMode")[0].checked;
+    function refreshUi() {
+        $panel.find("#applicationId").text(context.applicationId);
+        inputs.setValue("#timeInterval", context.settings.sendInterval);
+        inputs.setChecked("#saveLastMessage", context.settings.saveLastMessage);
+        inputs.setChecked("#debugMode", context.settings.debugMode);
+
+        $panel.on("change", "input",
+            function() {
+                var settings = {
+                    sendInterval: inputs.getIntValue("#timeInterval"),
+                    saveLastMessage: inputs.getChecked("#saveLastMessage"),
+                    debugMode: inputs.getChecked("#debugMode")
+                };
+
+                return apiService.updateSettings(settings)
+                    .then(function () {
+                        context.setSettings(settings);
+                    }, function (error) {
+                        alert(error);
+                    });
+            });
     }
 
-    $(".settings-btn").on("click", function () {
-        var $dialog = $("#settingsDialogTemplate")
-            .tmpl(context)
-            .dialog({
-                modal: true,
-                width: 600,
-                title: "Настройки:",
-                open: function (event, ui) {
-                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-                },
-                buttons: {
-                    "Применить": function () {
-                        updateSettings($dialog);
-                        $dialog.dialog("destroy");
-                    },
-                    "Отмнена": function () {
-                        $dialog.dialog("destroy");
-                    }
-                }
-            });
-    });
+    eventBroker.subscribe(VkAppEvents.initializationCompleted, refreshUi);
 }

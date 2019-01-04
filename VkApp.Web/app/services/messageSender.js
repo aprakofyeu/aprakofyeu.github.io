@@ -1,4 +1,25 @@
-﻿function MessageSender(context, callService, storageService, formatter, progressBar, eventBroker) {
+﻿function MessageSender(context, callService, apiService, formatter, progressBar, eventBroker) {
+    function saveUserMessage(message, attachments) {
+
+        if (context.settings.saveLastMessage) {
+            apiService.saveUserMessage({
+                userId: context.user.id,
+                groupId: context.targetGroup.id,
+                message: formatter.escape(message),
+                attachments: JSON.stringify(attachments)
+            }).then(
+                function(result) {
+                    if (!result.success) {
+                        eventBroker.publish(VkAppEvents.saveUserMessageError, result.error);
+                    }
+                },
+                function (error) {
+                    eventBroker.publish(VkAppEvents.saveUserMessageError, error);
+                });
+        } else {
+            apiService.clearUserSavedMessages();
+        }
+    }
 
     function sendMessage(message, attachments, users) {
         var timeout, canceled;
@@ -21,7 +42,7 @@
                     if (users.length > 0) {
                         timeout = setTimeout(function () {
                             send(users, deferred);
-                        }, context.settings.messagesInterval * 1000);
+                        }, context.settings.sendInterval * 1000);
                     } else {
                         deferred.resolve();
                     }
@@ -52,7 +73,7 @@
                             reject(error);
                         });
             } else {
-                storageService.haveMessagesByGroup(context.targetGroup.id, user.id)
+                apiService.haveMessagesByGroup(context.targetGroup.id, user.id)
                     .then(function (haveMessages) {
                         if (!haveMessages) {
                             return callService.call("messages.send",
@@ -63,7 +84,7 @@
                                 })
                                 .then(function (messageId) {
                                     context.addConversationUserId(user.id);
-                                    return storageService.saveMessage({
+                                    return apiService.saveMessage({
                                         senderUserId: context.user.id,
                                         targetGroupId: context.targetGroup.id,
                                         targetUserId: user.id,
@@ -122,6 +143,10 @@
 
         sendToMe(message, attachments) {
             sendMessage(message, attachments, [context.user]);
+        },
+
+        saveUserMessage(message, attachments) {
+            saveUserMessage(message, attachments);
         }
     };
 }

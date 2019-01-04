@@ -61,6 +61,8 @@
     <Compile Include="DataProviders\ApplicationsProvider.cs" />
     <Compile Include="DataProviders\GroupProvider.cs" />
     <Compile Include="DataProviders\MessagesProvider.cs" />
+    <Compile Include="DataProviders\UserSavedMessagesProvider.cs" />
+    <Compile Include="Model\SavedMessage.cs" />
     <Compile Include="Model\Application.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\Message.cs" />
@@ -71,8 +73,9 @@
     <Compile Include="VkAppDataRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database\dabase.sql" />
-    <Content Include="Database\statistics.sql" />
+    <Content Include="Database\database_2.sql" />
+    <Content Include="Database\database_1.sql" />
+    <Content Include="Database\useful scripts.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

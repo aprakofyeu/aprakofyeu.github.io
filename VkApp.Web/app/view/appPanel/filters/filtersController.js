@@ -61,10 +61,12 @@
         function refreshCities() {
             var countryId = inputs.getIntValue("#selectedCountry");
             regionsProvider.getCities(countryId).then(function (cities) {
-                var optionsHtml = cities.items.map(function (city) {
-                    return "<option value='" + city.id + "'" + (city.important ? " selected='selected'" : "") + ">" + city.title + "</option>";
-                }).join("");
-                $panel.find("#selectedCity").html(optionsHtml);
+                inputsHelper.renderOptions(
+                    $panel.find("#selectedCity"),
+                    cities.items,
+                    function (x) { return x.id; },
+                    function (x) { return x.title; },
+                    function (x) { return x.important; });
             });
         }
 

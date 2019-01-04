@@ -1,9 +1,11 @@
-﻿function InputsHelper(container) {
+﻿function InputsHelper() {
     return {
-        renderOptions: function (items, getId, getTitle, selected) {
-            return items.map(function (item) {
+        renderOptions: function ($element, items, getId, getTitle, selected) {
+            var optionsHtml = items.map(function (item) {
                 return "<option value='" + getId(item) + "'" + (selected(item) ? " selected='selected'" : "") + ">" + getTitle(item) + "</option>";
             }).join("");
+
+            $element.html(optionsHtml);
         },
         for: function (container) {
             function clearValidation() {
@@ -20,8 +22,21 @@
                 getValue: function (selector) {
                     return container.find(selector).val();
                 },
+                setValue: function(selector, value) {
+                    container.find(selector).val(value);
+                },
                 getIntValue: function (selector) {
                     return parseInt(this.getValue(selector));
+                },
+                getChecked: function (selector) {
+                    return !!container.find(selector)[0].checked;
+                },
+                setChecked: function (selector, value) {
+                    if (value) {
+                        container.find(selector).attr("checked", "checked");
+                    } else {
+                        container.find(selector).removeAttr("checked");
+                    }
                 },
                 disable: function (selector) {
                     container.find(selector).attr("disabled", "disabled");

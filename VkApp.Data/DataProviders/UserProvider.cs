@@ -1,4 +1,5 @@
-﻿using NHibernate;
+﻿using System.Collections.Generic;
+using NHibernate;
 using VkApp.Data.Model;
 
 namespace VkApp.Data.DataProviders
@@ -6,6 +7,9 @@ namespace VkApp.Data.DataProviders
     public interface IUserProvider
     {
         void AddUserSafe(User user);
+        User GetUser(int userId);
+        void Save(User user);
+        IEnumerable<User> GetUsersByGroup(int targetGroupId);
     }
 
     internal class UserProvider: IUserProvider
@@ -28,6 +32,31 @@ namespace VkApp.Data.DataProviders
                 .SetParameter("firstName", user.FirstName)
                 .SetParameter("lastName", user.LastName)
                 .ExecuteUpdate();
+        }
+
+        public User GetUser(int userId)
+        {
+            return _session.Get<User>(userId);
+        }
+
+        public void Save(User user)
+        {
+            _session.Update(user);
+        }
+
+        public IEnumerable<User> GetUsersByGroup(int targetGroupId)
+        {
+            var userIds = _session
+                .CreateSQLQuery(@"SELECT DISTINCT VkSenderId
+                                FROM Messages
+                                WHERE VkTargetGroupId=:targetGroupId")
+                .SetParameter("targetGroupId", targetGroupId)
+                .List<int>();
+
+            return _session
+                .QueryOver<User>()
+                .WhereRestrictionOn(x => x.VkUserId).IsInG(userIds)
+                .List();
         }
     }
 }

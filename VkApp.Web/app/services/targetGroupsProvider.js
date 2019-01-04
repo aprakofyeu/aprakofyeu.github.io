@@ -1,4 +1,4 @@
-﻿function TargetGroupsProvider(callService, storageService, urlHelper, context) {
+﻿function TargetGroupsProvider(callService, apiService, urlHelper, context) {
     var cachedGroups;
 
     function addGroup(groupId) {
@@ -11,7 +11,7 @@
                     return deferred.reject("Эта группа уже добавлена");
                 }
 
-                return storageService.addTargetGroup(group);
+                return apiService.addTargetGroup(group);
             }).then(function (response) {
 
                 if (response.success) {
@@ -39,7 +39,7 @@
                 return deferred.resolve(cachedGroups);
             }
 
-            return storageService.loadTargetGroups()
+            return apiService.loadTargetGroups()
                 .then(function (groups) {
                     cachedGroups = groups;
                     return groups;

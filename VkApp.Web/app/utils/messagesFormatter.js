@@ -9,6 +9,14 @@ String.prototype.replaceAll = function (search, replacement) {
 MessagesFormatter.prototype.firstNameTag = "<FirstName>";
 MessagesFormatter.prototype.lastNameTag = "<LastName>";
 
+MessagesFormatter.prototype.escape = function(text) {
+    return $("<div>").text(text).html();
+};
+
+MessagesFormatter.prototype.unescape = function(text) {
+    return $("<div>").html(text).text();
+};
+
 MessagesFormatter.prototype.format = function (message, user) {
     function wrapBlank(text) {
         return " " + text + " ";

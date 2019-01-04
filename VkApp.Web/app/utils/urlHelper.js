@@ -67,6 +67,10 @@
             return parseVkItemUrlSafe("z", "video", url);
         },
 
+        parseAudioPlaylistUrl: function (url) {
+            return parseVkItemUrlSafe("z", "audio_playlist", url);
+        },
+
         getGroupId: function (publicUrl) {
             return runSafe(function () {
                 var splitted = publicUrl.split("/");

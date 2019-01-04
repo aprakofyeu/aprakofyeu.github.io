@@ -1,0 +1,34 @@
+﻿<div class="panel statistics-panel">
+    <label class="title">Статистика</label>
+    
+    <div class="row">
+        <div id="statisticsStatusBar"><div class="progress-label">Загрузка и обработка данных...</div></div>
+    </div>
+
+    <div class="row">
+        <div class="summary fail" style="display: none"></div>
+    </div>
+
+    <div class="row" id="statisticsPanel">
+
+    </div>
+
+    <script id="statisticsTemplate" type="text/x-jquery-tmpl">
+        <table class="grid">
+            <tr class="header">
+                <td style="width: 300px">Отправитель</td>
+                <td style="width: 200px">Всего отправлено</td>
+                <td style="width: 200px">Из них подписалось</td>
+                <td style="width: 200px">Процент</td>
+            </tr>
+            {{each statistics}}
+            <tr>
+                <td>${$value.name}</td>
+                <td class="number">${$value.total}</td>
+                <td class="number">${$value.subscribed}</td>
+                <td class="number">${$value.percent}</td>
+            </tr>
+            {{/each}}
+        </table>
+    </script>
+</div>

@@ -1,4 +1,4 @@
-﻿function SearchService(callService, storageService, context, eventBroker) {
+﻿function SearchService(callService, apiService, context, eventBroker) {
     var batchSize = 500;
 
     function callWithDelay(action, delay) {
@@ -79,7 +79,7 @@
                 if (searchParameters.noMessagesByTargetGroup) {
                     var userIds = users.map(function(user) { return user.id; });
 
-                    return storageService.getUsersWithoutMessagesByGroup(context.targetGroup.id, userIds)
+                    return apiService.getUsersWithoutMessagesByGroup(context.targetGroup.id, userIds)
                         .then(function(userIdsWithoutMessages) {
                             var userIdsWithoutMessagesDict = {};
                             userIdsWithoutMessages.forEach(function(x) {
