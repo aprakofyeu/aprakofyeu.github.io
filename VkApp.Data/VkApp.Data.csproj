@@ -73,6 +73,7 @@
     <Compile Include="VkAppDataRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\database_3.sql" />
     <Content Include="Database\database_2.sql" />
     <Content Include="Database\database_1.sql" />
     <Content Include="Database\useful scripts.sql" />

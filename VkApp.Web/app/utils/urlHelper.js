@@ -82,6 +82,23 @@
 
                 return publicId;
             });
+        },
+
+        getUserId: function (userUrl) {
+            return runSafe(function () {
+                var splitted = userUrl.split("/");
+                var userId = splitted[splitted.length - 1];
+
+                if (userId.indexOf("id") === 0) {
+                    var id = userId.replace("id", "");
+                    id = parseInt(id);
+                    if (id > 0) {
+                        return id;
+                    }
+                }
+
+                return userId;
+            });
         }
     };
 }

@@ -10,7 +10,6 @@
     </div>
 
     <div class="row" id="statisticsPanel">
-
     </div>
 
     <script id="statisticsTemplate" type="text/x-jquery-tmpl">
@@ -22,7 +21,7 @@
                 <td style="width: 200px">Процент</td>
             </tr>
             {{each statistics}}
-            <tr>
+            <tr {{if $value.isTotals}}class="totals"{{/if}}>
                 <td>${$value.name}</td>
                 <td class="number">${$value.total}</td>
                 <td class="number">${$value.subscribed}</td>

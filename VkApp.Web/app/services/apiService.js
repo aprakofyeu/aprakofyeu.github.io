@@ -64,11 +64,16 @@
 
             return post("api/user/update", { userSettings: userSettings });
         },
-        getUserSavedMessage: function () {
+        getUserSavedMessages: function () {
             return get("api/user/savedMessages/get", { userId: context.user.id, groupId: context.targetGroup.id });
         },
-        saveUserMessage: function (message) {
-            return post("api/user/savedMessages/save", { message: message });
+        saveUserMessages: function (messages) {
+            return post("api/user/savedMessages/save",
+                {
+                    userId: context.user.id,
+                    groupId: context.targetGroup.id,
+                    messages: messages
+                });
         },
         clearUserSavedMessages: function () {
             return post("api/user/savedMessages/clear", { userId: context.user.id });

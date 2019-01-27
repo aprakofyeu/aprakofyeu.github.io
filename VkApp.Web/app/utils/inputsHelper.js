@@ -25,6 +25,9 @@
                 setValue: function(selector, value) {
                     container.find(selector).val(value);
                 },
+                clear: function(selector) {
+                    container.find(selector).val("");
+                },
                 getIntValue: function (selector) {
                     return parseInt(this.getValue(selector));
                 },

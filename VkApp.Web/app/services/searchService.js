@@ -41,6 +41,7 @@
 
     function searchInner(searchParameters, hits, offset) {
         var totalLikesCount = 0;
+        var recentlyTimeEdge = Math.floor(Date.now() / 1000) - 60 * 60 * 6; //last 6 hours
 
         return callService.call("likes.getList",
             {
@@ -56,20 +57,21 @@
                 return callService.call("users.get",
                     {
                         user_ids: likes.items.join(','),
-                        fields: 'photo_50,can_write_private_message,online,city,country'
+                        fields: 'photo_50,can_write_private_message,online,city,country,last_seen'
                     });
             })
             .then(function (users) {
                 return users.filter(function (x) {
                     return (!searchParameters.canSendMessageOnly || x.can_write_private_message)
                         && (!searchParameters.onlineOnly || x.online)
+                        && (!searchParameters.recenltyActivityOnly || (x.last_seen && (x.last_seen.time > recentlyTimeEdge)))
                         && (!searchParameters.country || (x.country && x.country.id === searchParameters.country))
                         && (!searchParameters.city || (x.city && x.city.id === searchParameters.city));
                 });
             })
             .then(function (users) {
                 if (searchParameters.withoutConversationsWithMe) {
-                    users = users.filter(function(user) {
+                    users = users.filter(function (user) {
                         return !context.conversations.users[user.id];
                     });
                 }
@@ -77,16 +79,16 @@
             })
             .then(function (users) {
                 if (searchParameters.noMessagesByTargetGroup) {
-                    var userIds = users.map(function(user) { return user.id; });
+                    var userIds = users.map(function (user) { return user.id; });
 
                     return apiService.getUsersWithoutMessagesByGroup(context.targetGroup.id, userIds)
-                        .then(function(userIdsWithoutMessages) {
+                        .then(function (userIdsWithoutMessages) {
                             var userIdsWithoutMessagesDict = {};
-                            userIdsWithoutMessages.forEach(function(x) {
+                            userIdsWithoutMessages.forEach(function (x) {
                                 userIdsWithoutMessagesDict[x] = true;
                             });
 
-                            return users.filter(function(user) {
+                            return users.filter(function (user) {
                                 return userIdsWithoutMessagesDict[user.id];
                             });
                         });

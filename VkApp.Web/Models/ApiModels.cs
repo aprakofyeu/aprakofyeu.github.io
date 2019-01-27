@@ -48,4 +48,10 @@
         public int SendInterval { get; set; }
         public bool SaveLastMessage { get; set; }
     }
+
+    public class UserMessageRequest
+    {
+        public string Message { get; set; }
+        public string Attachments { get; set; }
+    }
 }

@@ -18,6 +18,12 @@ footer p {
     margin: 30px;
 }
 
+.training img {
+    border: 1px dotted #777;
+    width: 700px;
+    margin: 20px;
+}
+
 a, a:link, a:visited, a:hover, a:active {
     text-decoration: none;
     color: #2A5885;
@@ -126,8 +132,6 @@ input.url-input {
         }
 
     .panel .row.buttons {
-        border-top: solid 1px #EEE;
-        margin: 10px 0 0 0;
         padding-top: 10px;
     }
 
@@ -136,6 +140,11 @@ input.url-input {
         vertical-align: top;
         padding: 0 5px;
     }
+
+.input-message-panel {
+    border-bottom: solid 1px #EEE;
+    margin-bottom: 20px;
+}
 
 .user {
     padding: 5px;
@@ -183,7 +192,7 @@ input.url-input {
             height: 15px;
             width: 15px;
             margin-top: 18px;
-            background: url(./images/icons.v1.png) -143px -15px;
+            background: url(./images/icons.v2.png) -143px -15px;
         }
 
     .user .status-panel div {
@@ -193,25 +202,41 @@ input.url-input {
     }
 
     .user .status-panel .disabled {
-        background: url(./images/icons.v1.png) -40px -8px;
+        background: url(./images/icons.v2.png) -40px -8px;
     }
 
     .user .status-panel .ok {
-        background: url(./images/icons.v1.png) -72px -10px;
+        background: url(./images/icons.v2.png) -72px -10px;
     }
 
     .user .status-panel .fail {
-        background: url(./images/icons.v1.png) -10px -10px;
+        background: url(./images/icons.v2.png) -10px -10px;
     }
 
     .user .status-panel .warning {
-        background: url(./images/icons.v1.png) -165px -10px;
+        background: url(./images/icons.v2.png) -165px -10px;
     }
 
 .message-panel textarea {
     display: block;
     height: 200px;
     width: 500px;
+}
+
+.message-panel .add-message-button {
+    display: inline-block;
+    height: 30px;
+    padding-left: 40px;
+    cursor: pointer;
+    background: url(./images/icons.v2.png) -200px -10px no-repeat;
+}
+
+.message-panel .remove-message-button {
+    display: block;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    background: url(./images/icons.v2.png) -10px -10px;
 }
 
 .message-panel .options-btn {
@@ -225,6 +250,12 @@ input.url-input {
     line-height: 20px;
     text-align: center;
 }
+
+    .message-panel .options-btn.remove-message {
+        color: red;
+        border: red solid 1px;
+        background-color: #faebd7;
+    }
 
 .attachments .attachment {
     display: block;
@@ -304,10 +335,20 @@ input.url-input {
     margin: 10px 0;
 }
 
-    .summary.fail.visible,
-    .summary.warning.visible {
-        display: block;
-    }
+.summary.info {
+    display: none;
+    border: 1px solid #2a5885;
+    color: #2a5885;
+    background-color: #f0f8ff;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.summary.fail.visible,
+.summary.warning.visible,
+.summary.warning.info {
+    display: block;
+}
 
 .result-users .loader {
     display: block;
@@ -354,6 +395,9 @@ table {
             border: 1px solid #E3E4E8;
         }
 
+        table.grid .totals td {
+            font-weight: 600;
+        }
 
 
 .ui-tabs .ui-tabs-panel {

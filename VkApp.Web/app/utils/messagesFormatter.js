@@ -32,10 +32,14 @@ MessagesFormatter.prototype.formatAttachmentId = function (type, item) {
 };
 
 MessagesFormatter.prototype.formatAttachments = function (attachments) {
-    return attachments ? attachments.join(",") : null;
+    return attachments
+        ? attachments.map(function (x) { return x.id; }).join(",")
+        : null;
 };
 
 MessagesFormatter.prototype.insertAtCaret = function (txtarea, text) {
+    $(txtarea).focus();
+
     var scrollPos = txtarea.scrollTop;
     var strPos = 0;
     var br = ((txtarea.selectionStart || txtarea.selectionStart === '0') ?

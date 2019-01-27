@@ -39,11 +39,17 @@
 
     function matToViewModel(statistics) {
         var statisticsView = [];
+
+        var totalSent = 0;
+        var totalSubscribed = 0;
         for (var i = 0; i < statistics.users.length; i++) {
             var user = statistics.users[i];
             var sentIds = statistics.messages[user.id];
             var subscribedCount = calculateSubscribedCount(sentIds, statistics.membersDict);
 
+            totalSent += sentIds.length;
+            totalSubscribed += subscribedCount;
+            
             statisticsView.push({
                 name: user.firstName + " " + user.lastName,
                 total: sentIds.length,
@@ -51,6 +57,15 @@
                 percent: percentFormat(subscribedCount / sentIds.length * 100)
             });
         }
+
+        statisticsView.push({
+            name: "Всего",
+            total: totalSent,
+            subscribed: totalSubscribed,
+            percent: percentFormat(totalSubscribed / totalSent * 100),
+            isTotals: true
+        });
+
         return statisticsView;
     }
 
@@ -69,7 +84,7 @@
                     reportInitializationStatus(totalLoadedCount, userIds.length);
 
                     if (totalLoadedCount < userIds.length) {
-                        return checkIsMember(totalLoadedCount, 300)
+                        return checkIsMember(totalLoadedCount, 250)
                             .then(function (moreResults) {
                                 return results.concat(moreResults);
                             });
@@ -90,11 +105,16 @@
                 .then(function (statistics) {
                     var allTargetUsers = getAllTargetUsers(statistics.messages);
 
-                    return loadSubsribedUsers(allTargetUsers)
-                        .then(function (membersDict) {
-                            statistics.membersDict = membersDict;
-                            return statistics;
-                        });
+                    if (allTargetUsers.length > 0) {
+                        return loadSubsribedUsers(allTargetUsers)
+                            .then(function(membersDict) {
+                                statistics.membersDict = membersDict;
+                                return statistics;
+                            });
+                    }
+
+                    statistics.membersDict = {};
+                    return statistics;
                 })
                 .then(function (statistics) {
                     return matToViewModel(statistics);

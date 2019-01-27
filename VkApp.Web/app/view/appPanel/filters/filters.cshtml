@@ -10,7 +10,7 @@
         <input type="checkbox" checked="checked" id="subscriptionEnabledCheckbox" />
         <label for="subscriptionEnabledCheckbox">не подписаны в группу: <b><span id="groupNameLabel"></span></b></label>
     </div>
-    
+
     <div class="row">
         <input type="checkbox" checked="checked" id="noMessagesCheckbox" />
         <label for="noMessagesCheckbox">и не получали сообщений от этой группы</label>
@@ -27,8 +27,17 @@
     </div>
 
     <div class="row">
-        <input type="checkbox" checked="checked" id="onlineOnlyCheckbox" />
-        <label for="onlineOnlyCheckbox">только те, кто сейчас 'online'</label>
+        <label>Активность:</label>
+        <div class="subrow">
+            <input type="radio" name="activity" id="recentActivityRadio" value="recent" checked="checked">
+            <label for="recentActivityRadio">только те, кто недавно был в сети (последние 6ч)</label>
+            <br>
+            <input type="radio" name="activity" id="onlineActivityRadio" value="online">
+            <label for="onlineActivityRadio">только те, кто сейчас "онлайн"</label>
+            <br/>
+            <input type="radio" name="activity" id="allActivityRadio" value="all">
+            <label for="allActivityRadio">все</label>
+        </div>
     </div>
 
     <div class="row">

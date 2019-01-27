@@ -35,8 +35,12 @@
             parameters.notSubscribedToTargetGroup = true;
         }
 
-        if (isChecked("#onlineOnlyCheckbox")) {
+        if (isChecked("#onlineActivityRadio")) {
             parameters.onlineOnly = true;
+        }
+
+        if (isChecked("#recentActivityRadio")) {
+            parameters.recenltyActivityOnly = true;
         }
 
         if (isChecked("#enableCountryCheckbox")) {
@@ -114,7 +118,6 @@
         initRowDisabling("withoutConversationsWithMeCheckbox");
         initRowDisabling("noMessagesCheckbox");
         initRowDisabling("canSendMessageCheckbox");
-        initRowDisabling("onlineOnlyCheckbox");
         initRowDisabling("enableCountryCheckbox");
         initRowDisabling("enableCityCheckbox");
 

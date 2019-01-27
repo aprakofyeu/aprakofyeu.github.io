@@ -1,34 +1,47 @@
 ﻿function MessageSender(context, callService, apiService, formatter, progressBar, eventBroker) {
-    function saveUserMessage(message, attachments) {
+    function saveUserMessages(messages) {
 
         if (context.settings.saveLastMessage) {
-            apiService.saveUserMessage({
-                userId: context.user.id,
-                groupId: context.targetGroup.id,
-                message: formatter.escape(message),
-                attachments: JSON.stringify(attachments)
-            }).then(
-                function(result) {
-                    if (!result.success) {
-                        eventBroker.publish(VkAppEvents.saveUserMessageError, result.error);
-                    }
-                },
-                function (error) {
-                    eventBroker.publish(VkAppEvents.saveUserMessageError, error);
-                });
+            messages = messages.map(function (x) {
+                return {
+                    message: formatter.escape(x.message),
+                    attachments: JSON.stringify(x.attachments)
+                };
+            });
+
+            apiService.saveUserMessages(messages)
+                .then(
+                    function (result) {
+                        if (!result.success) {
+                            eventBroker.publish(VkAppEvents.saveUserMessageError, result.error);
+                        }
+                    },
+                    function (error) {
+                        eventBroker.publish(VkAppEvents.saveUserMessageError, error);
+                    });
         } else {
             apiService.clearUserSavedMessages();
         }
     }
 
-    function sendMessage(message, attachments, users) {
+    function sendMessage(messages, users) {
         var timeout, canceled;
-        attachments = formatter.formatAttachments(attachments);
+        var messageIndex = 0;
 
         function send(users, deferred) {
             var user = users[0];
-            users = users.slice(1, users.length);
-            var formattedMessage = formatter.format(message, user);
+            var isSendToMe = user.id === context.user.id;
+
+            messageIndex = messageIndex % messages.length;
+
+            var attachments = formatter.formatAttachments(messages[messageIndex].attachments);
+            var formattedMessage = formatter.format(messages[messageIndex].message, user);
+
+            messageIndex += 1;
+
+            if (!isSendToMe || messageIndex >= messages.length) {
+                users = users.slice(1, users.length);
+            }
 
             if (!deferred) {
                 deferred = new $.Deferred();
@@ -42,7 +55,7 @@
                     if (users.length > 0) {
                         timeout = setTimeout(function () {
                             send(users, deferred);
-                        }, context.settings.sendInterval * 1000);
+                        }, isSendToMe ? 1000 : context.settings.sendInterval * 1000);
                     } else {
                         deferred.resolve();
                     }
@@ -68,10 +81,9 @@
                     })
                     .then(function () {
                         markAsSentAndSendNext();
-                    },
-                        function (error) {
-                            reject(error);
-                        });
+                    }, function (error) {
+                        reject(error);
+                    });
             } else {
                 apiService.haveMessagesByGroup(context.targetGroup.id, user.id)
                     .then(function (haveMessages) {
@@ -122,7 +134,11 @@
         }
 
         if (users && users.length > 0) {
-            progressBar.init(users, function () {
+            var messagesCount = users[0].id === context.user.id
+                ? messages.length
+                : users.length;
+
+            progressBar.init(messagesCount, function () {
                 canceled = true;
                 clearTimeout(timeout);
             });
@@ -136,17 +152,17 @@
     };
 
     return {
-        sendToAll: function (message, attachments) {
+        sendToAll: function (messages) {
             var users = context.searchResult.users.filter(function (user) { return !user.sent; });
-            sendMessage(message, attachments, users);
+            sendMessage(messages, users);
         },
 
-        sendToMe(message, attachments) {
-            sendMessage(message, attachments, [context.user]);
+        sendToMe(messages) {
+            sendMessage(messages, [context.user]);
         },
 
-        saveUserMessage(message, attachments) {
-            saveUserMessage(message, attachments);
+        saveUserMessages(messages) {
+            saveUserMessages(messages);
         }
     };
 }

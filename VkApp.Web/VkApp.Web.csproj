@@ -149,6 +149,7 @@
     <Compile Include="Controllers\api\UserSavedMessagesController.cs" />
     <Compile Include="Controllers\api\UserController.cs" />
     <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\TrainingController.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="DependencyResolution\VkAppRegistry.cs" />
     <Compile Include="Global.asax.cs">
@@ -167,13 +168,28 @@
     <Content Include="app\utils\inputsHelper.js" />
     <Content Include="app\utils\progressBarHelper.js" />
     <Content Include="app\view\appPanel\appPanelController.js" />
+    <Content Include="app\view\appPanel\instruments\instrumentsPanel.cshtml" />
     <None Include="app\view\appPanel\statistics\statisticsPanel.cshtml" />
+    <Content Include="app\view\appPanel\instruments\instrumentsPanelController.js" />
     <Content Include="app\view\appPanel\statistics\statisticsPanelController.js" />
     <Content Include="app\view\authenticationPanel\authenticationController.js" />
     <Content Include="app\view\initializationPanel\initializationController.js" />
     <Content Include="app\view\initializationProgressPanel\initializationProgressController.js" />
     <Content Include="Content\images\icons.v1.png" />
+    <Content Include="Content\images\icons.v2.png" />
     <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\step1.jpg" />
+    <Content Include="Content\images\step10.jpg" />
+    <Content Include="Content\images\step11.jpg" />
+    <Content Include="Content\images\step12.jpg" />
+    <Content Include="Content\images\step2.jpg" />
+    <Content Include="Content\images\step3.jpg" />
+    <Content Include="Content\images\step4.jpg" />
+    <Content Include="Content\images\step5.jpg" />
+    <Content Include="Content\images\step6.jpg" />
+    <Content Include="Content\images\step7.jpg" />
+    <Content Include="Content\images\step8_1.jpg" />
+    <Content Include="Content\images\step9.jpg" />
     <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -240,6 +256,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Training\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VkApp.Data\VkApp.Data.csproj">
@@ -255,6 +272,7 @@
     <Content Include="jquery\jquery-3.3.1.slim.min.map" />
     <Content Include="jquery\jquery-3.3.1.min.map" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

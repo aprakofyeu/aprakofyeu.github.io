@@ -6,6 +6,7 @@ namespace VkApp.Data.Model
     {
         public virtual int UserId { get; set; }
         public virtual int GroupId { get; set; }
+        public virtual int Order { get; set; }
         public virtual string Message { get; set; }
         public virtual string Attachments { get; set; }
     }
@@ -18,6 +19,7 @@ namespace VkApp.Data.Model
             Not.LazyLoad();
             Id(x => x.UserId, "VkUserId").GeneratedBy.Assigned();
             Map(x => x.GroupId, "TargetGroupId");
+            Map(x => x.Order, "OrderIndex");
             Map(x => x.Message);
             Map(x => x.Attachments);
         }

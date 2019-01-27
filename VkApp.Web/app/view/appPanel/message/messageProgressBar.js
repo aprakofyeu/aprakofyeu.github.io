@@ -20,7 +20,7 @@
     }
 
     return {
-        init: function (users, cancelCallback) {
+        init: function (messagesCount, cancelCallback) {
             $dialog = $("#messagesProgressDialogTemplate").tmpl().dialog({
                 modal: true,
                 width: 600,
@@ -28,10 +28,10 @@
                 open: function (event, ui) {
                     $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
                     var $progressbar = $(this).find("#progressbar").progressbar({
-                        max: users.length,
+                        max: messagesCount,
                         value: 0,
                         change: function () {
-                            $(this).find(".progress-label").text("Отправлено " + $progressbar.progressbar("value") + " из " + users.length + " сообщений.");
+                            $(this).find(".progress-label").text("Отправлено " + $progressbar.progressbar("value") + " из " + messagesCount + " сообщений.");
                         },
                         complete: function () {
                             $(this).find(".progress-label").text("Все сообщения успешно отправлены!");

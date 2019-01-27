@@ -2,6 +2,7 @@
     var context = {
         baseUrl: "",
         applicationId: applicationId,
+        maxMessagesCount: 5,
         settings: {
             sendInterval: 30,
             saveLastMessage: true,

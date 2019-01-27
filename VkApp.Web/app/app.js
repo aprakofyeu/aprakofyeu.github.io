@@ -9,25 +9,27 @@
     var eventBroker = new EventBroker();
     var context = new AppContext(applicationId);
     var apiService = new ApiService(context);
-    var settingsController = new SettingsController(context, apiService, inputsHelper, eventBroker);
     var callService = new CallService(context, captchaService);
     var searchService = new SearchService(callService, apiService, context, eventBroker);
     var regionsProvider = new RegionsProvider(callService, eventBroker);
-    var filtersController = new FiltersController(urlHelper, inputsHelper, searchService, regionsProvider, context, eventBroker);
-    var resultsController = new ResultsController(eventBroker);
     var formatter = new MessagesFormatter();
     var progressBar = new MessageProgressBar(context);
     var messageSender = new MessageSender(context, callService, apiService, formatter, progressBar, eventBroker);
-    var messagesController = new MessagesController(formatter, messageSender, apiService, urlHelper, eventBroker);
     var targetGroupsProvider = new TargetGroupsProvider(callService, apiService, urlHelper, context);
-    var stepsController = new StepsController(eventBroker);
     var initializationService = new InitializationService(apiService, callService, context, dateFormatter, eventBroker);
+    var statisticsService = new StatisticsService(apiService, callService, context, eventBroker);
+
+    var settingsController = new SettingsController(context, apiService, inputsHelper, eventBroker);
+    var filtersController = new FiltersController(urlHelper, inputsHelper, searchService, regionsProvider, context, eventBroker);
+    var resultsController = new ResultsController(eventBroker);
+    var messagesController = new MessagesController(formatter, messageSender, apiService, urlHelper, context, eventBroker);
+    var stepsController = new StepsController(eventBroker);
     var initializationController = new InitializationController(initializationService, targetGroupsProvider, inputsHelper, context, eventBroker);
     var authenticationController = new AuthenticationController(initializationService, inputsHelper, urlHelper, eventBroker);
     var initializationProgressController = new InitializationProgressController(progressBarHelper, eventBroker);
-    var pppPanelController = new AppPanelController(eventBroker);
-    var statisticsService = new StatisticsService(apiService, callService, context, eventBroker);
+    var appPanelController = new AppPanelController(eventBroker);
     var statisticsPanelController = new StatisticsPanelController(statisticsService, progressBarHelper, eventBroker);
+    var instrumentsPanelController = new InstrumentsPanelController(urlHelper, inputsHelper, callService, context, eventBroker);
 
 
     //end dependency injection
@@ -38,7 +40,6 @@
 
     return {
         init: function (authResponseUrl) {
-            var that = this;
             var authParameters = urlHelper.parseUrlParameters(authResponseUrl);
             if (!authParameters) {
                 alert("Не введен, либо введен неверный авторизационный токен.");

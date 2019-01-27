@@ -21,6 +21,8 @@
     showStatistics: "showStatistics",
     statisticsStatus: "statisticsStatus",
 
+    showInstruments: "showInstruments",
+
     changeStep:"changeStep"
 };
 

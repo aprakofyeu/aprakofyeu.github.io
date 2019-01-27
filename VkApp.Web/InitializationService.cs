@@ -50,7 +50,8 @@ namespace VkApp.Web
 
             return new UserSettings
             {
-                MessagesInitialized = _messagesProvider.IsUserMessagesInitialized(user.VkUserId),
+                //MessagesInitialized = _messagesProvider.IsUserMessagesInitialized(user.VkUserId),
+                MessagesInitialized = true,
                 PreferredGroup = _groupProvider.GetPreferredGroup(user.VkUserId),
                 SaveLastMessage = user.SaveLastMessage,
                 SendInterval = user.SendInterval
