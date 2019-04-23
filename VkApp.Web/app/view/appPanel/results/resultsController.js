@@ -1,6 +1,18 @@
-﻿function ResultsController(eventBroker) {
+﻿function ResultsController(manualMessageSender, eventBroker) {
     var $panel = $(".results-panel");
     var $results = $panel.find(".result-users");
+
+    $results.on("click", "button.manual-send-message", function () {
+        if (!$(this).attr("disabled")) {
+            var userId = parseInt($(this).attr("user-id"));
+            manualMessageSender.sendMessage(userId);
+        }
+    });
+
+    function disableManualSending(userId) {
+        var sendManualButton = $results.find("button[user-id=" + userId + "]");
+        sendManualButton.attr("disabled", "disabled");
+    }
 
     function hideError() {
         $panel.find(".summary.fail").empty().hide();
@@ -34,14 +46,17 @@
     }
 
     function markAsSent(userId) {
+        disableManualSending(userId);
         getUserStatusPanel(userId).append("<div class='ok' title='Отправлено!'></div>");
     }
 
     function markAsFailed(userId, error) {
+        disableManualSending(userId);
         getUserStatusPanel(userId).append("<div class='fail' title='" + error + "'></div>");
     }
 
     function markAsWarning(userId, warning) {
+        disableManualSending(userId);
         getUserStatusPanel(userId).append("<div class='warning' title='" + warning + "'></div>");
     }
 

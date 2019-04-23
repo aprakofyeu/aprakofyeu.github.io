@@ -162,6 +162,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\services\manualMessageSender.js" />
     <Content Include="app\services\statisticsService.js" />
     <Content Include="app\services\targetGroupsProvider.js" />
     <Content Include="app\utils\dateFornatter.js" />
@@ -175,7 +176,7 @@
     <Content Include="app\view\authenticationPanel\authenticationController.js" />
     <Content Include="app\view\initializationPanel\initializationController.js" />
     <Content Include="app\view\initializationProgressPanel\initializationProgressController.js" />
-    <Content Include="Content\images\icons.v1.png" />
+    <Content Include="Content\images\extension-img1.jpg" />
     <Content Include="Content\images\icons.v2.png" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\step1.jpg" />
@@ -257,6 +258,7 @@
     </Content>
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Training\Index.cshtml" />
+    <Content Include="Views\Training\InstallExtension.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VkApp.Data\VkApp.Data.csproj">

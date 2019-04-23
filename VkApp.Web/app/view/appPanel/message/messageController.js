@@ -196,6 +196,14 @@
             });
         });
 
+    $panel.find("#saveMessageButton").on("click",
+        function () {
+            sendMessage(function() {
+                //empty function. just for save messages.
+                alert("Сообщения успешно сохранены");
+            });
+        });
+
     $panel.find(".add-message-button").on("click",
         function () {
             if ($messagesContainer.find(".input-message-panel").length >= context.maxMessagesCount) {
@@ -266,4 +274,12 @@
 
     eventBroker.subscribe(VkAppEvents.initializationCompleted, function () { loadUserSavedMessage(); });
     eventBroker.subscribe(VkAppEvents.saveUserMessageError, function (error) { showWarning("Не удалось сохранить сообщения...<br/>" + error); });
+
+
+    return {
+        getMessages: function() {
+            var messages = getMessages();
+            return isValid(messages) ? messages : null;
+        }
+    };
 }

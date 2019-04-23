@@ -9,11 +9,11 @@ String.prototype.replaceAll = function (search, replacement) {
 MessagesFormatter.prototype.firstNameTag = "<FirstName>";
 MessagesFormatter.prototype.lastNameTag = "<LastName>";
 
-MessagesFormatter.prototype.escape = function(text) {
+MessagesFormatter.prototype.escape = function (text) {
     return $("<div>").text(text).html();
 };
 
-MessagesFormatter.prototype.unescape = function(text) {
+MessagesFormatter.prototype.unescape = function (text) {
     return $("<div>").html(text).text();
 };
 
@@ -36,6 +36,35 @@ MessagesFormatter.prototype.formatAttachments = function (attachments) {
         ? attachments.map(function (x) { return x.id; }).join(",")
         : null;
 };
+
+MessagesFormatter.prototype.formatMessageForUrl = function (message, attachments, targetUser, user) {
+    function splitId(id) {
+        return id
+            .replace("photo", "photo;")
+            .replace("video", "video;")
+            .replace("audio_playlist", "audio_playlist;")
+            .split(";");
+    }
+
+    var parameters = ["sel=" + targetUser.id, "sndall_vkid=" + user.id];
+
+    var formattedMessage = escape(this.format(message, targetUser));
+    parameters.push("sndall_message=" + formattedMessage);
+
+    if (attachments && attachments.length) {
+        var formattedAttachments = [];
+        for (var i = 0; i < attachments.length; i++) {
+            var splittedId = splitId(attachments[i].id);
+            formattedAttachments.push({ type: splittedId[0], id: splittedId[1] });
+        }
+        parameters.push("sndall_attachments=" + escape(JSON.stringify(formattedAttachments)));
+    }
+
+    var url = "https://vk.com/im?" + parameters.join("&");
+
+    return url;
+};
+
 
 MessagesFormatter.prototype.insertAtCaret = function (txtarea, text) {
     $(txtarea).focus();

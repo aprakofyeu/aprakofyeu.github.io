@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Install extension";
+}
+
+<div class="panel training">
+    <div class="row">
+        <label class="title">Внимание!</label>
+        <div class="subrow">
+            Как известно, контактик сильно ограничил общедоступный функционал, по этому пришлось искать обходные пути для решения возникшей ситуации.
+            <br />
+            Кое какие решения были найдены, но для того чтобы все работало, нужно проделать кое-какие дополнительные шаги.
+            <br />
+            Подробная инструкция ниже
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="title">Браузер</label>
+        <div class="subrow">
+            Отныне корректная работа приложения возможна только в Google Chrome.
+            <br />
+            Если у вас его нет, то скачать можно <a href="https://www.google.ru/intl/ru/chrome" target="_blank">тут</a>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="title">Расширение для Хрома</label>
+        <div class="subrow">
+            К сожалению, для корректной работы всего функционала одного хрома недостаточно. Необходимо установить расширение.
+            <br />
+            Для этого необходимо проделать следующие шаги:
+            <br />
+            1) Скачать расширение <a href="~/ChromeExtension.zip" target="_blank">тут</a>
+            <br />
+            2) Распаковать архив в некоторую папку на жестком диске. Например D:/SndallExtension
+            <br />
+            3) Открыть браузер Google Chrome и ввести в адресной строке: <b>chrome://extensions</b>
+            <br />
+            4) В правом верхнем углу включить Developer mode
+            <br/>
+            5) Загрузить расширение с помошь кнопки 'Load unpacked' и выбора папки, куда вы распаковали расширение:
+            <br/>
+            <img src="~/Content/images/extension-img1.jpg" />
+        </div>
+    </div>
+    <div class="row">
+        <label class="title">Завершение</label>
+        <div class="subrow">
+            Если все шаги проделаны, и приложение установлено, то можете переходить к работе: @Html.ActionLink("sndall.ru", "Index", "App")
+        </div>
+    </div>
+</div>
+

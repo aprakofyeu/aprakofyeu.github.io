@@ -38,7 +38,7 @@
             var params = $.extend(parameters, { v: "5.73" });
             var deferred = new $.Deferred();
 
-            if (VK._session) {
+            if (VK._session && this.accessToken) {
                 VK._session.sid = this.accessToken;
             }
 

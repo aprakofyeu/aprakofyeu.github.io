@@ -12,6 +12,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkApp.Data", "VkApp.Data\VkApp.Data.csproj", "{16997E20-9268-458A-B80E-5DD7B149280E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ChromeExtension", "ChromeExtension", "{6B115021-8B58-4445-83E2-8CC7CBD3B5D9}"
+	ProjectSection(SolutionItems) = preProject
+		ChromeExtension\content.js = ChromeExtension\content.js
+		ChromeExtension\flag.js = ChromeExtension\flag.js
+		ChromeExtension\jquery.js = ChromeExtension\jquery.js
+		ChromeExtension\manifest.json = ChromeExtension\manifest.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

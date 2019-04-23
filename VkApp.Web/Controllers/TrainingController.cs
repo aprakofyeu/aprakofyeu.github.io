@@ -2,9 +2,14 @@
 
 namespace VkApp.Web.Controllers
 {
-    public class TrainingController: Controller
+    public class TrainingController : Controller
     {
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult InstallExtension()
         {
             return View();
         }

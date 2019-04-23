@@ -115,7 +115,7 @@
         }
 
         initRowDisabling("subscriptionEnabledCheckbox");
-        initRowDisabling("withoutConversationsWithMeCheckbox");
+        //initRowDisabling("withoutConversationsWithMeCheckbox");
         initRowDisabling("noMessagesCheckbox");
         initRowDisabling("canSendMessageCheckbox");
         initRowDisabling("enableCountryCheckbox");

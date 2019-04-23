@@ -21,6 +21,11 @@
                     {{if country}}${country.title}{{/if}}
                 </div>
             </div>
+            <div class="info-panel">
+                {{if can_write_private_message}}
+                    <button class="manual-send-message" user-id="${id}">Отправить сообщение</button>
+                {{/if}}
+            </div>
             <div class="status-panel">
                 {{if !can_write_private_message}}<div class="disabled"></div>{{/if}}
             </div>

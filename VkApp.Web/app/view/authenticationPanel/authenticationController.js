@@ -30,5 +30,13 @@
         initializationService.initUser();
     });
 
+    $panel.find("#loginButton").click(function () {
+        clearErrors();
+        inputs.disable("#initAppButton");
+        initializationService.initApplicationByVkLogin();
+    });
+
+
+
     eventBroker.subscribe(VkAppEvents.authenticationError, function(error) { showError(error); });
 }

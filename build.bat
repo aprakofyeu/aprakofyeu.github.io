@@ -14,6 +14,7 @@ XCOPY .\VkApp.Web\Views\*.* .\BuildResults\Views\ /S
 XCOPY .\VkApp.Web\*.asax .\BuildResults\
 XCOPY .\VkApp.Web\*.config .\BuildResults\
 XCOPY .\VkApp.Web\*.ico .\BuildResults\
+XCOPY .\VkApp.Web\ChromeExtension.zip .\BuildResults\
 
 cd BuildResults
 call "c:\Program Files\7-Zip\7z.exe" a wwwroot.zip 

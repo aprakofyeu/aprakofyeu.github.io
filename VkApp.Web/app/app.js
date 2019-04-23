@@ -21,8 +21,9 @@
 
     var settingsController = new SettingsController(context, apiService, inputsHelper, eventBroker);
     var filtersController = new FiltersController(urlHelper, inputsHelper, searchService, regionsProvider, context, eventBroker);
-    var resultsController = new ResultsController(eventBroker);
     var messagesController = new MessagesController(formatter, messageSender, apiService, urlHelper, context, eventBroker);
+    var manualMessageSender = new ManualMessageSender(context, messagesController, formatter, apiService, eventBroker);
+    var resultsController = new ResultsController(manualMessageSender, eventBroker);
     var stepsController = new StepsController(eventBroker);
     var initializationController = new InitializationController(initializationService, targetGroupsProvider, inputsHelper, context, eventBroker);
     var authenticationController = new AuthenticationController(initializationService, inputsHelper, urlHelper, eventBroker);

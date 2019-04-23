@@ -13,30 +13,42 @@
         eventBroker.publish(VkAppEvents.initializationStatus, { currentCount: currentCount, totalCount: totalCount });
     }
 
+    function loadConversationsMock() {
+        var deferred = new $.Deferred();
+
+        setTimeout(function () {
+            deferred.resolve([]);
+        }, 0);
+
+        return deferred.promise();
+    }
+
     function loadAllConversationsWithUsers() {
-        function loadConversations(offset, delay) {
-            offset = defaultIfUndefined(offset);
-            delay = defaultIfUndefined(delay);
+        return loadConversationsMock();
 
-            return callService.callWithDelay('messages.getConversations', { offset: offset, count: conversationsBatchSize, extended: 0 }, delay)
-                .then(function (result) {
-                    var totalLoadedCount = result.items.length + offset;
-                    reportInitializationStatus(totalLoadedCount, result.count);
-                    if (totalLoadedCount < result.count) {
-                        return loadConversations(totalLoadedCount, 250)
-                            .then(function (moreItems) {
-                                return result.items.concat(moreItems);
-                            });
-                    }
-                    return result.items;
-                });
-        }
+        //function loadConversations(offset, delay) {
+        //    offset = defaultIfUndefined(offset);
+        //    delay = defaultIfUndefined(delay);
 
-        return loadConversations().then(function (conversations) {
-            return conversations.filter(function (x) {
-                return x.conversation.peer.type === "user";
-            });
-        });
+        //    return callService.callWithDelay('messages.getConversations', { offset: offset, count: conversationsBatchSize, extended: 0 }, delay)
+        //        .then(function (result) {
+        //            var totalLoadedCount = result.items.length + offset;
+        //            reportInitializationStatus(totalLoadedCount, result.count);
+        //            if (totalLoadedCount < result.count) {
+        //                return loadConversations(totalLoadedCount, 250)
+        //                    .then(function (moreItems) {
+        //                        return result.items.concat(moreItems);
+        //                    });
+        //            }
+        //            return result.items;
+        //        });
+        //}
+
+        //return loadConversations().then(function (conversations) {
+        //    return conversations.filter(function (x) {
+        //        return x.conversation.peer.type === "user";
+        //    });
+        //});
     }
 
     function loadConversationInfo(userIds) {
@@ -90,12 +102,26 @@
     }
 
     return {
+        initApplicationByVkLogin: function () {
+            var that = this;
+            VK.init({
+                apiId: context.applicationId
+            });
+            VK.Auth.login(function () {
+                that.initUser();
+            });
+        },
+
         initApplication: function (accessToken) {
             VK.init({
                 apiId: context.applicationId
             });
+            VK.Auth.login(function() {
+
+            });
             callService.init(accessToken);
         },
+
         initUser: function () {
 
             VK.Auth.getLoginStatus(function (resp) {

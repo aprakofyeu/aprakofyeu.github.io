@@ -40,7 +40,9 @@ input.url-input {
     width: 500px;
 }
 
-.hidden {
+.hidden,
+.row.hidden,
+.panel .row.hidden {
     display: none;
 }
 
@@ -175,6 +177,7 @@ input.url-input {
     }
 
     .user .info-panel,
+    .user .actions-panel,
     .user .status-panel {
         vertical-align: top;
         padding-top: 10px;

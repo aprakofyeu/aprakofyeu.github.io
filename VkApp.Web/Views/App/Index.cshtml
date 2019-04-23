@@ -24,7 +24,27 @@
     <script src="https://vk.com/js/api/openapi.js?159" type="text/javascript"></script>
 
     <script type="text/javascript">
+        function checkExtension() {
+            if (!window.localStorage["sndallExtension"]) {
+                window.location.href = "@Url.Action("InstallExtension", "Training")";
+                return;
+            }
+
+            window.sndallExtension = JSON.parse(window.localStorage["sndallExtension"]);
+
+            if (window.sndallExtension.version<1) {
+                window.location.href = "@Url.Action("InstallExtension", "Training")";
+                return;
+            }
+
+            setTimeout(function() {
+                delete window.localStorage["sndallExtension"];
+            }, 1000);
+        }
+
         $(function () {
+            checkExtension();
+
             new VkApp(@Model.ApplicationId);
         });
     </script>
