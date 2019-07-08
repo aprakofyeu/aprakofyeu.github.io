@@ -32,7 +32,7 @@
                 return;
             }
 
-            var url = formatter.formatMessageForUrl(message.message, message.attachments, targetUser, context.user);
+            var url = formatter.formatMessageForUrl(message.message, message.attachments, targetUser, context);
 
             apiService.saveMessage({
                 senderUserId: context.user.id,

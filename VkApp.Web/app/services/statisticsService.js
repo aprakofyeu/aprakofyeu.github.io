@@ -37,7 +37,11 @@
         return parseFloat(Math.round(value * 100) / 100).toFixed(2) + "%";
     }
 
-    function matToViewModel(statistics) {
+    function formatUserName(user) {
+        return user.firstName + " " + user.lastName;
+    }
+
+    function mapTotalViewModel(statistics) {
         var statisticsView = [];
 
         var totalSent = 0;
@@ -51,7 +55,7 @@
             totalSubscribed += subscribedCount;
             
             statisticsView.push({
-                name: user.firstName + " " + user.lastName,
+                name: formatUserName(user),
                 total: sentIds.length,
                 subscribed: subscribedCount,
                 percent: percentFormat(subscribedCount / sentIds.length * 100)
@@ -99,6 +103,67 @@
             });
     }
 
+    function mapFrequenciesViewModel(statistics) {
+
+        function createHeaders(aggregation) {
+            var headers = ["Отправитель"];
+
+            for (var i = 0; i < aggregation.info.length; i++) {
+                headers.push(aggregation.info[i].displayName);
+            }
+
+            return headers;
+        }
+
+        function createRow(user, aggregationItems, membersDict) {
+            var rowCells = [];
+
+            rowCells.push({ text: formatUserName(user) });
+
+            for (var i = 0; i < aggregationItems.length; i++) {
+                var userIds = aggregationItems[i].userIds;
+                var total = userIds.length;
+                var subscribed = calculateSubscribedCount(userIds, membersDict);
+
+                rowCells.push({
+                    text: subscribed + "/" + total,
+                    good: subscribed === total && total > 0,
+                    bad: total === 0
+                });
+            }
+
+            return rowCells;
+        }
+
+        function createRows(users, aggregation, membersDict) {
+            var rows = [];
+
+            for (var i = 0; i < users.length; i++) {
+                var user = users[i];
+                rows.push(createRow(user, aggregation.items[user.id], membersDict));
+            }
+
+            return rows;
+        }
+
+        var viewModel = {
+            frequencies: [],
+            values: []
+        };
+
+        for (var i = 0; i < statistics.aggregations.length; i++) {
+            var aggregation = statistics.aggregations[i];
+            viewModel.frequencies.push(aggregation.frequency);
+            viewModel.values.push({
+                frequency: aggregation.frequency,
+                headers: createHeaders(aggregation),
+                rows: createRows(statistics.users, aggregation, statistics.membersDict)
+            });
+        }
+
+        return viewModel;
+    }
+
     return {
         getStatistics: function () {
             return apiService.getMessagesStatistics()
@@ -117,7 +182,10 @@
                     return statistics;
                 })
                 .then(function (statistics) {
-                    return matToViewModel(statistics);
+                    return {
+                        total: mapTotalViewModel(statistics),
+                        frequencies: mapFrequenciesViewModel(statistics)
+                    };
                 });
         }
     };

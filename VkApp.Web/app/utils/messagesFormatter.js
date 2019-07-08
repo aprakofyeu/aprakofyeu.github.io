@@ -37,7 +37,7 @@ MessagesFormatter.prototype.formatAttachments = function (attachments) {
         : null;
 };
 
-MessagesFormatter.prototype.formatMessageForUrl = function (message, attachments, targetUser, user) {
+MessagesFormatter.prototype.formatMessageForUrl = function (message, attachments, targetUser, context) {
     function splitId(id) {
         return id
             .replace("photo", "photo;")
@@ -46,7 +46,7 @@ MessagesFormatter.prototype.formatMessageForUrl = function (message, attachments
             .split(";");
     }
 
-    var parameters = ["sel=" + targetUser.id, "sndall_vkid=" + user.id];
+    var parameters = ["sel=" + targetUser.id, "sndall_vkuserid=" + context.user.id, "sndall_groupid=" + context.targetGroup.id];
 
     var formattedMessage = escape(this.format(message, targetUser));
     parameters.push("sndall_message=" + formattedMessage);

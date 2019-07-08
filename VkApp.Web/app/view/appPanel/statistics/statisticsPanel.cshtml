@@ -10,15 +10,25 @@
     </div>
 
     <div class="row" id="statisticsPanel">
+        <div class="row">
+            Общая статистика:
+        </div>
+    </div>
+
+    <div class="row hidden" id="frequenciesStatisticsPanel">
+        <div class="row" style="padding-top: 20px;">
+            Статистика по периодам:
+            <select id="selectFrequency"></select>
+        </div>
     </div>
 
     <script id="statisticsTemplate" type="text/x-jquery-tmpl">
-        <table class="grid">
+        <table class="grid" style="width: 1050px;">
             <tr class="header">
-                <td style="width: 300px">Отправитель</td>
-                <td style="width: 200px">Всего отправлено</td>
-                <td style="width: 200px">Из них подписалось</td>
-                <td style="width: 200px">Процент</td>
+                <td style="width: 25%">Отправитель</td>
+                <td style="width: 25%">Всего отправлено</td>
+                <td style="width: 25%">Из них подписалось</td>
+                <td style="width: 25%">Процент</td>
             </tr>
             {{each statistics}}
             <tr {{if $value.isTotals}}class="totals"{{/if}}>
@@ -26,6 +36,24 @@
                 <td class="number">${$value.total}</td>
                 <td class="number">${$value.subscribed}</td>
                 <td class="number">${$value.percent}</td>
+            </tr>
+            {{/each}}
+        </table>
+    </script>
+
+    <script id="frequencyStatisticsTemplate" type="text/x-jquery-tmpl">
+        <table class="grid" style="width: 1050px; overflow-x: auto;">
+            <tr class="header">
+                {{each headers}}
+                <td>${$value}</td>
+                {{/each}}
+            </tr>
+            {{each rows}}
+            <tr>
+                {{each $value}}
+                <td {{if $value.bad}}class="bad-result"{{/if}}
+                    {{if $value.good}}class="good-result"{{/if}}>${$value.text}</td>
+                {{/each}}
             </tr>
             {{/each}}
         </table>

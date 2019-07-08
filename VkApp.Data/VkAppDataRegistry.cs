@@ -3,6 +3,7 @@ using NHibernate;
 using StructureMap;
 using StructureMap.Web;
 using VkApp.Data.DataProviders;
+using VkApp.Data.Statistics;
 using VkApp.Web.DependencyResolution;
 
 namespace VkApp.Data
@@ -13,6 +14,8 @@ namespace VkApp.Data
         {
             RegisterDb();
 
+            For<ICultureInfoProvider>().Use<CultureInfoProvider>();
+
             For<Random>().Use<Random>().Singleton();
 
             For<IApplicationsProvider>().Use<ApplicationsProvider>();
@@ -20,6 +23,10 @@ namespace VkApp.Data
             For<IGroupProvider>().Use<GroupProvider>();
             For<IUserProvider>().Use<UserProvider>();
             For<IUserSavedMessagesProvider>().Use<UserSavedMessagesProvider>();
+
+            For<IMessagesAggregator>().Use<MessagesAggregator>();
+            For<IFrequencyAggregator>().Use<DailyAggregator>();
+            For<IFrequencyAggregator>().Use<MonthlyAggregator>();
         }
 
         private void RegisterDb()

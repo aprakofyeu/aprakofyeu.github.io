@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VkApp.Data.DataProviders;
+using VkApp.Data.Statistics;
 using VkApp.Web.Models;
 
 namespace VkApp.Web.Controllers.api
@@ -14,15 +15,18 @@ namespace VkApp.Web.Controllers.api
         private readonly IMessagesProvider _messagesProvider;
         private readonly IApplicationsProvider _applicationsProvider;
         private readonly IUserProvider _userProvider;
+        private readonly IMessagesAggregator _messagesAggregator;
 
         public MessagesController(
             IMessagesProvider messagesProvider,
             IApplicationsProvider applicationsProvider,
-            IUserProvider userProvider)
+            IUserProvider userProvider,
+            IMessagesAggregator messagesAggregator)
         {
             _messagesProvider = messagesProvider;
             _applicationsProvider = applicationsProvider;
             _userProvider = userProvider;
+            _messagesAggregator = messagesAggregator;
         }
 
         [HttpPost]
@@ -40,17 +44,17 @@ namespace VkApp.Web.Controllers.api
 
         [HttpGet]
         [Route("haveMessages")]
-        public JsonResult HaveMessagesByGroup(int targetGroupId, int targetUserId)
+        public JsonResult HaveMessagesByGroup(int targetGroupId, int senderUserId, int targetUserId)
         {
-            var haveMessages = _messagesProvider.HaveUserMessagesByGroup(targetGroupId, targetUserId);
+            var haveMessages = _messagesProvider.HaveUserMessagesByGroupOrSender(targetGroupId, senderUserId, targetUserId);
             return Json(haveMessages, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [Route("usersWithoutMessages")]
-        public JsonResult GetUsersWithoutMessagesByGroup(int targetGroupId, IEnumerable<int> userIds)
+        public JsonResult GetUsersWithoutMessagesByGroup(int targetGroupId, int senderUserId, IEnumerable<int> userIds)
         {
-            var resultUserIds = _messagesProvider.GetUsersWithoutMessagesByGroup(targetGroupId, userIds);
+            var resultUserIds = _messagesProvider.GetUsersWithoutMessagesByGroupOrSender(targetGroupId, senderUserId, userIds);
             return Json(resultUserIds);
         }
 
@@ -67,8 +71,20 @@ namespace VkApp.Web.Controllers.api
                     .GroupBy(x => x.VkSenderId)
                     .ToDictionary(x => x.Key, x => x.Select(y => y.VkTargetUserId)),
 
-                users = users.Select(x => new { Id = x.VkUserId, x.FirstName, x.LastName })
+                aggregations = _messagesAggregator.AggregateByFrequencies(messages),
+
+                users = users.Select(x => new { Id = x.VkUserId, x.FirstName, x.LastName }),
             });
+        }
+
+        [HttpGet]
+        [Route("undoMessage")]
+        public ViewResult UndoMessage(int targetGroupId, int targetUserId)
+        {
+            _messagesProvider.UndoMessage(targetGroupId, targetUserId);
+
+            ViewBag.UserLink = $"http://vk.com/id{targetUserId}";
+            return View("UndoMessage");
         }
     }
 }

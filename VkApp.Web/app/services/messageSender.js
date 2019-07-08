@@ -85,7 +85,7 @@
                         reject(error);
                     });
             } else {
-                apiService.haveMessagesByGroup(context.targetGroup.id, user.id)
+                apiService.haveMessagesByCurrentGroup(user.id)
                     .then(function (haveMessages) {
                         if (!haveMessages) {
                             return callService.call("messages.send",

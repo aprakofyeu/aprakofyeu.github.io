@@ -12,9 +12,10 @@ namespace VkApp.Data.DataProviders
         bool AddMessage(int vkUserId, int vkTargetGroupId, int vkTargetUserId);
         void AddMessages(IEnumerable<Message> messages);
         bool IsUserMessagesInitialized(int userId);
-        IEnumerable<int> GetUsersWithoutMessagesByGroup(int targetGroupId, IEnumerable<int> userIds);
-        bool HaveUserMessagesByGroup(int targetGroupId, int targetUserId);
+        IEnumerable<int> GetUsersWithoutMessagesByGroupOrSender(int targetGroupId, int senderUserId, IEnumerable<int> userIds);
+        bool HaveUserMessagesByGroupOrSender(int targetGroupId, int senderUserId, int targetUserId);
         IEnumerable<Message> GetAllMessagesByGroup(int targetGroupId);
+        void UndoMessage(int targetGroupId, int targetUserId);
     }
 
     internal class MessagesProvider : IMessagesProvider
@@ -28,7 +29,7 @@ namespace VkApp.Data.DataProviders
 
         public bool AddMessage(int vkUserId, int vkTargetGroupId, int vkTargetUserId)
         {
-            if (HaveUserMessagesByGroup(vkTargetGroupId, vkTargetUserId))
+            if (HaveUserMessagesByGroupOrSender(vkTargetGroupId, vkUserId, vkTargetUserId))
                 return false;
 
             _session.Save(new Message
@@ -91,16 +92,17 @@ namespace VkApp.Data.DataProviders
                 .UniqueResult<bool>();
         }
 
-        public IEnumerable<int> GetUsersWithoutMessagesByGroup(int targetGroupId, IEnumerable<int> userIds)
+        public IEnumerable<int> GetUsersWithoutMessagesByGroupOrSender(int targetGroupId, int senderUserId, IEnumerable<int> userIds)
         {
             if (userIds == null || !userIds.Any())
                 return Enumerable.Empty<int>();
 
             var usersWithMessagesDict = _session
-                .CreateSQLQuery(@"SELECT VkTargetUserId FROM Messages
-                                  WHERE VkTargetGroupId = :targetGroupId
+                .CreateSQLQuery(@"SELECT DISTINCT VkTargetUserId FROM Messages
+                                  WHERE (VkTargetGroupId = :targetGroupId OR VkSenderId = :senderUserId)
                                   AND VkTargetUserId IN (:userIds)")
                 .SetParameter("targetGroupId", targetGroupId)
+                .SetParameter("senderUserId", senderUserId)
                 .SetParameterList("userIds", userIds)
                 .List<int>()
                 .ToDictionary(x => x);
@@ -110,13 +112,14 @@ namespace VkApp.Data.DataProviders
                 .ToList();
         }
 
-        public bool HaveUserMessagesByGroup(int targetGroupId, int targetUserId)
+        public bool HaveUserMessagesByGroupOrSender(int targetGroupId, int senderUserId, int targetUserId)
         {
             var messagesCount = _session
                 .CreateSQLQuery(@"SELECT COUNT(*) FROM Messages
-                                  WHERE VkTargetGroupId = :targetGroupId
+                                  WHERE (VkTargetGroupId = :targetGroupId OR VkSenderId = :senderUserId)
                                   AND VkTargetUserId = :targetUserId")
                 .SetParameter("targetGroupId", targetGroupId)
+                .SetParameter("senderUserId", senderUserId)
                 .SetParameter("targetUserId", targetUserId)
                 .UniqueResult<int>();
 
@@ -128,6 +131,17 @@ namespace VkApp.Data.DataProviders
             return _session.QueryOver<Message>()
                 .Where(x => x.VkTargetGroupId == targetGroupId)
                 .List();
+        }
+
+        public void UndoMessage(int targetGroupId, int targetUserId)
+        {
+            _session
+                .CreateSQLQuery(@"DELETE FROM Messages
+                                    WHERE VkTargetGroupId = :targetGroupId
+                                    AND VkTargetUserId = :targetUserId")
+                .SetParameter("targetGroupId", targetGroupId)
+                .SetParameter("targetUserId", targetUserId)
+                .ExecuteUpdate();
         }
     }
 }

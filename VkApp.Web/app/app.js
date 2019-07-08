@@ -29,7 +29,7 @@
     var authenticationController = new AuthenticationController(initializationService, inputsHelper, urlHelper, eventBroker);
     var initializationProgressController = new InitializationProgressController(progressBarHelper, eventBroker);
     var appPanelController = new AppPanelController(eventBroker);
-    var statisticsPanelController = new StatisticsPanelController(statisticsService, progressBarHelper, eventBroker);
+    var statisticsPanelController = new StatisticsPanelController(statisticsService, inputsHelper, progressBarHelper, eventBroker);
     var instrumentsPanelController = new InstrumentsPanelController(urlHelper, inputsHelper, callService, context, eventBroker);
 
 

@@ -381,6 +381,15 @@ table {
             padding: 2px 10px;
         }
 
+        table.grid td.bad-result {
+            color: coral;
+        }
+
+        table.grid td.good-result {
+            color: mediumseagreen;
+            font-weight: bold;
+        }
+
         table.grid .header {
             background-color: #edeef0;
         }

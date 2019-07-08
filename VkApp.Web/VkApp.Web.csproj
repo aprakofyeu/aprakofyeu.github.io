@@ -143,6 +143,7 @@
     <Compile Include="App_Start\JsonContentNegotiator.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapConfig.cs" />
+    <Compile Include="ChromeExtensionsVersionProvider.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\api\GroupsController.cs" />
     <Compile Include="Controllers\api\MessagesController.cs" />
@@ -259,6 +260,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Training\Index.cshtml" />
     <Content Include="Views\Training\InstallExtension.cshtml" />
+    <Content Include="Views\Messages\UndoMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VkApp.Data\VkApp.Data.csproj">

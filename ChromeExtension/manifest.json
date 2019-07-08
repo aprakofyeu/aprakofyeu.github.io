@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
   "name": "SendAll Extension",
-  "version": "0.1",
+  "version": "1.0",
   "content_scripts": [
     {
       "matches": [ "https://vk.com/im?*" ],
       "js": [ "jquery.js", "content.js" ]
     },
     {
-      "matches": [ "http://localhost/vkapp/", "http://www.sndall.ru/" ],
+      "matches": [ "http://www.sndall.ru/" ],
       "js": [ "jquery.js", "flag.js" ]
     }
   ]

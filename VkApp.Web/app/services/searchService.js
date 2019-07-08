@@ -81,7 +81,7 @@
                 if (searchParameters.noMessagesByTargetGroup) {
                     var userIds = users.map(function (user) { return user.id; });
 
-                    return apiService.getUsersWithoutMessagesByGroup(context.targetGroup.id, userIds)
+                    return apiService.getUsersWithoutMessagesByCurrentGroup(userIds)
                         .then(function (userIdsWithoutMessages) {
                             var userIdsWithoutMessagesDict = {};
                             userIdsWithoutMessages.forEach(function (x) {

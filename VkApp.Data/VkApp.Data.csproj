@@ -70,6 +70,12 @@
     <Compile Include="NHibernateContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataProviders\UserProvider.cs" />
+    <Compile Include="Statistics\AggregationItem.cs" />
+    <Compile Include="Statistics\CultureInfoProvider.cs" />
+    <Compile Include="Statistics\DailyAggregator.cs" />
+    <Compile Include="Statistics\IFrequencyAggregator.cs" />
+    <Compile Include="Statistics\MessagesAggregator.cs" />
+    <Compile Include="Statistics\MonthlyAggregator.cs" />
     <Compile Include="VkAppDataRegistry.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -38,11 +38,11 @@
         getMessagesStatistics: function () {
             return get("api/messages/getAll", { targetGroupId: context.targetGroup.id });
         },
-        getUsersWithoutMessagesByGroup: function (targetGroupId, userIds) {
-            return post("api/messages/usersWithoutMessages", { targetGroupId: targetGroupId, userIds: userIds });
+        getUsersWithoutMessagesByCurrentGroup: function (userIds) {
+            return post("api/messages/usersWithoutMessages", { targetGroupId: context.targetGroup.id, senderUserId: context.user.id, userIds: userIds });
         },
-        haveMessagesByGroup: function (targetGroupId, targetUserId) {
-            return get("api/messages/haveMessages", { targetGroupId: targetGroupId, targetUserId: targetUserId });
+        haveMessagesByCurrentGroup: function (targetUserId) {
+            return get("api/messages/haveMessages", { targetGroupId: context.targetGroup.id, senderUserId: context.user.id, targetUserId: targetUserId });
         },
         saveMessage: function (messageInfo) {
             if (context.settings.debugMode) {

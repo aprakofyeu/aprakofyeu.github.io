@@ -32,17 +32,18 @@
 
             window.sndallExtension = JSON.parse(window.localStorage["sndallExtension"]);
 
-            if (window.sndallExtension.version<1) {
+            if (window.sndallExtension.version < @ChromeExtensions.Version) {
                 window.location.href = "@Url.Action("InstallExtension", "Training")";
                 return;
             }
 
             setTimeout(function() {
-                delete window.localStorage["sndallExtension"];
-            }, 1000);
+                    delete window.localStorage["sndallExtension"];
+                },
+                1000);
         }
 
-        $(function () {
+        $(function() {
             checkExtension();
 
             new VkApp(@Model.ApplicationId);
