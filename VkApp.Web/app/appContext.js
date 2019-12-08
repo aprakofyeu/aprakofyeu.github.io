@@ -6,8 +6,7 @@
         settings: {
             sendInterval: 30,
             saveLastMessage: true,
-            debugMode: false,
-            initializationStartPeriod: new Date(2018, 11, 6)//6 december 2018
+            debugMode: false
         },
         searchResult: {},
         conversations: {

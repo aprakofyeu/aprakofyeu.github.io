@@ -1,0 +1,40 @@
+﻿@model  IEnumerable<VkApp.Web.Models.GroupView>
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<div class="panel">
+    @Html.ActionLink("Admin", "Index", "Admin") > <label class="title">Groups</label>
+    <br/>
+
+
+    <div class="row">
+        <table class="grid">
+            <tr class="header">
+                <td style="width: 500px">Name</td>
+                <td style="width: 300px">Actions</td>
+            </tr>
+
+            @foreach (var group in Model)
+            {
+                <tr>
+                    <td><b>@group.Name</b></td>
+                    <td class="actions">
+
+                        @Html.ActionLink("Edit", "Edit", new {groupId = group.Id})
+
+                    </td>
+                </tr>
+            }
+        </table>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+

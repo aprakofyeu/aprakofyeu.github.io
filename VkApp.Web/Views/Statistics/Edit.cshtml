@@ -4,7 +4,10 @@
 }
 
 <div class="panel">
-    <label class="title">@(Model.StatisticsGroup.Id.HasValue ? "Edit" : "Create") statistics group for '@Model.Group.Name'</label>
+    @Html.ActionLink("Admin", "Index", "Admin") >
+    @Html.ActionLink("Statistics", "Index") >
+    @Html.ActionLink(Model.Group.Name, "ForGroup", new { groupId = Model.Group.VkGroupId }) >
+    <label class="title">@(Model.StatisticsGroup.Id.HasValue ? "Edit" : "Create") statistics group</label>
 
     @if (!string.IsNullOrEmpty(@Model.ErrorMessage))
     {

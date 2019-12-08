@@ -1,0 +1,42 @@
+﻿@model  VkApp.Web.Models.GroupView
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<div class="panel">
+    @Html.ActionLink("Admin", "Index", "Admin") > @Html.ActionLink("Groups", "Index") > <label class="title">@Model.Name</label>
+
+    <br/>
+    <label class="title">Edit group</label>
+
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="row">
+            <div class="summary fail visible">Error: @ViewBag.ErrorMessage</div>
+        </div>
+    }
+
+    <div class="row edit-form">
+        @using (Html.BeginForm("Save", "Groups"))
+        {
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="row" >
+                <label for="Name">Name</label>
+                @Html.TextBoxFor(m => m.Name)
+            </div>
+
+            <div class="row">
+                <button type="submit" class="active-button">Save changes</button>
+                @Html.ActionLink("Cancel", "Index")
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+
+
+

@@ -4,7 +4,7 @@
 }
 
 <div class="panel">
-    <label class="title">Applications</label>
+    @Html.ActionLink("Admin", "Index", "Admin") > <label class="title">Applications</label>
 
     @if (!string.IsNullOrEmpty(@Model.Error))
     {
@@ -28,13 +28,13 @@
                     <td><b>@application.Id</b></td>
                     <td><b>@application.Name</b></td>
                     <td><b>@application.Count</b></td>
-                    <td>@Html.ActionLink("Remove", "RemoveApplication", new {id = application.Id})</td>
+                    <td>@Html.ActionLink("Remove", "RemoveApplication", new { id = application.Id })</td>
                 </tr>
             }
         </table>
     </div>
-    
-    <br/>
+
+    <br />
     <label class="title">Add application:</label>
 
     <div class="row">

@@ -115,6 +115,10 @@ input.url-input {
     color: #777;
 }
 
+.panel .edit-form input {
+    width: 400px;
+}
+
 .row,
 .panel .row {
     margin: 10px 0;

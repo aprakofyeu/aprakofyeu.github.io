@@ -145,12 +145,13 @@
     <Compile Include="App_Start\StructuremapConfig.cs" />
     <Compile Include="ChromeExtensionsVersionProvider.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\api\GroupsController.cs" />
+    <Compile Include="Controllers\api\GroupsApiController.cs" />
     <Compile Include="Controllers\api\MessagesController.cs" />
     <Compile Include="Controllers\api\StatisticsApiController.cs" />
     <Compile Include="Controllers\api\UserSavedMessagesController.cs" />
     <Compile Include="Controllers\api\UserController.cs" />
     <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\TrainingController.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Models\ApplicationsView.cs" />
     <Compile Include="Models\AppView.cs" />
     <Compile Include="Models\ApiModels.cs" />
+    <Compile Include="Models\GroupsView.cs" />
     <Compile Include="Models\StatisticsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -265,6 +267,8 @@
     <Content Include="Views\Statistics\Index.cshtml" />
     <Content Include="Views\Statistics\ForGroup.cshtml" />
     <Content Include="Views\Statistics\Edit.cshtml" />
+    <Content Include="Views\Groups\Index.cshtml" />
+    <Content Include="Views\Groups\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VkApp.Data\VkApp.Data.csproj">

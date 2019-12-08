@@ -7,12 +7,12 @@ using VkApp.Web.Models;
 namespace VkApp.Web.Controllers.api
 {
     [RoutePrefix("api/groups")]
-    public class GroupsController: Controller
+    public class GroupsApiController: Controller
     {
         private readonly IInitializationService _initializationService;
         private readonly IGroupProvider _groupProvider;
 
-        public GroupsController(
+        public GroupsApiController(
             IInitializationService initializationService,
             IGroupProvider groupProvider)
         {
