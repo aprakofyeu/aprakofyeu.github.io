@@ -147,9 +147,11 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\api\GroupsController.cs" />
     <Compile Include="Controllers\api\MessagesController.cs" />
+    <Compile Include="Controllers\api\StatisticsApiController.cs" />
     <Compile Include="Controllers\api\UserSavedMessagesController.cs" />
     <Compile Include="Controllers\api\UserController.cs" />
     <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\TrainingController.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="DependencyResolution\VkAppRegistry.cs" />
@@ -160,13 +162,14 @@
     <Compile Include="Models\ApplicationsView.cs" />
     <Compile Include="Models\AppView.cs" />
     <Compile Include="Models\ApiModels.cs" />
+    <Compile Include="Models\StatisticsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\services\cachedStatisticsDataLoader.js" />
     <Content Include="app\services\manualMessageSender.js" />
     <Content Include="app\services\statisticsService.js" />
     <Content Include="app\services\targetGroupsProvider.js" />
-    <Content Include="app\utils\dateFornatter.js" />
     <Content Include="app\utils\inputsHelper.js" />
     <Content Include="app\utils\progressBarHelper.js" />
     <Content Include="app\view\appPanel\appPanelController.js" />
@@ -176,7 +179,6 @@
     <Content Include="app\view\appPanel\statistics\statisticsPanelController.js" />
     <Content Include="app\view\authenticationPanel\authenticationController.js" />
     <Content Include="app\view\initializationPanel\initializationController.js" />
-    <Content Include="app\view\initializationProgressPanel\initializationProgressController.js" />
     <Content Include="Content\images\extension-img1.jpg" />
     <Content Include="Content\images\icons.v2.png" />
     <Content Include="Content\images\loading.gif" />
@@ -220,7 +222,6 @@
     <Content Include="app\view\appPanel\results\results.cshtml" />
     <Content Include="app\view\appPanel\message\message.cshtml" />
     <Content Include="app\view\appPanel\settings\settings.cshtml" />
-    <Content Include="app\view\initializationProgressPanel\initializationProgressPanel.cshtml" />
     <None Include="jquery\jquery-3.3.1.intellisense.js" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
@@ -261,6 +262,9 @@
     <Content Include="Views\Training\Index.cshtml" />
     <Content Include="Views\Training\InstallExtension.cshtml" />
     <Content Include="Views\Messages\UndoMessage.cshtml" />
+    <Content Include="Views\Statistics\Index.cshtml" />
+    <Content Include="Views\Statistics\ForGroup.cshtml" />
+    <Content Include="Views\Statistics\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VkApp.Data\VkApp.Data.csproj">

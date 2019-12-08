@@ -1,0 +1,53 @@
+﻿@model  VkApp.Web.Models.StatisticsView
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<div class="panel">
+    @Html.ActionLink("Statistics", "Index") > <label class="title">@Model.Group.Name</label>
+    <br/>
+
+
+    <div class="row">
+        <table class="grid">
+            <tr class="header">
+                <td style="width: 200px">Name</td>
+                <td style="width: 300px">Users</td>
+                <td style="width: 300px">Actions</td>
+            </tr>
+
+            @foreach (var statisticsGroup in Model.StatisticsGroups)
+            {
+                <tr>
+                    <td><b>@statisticsGroup.Name</b></td>
+                    <td>
+                        @foreach (var userId in statisticsGroup.SelectedUsers)
+                        {
+                            var user = Model.UsersDict[userId];
+                            @user.FirstName @user.LastName
+                            <a href="@($"http://vk.com/id{user.VkUserId}")">@user.VkUserId</a>
+                            <br />
+                        }
+                    </td>
+                    <td class="actions">
+                        @if (statisticsGroup.Id.HasValue)
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { statisticsGroupId = statisticsGroup.Id })
+                            @Html.ActionLink("Remove", "Remove", new { statisticsGroupId = statisticsGroup.Id })
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+
+        @Html.ActionLink("Add new", "Create", new { groupId = Model.Group.VkGroupId })
+    </div>
+
+
+</div>
+
+
+
+
+
+

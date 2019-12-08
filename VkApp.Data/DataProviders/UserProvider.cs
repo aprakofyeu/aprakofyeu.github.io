@@ -10,6 +10,7 @@ namespace VkApp.Data.DataProviders
         User GetUser(int userId);
         void Save(User user);
         IEnumerable<User> GetUsersByGroup(int targetGroupId);
+        IEnumerable<User> GetUsersByStatisticsGroup(int statisticsGroupId);
     }
 
     internal class UserProvider: IUserProvider
@@ -53,6 +54,23 @@ namespace VkApp.Data.DataProviders
                 .SetParameter("targetGroupId", targetGroupId)
                 .List<int>();
 
+            return LoadUsers(userIds);
+        }
+
+        public IEnumerable<User> GetUsersByStatisticsGroup(int statisticsGroupId)
+        {
+            var userIds = _session
+                .CreateSQLQuery(@"SELECT DISTINCT UserId
+                                FROM StatisticsGroupUsers
+                                WHERE StatisticsGroupId=:statisticsGroupId")
+                .SetParameter("statisticsGroupId", statisticsGroupId)
+                .List<int>();
+
+            return LoadUsers(userIds);
+        }
+
+        private IEnumerable<User> LoadUsers(IList<int> userIds)
+        {
             return _session
                 .QueryOver<User>()
                 .WhereRestrictionOn(x => x.VkUserId).IsInG(userIds)

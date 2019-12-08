@@ -1,0 +1,63 @@
+﻿@model VkApp.Web.Models.StatisticsGroupEditView
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<div class="panel">
+    <label class="title">@(Model.StatisticsGroup.Id.HasValue ? "Edit" : "Create") statistics group for '@Model.Group.Name'</label>
+
+    @if (!string.IsNullOrEmpty(@Model.ErrorMessage))
+    {
+        <div class="row">
+            <div class="summary fail visible">Error: @Model.ErrorMessage</div>
+        </div>
+    }
+
+    <div class="row">
+        @using (Html.BeginForm("Save", "Statistics"))
+        {
+            @Html.Hidden("Id", Model.StatisticsGroup.Id)
+            @Html.Hidden("TargetGroupId", Model.Group.VkGroupId)
+
+            <div class="row">
+                <label for="Name">Name</label>
+                @Html.TextBox("Name", Model.StatisticsGroup.Name)
+            </div>
+
+            <div class="row">
+                <table class="grid">
+                    <tr class="header">
+                        <td style="width: 100px"></td>
+                        <td style="width: 300px">User</td>
+                        <td style="width: 300px">UserId</td>
+                    </tr>
+                    @foreach (var user in Model.UsersDict)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox"
+                                       name="SelectedUsers"
+                                       value="@user.Value.VkUserId"
+                                       @(Model.StatisticsGroup.SelectedUsers.Contains(user.Key) ? "checked" : "") />
+                            </td>
+                            <td>
+                                @user.Value.FirstName @user.Value.LastName
+                            </td>
+                            <td>
+                                <a href="@($"http://vk.com/id{user.Value.VkUserId}")" target="_blank">@user.Value.VkUserId</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <button type="submit" class="active-button">Save changes</button>
+                @Html.ActionLink("Cancel", "ForGroup", new { groupId = Model.Group.VkGroupId })
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+

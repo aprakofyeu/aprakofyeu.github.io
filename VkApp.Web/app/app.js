@@ -2,7 +2,6 @@
     //manual dependency injection region
 
     var urlHelper = new UrlHelper();
-    var dateFormatter = new DateFormatter();
     var inputsHelper = new InputsHelper();
     var progressBarHelper = new ProgressBarHelper();
     var captchaService = new CaptchaService();
@@ -16,8 +15,9 @@
     var progressBar = new MessageProgressBar(context);
     var messageSender = new MessageSender(context, callService, apiService, formatter, progressBar, eventBroker);
     var targetGroupsProvider = new TargetGroupsProvider(callService, apiService, urlHelper, context);
-    var initializationService = new InitializationService(apiService, callService, context, dateFormatter, eventBroker);
-    var statisticsService = new StatisticsService(apiService, callService, context, eventBroker);
+    var initializationService = new InitializationService(apiService, callService, context, eventBroker);
+    var cachedStatisticsDataLoader = new CachedStatisticsDataLoader(context, callService, apiService, eventBroker);
+    var statisticsService = new StatisticsService(cachedStatisticsDataLoader);
 
     var settingsController = new SettingsController(context, apiService, inputsHelper, eventBroker);
     var filtersController = new FiltersController(urlHelper, inputsHelper, searchService, regionsProvider, context, eventBroker);
@@ -27,9 +27,8 @@
     var stepsController = new StepsController(eventBroker);
     var initializationController = new InitializationController(initializationService, targetGroupsProvider, inputsHelper, context, eventBroker);
     var authenticationController = new AuthenticationController(initializationService, inputsHelper, urlHelper, eventBroker);
-    var initializationProgressController = new InitializationProgressController(progressBarHelper, eventBroker);
     var appPanelController = new AppPanelController(eventBroker);
-    var statisticsPanelController = new StatisticsPanelController(statisticsService, inputsHelper, progressBarHelper, eventBroker);
+    var statisticsPanelController = new StatisticsPanelController(statisticsService, context, inputsHelper, progressBarHelper, eventBroker);
     var instrumentsPanelController = new InstrumentsPanelController(urlHelper, inputsHelper, callService, context, eventBroker);
 
 

@@ -1,6 +1,6 @@
 ﻿<div class="panel statistics-panel">
     <label class="title">Статистика</label>
-    
+
     <div class="row">
         <div id="statisticsStatusBar"><div class="progress-label">Загрузка и обработка данных...</div></div>
     </div>
@@ -9,18 +9,32 @@
         <div class="summary fail" style="display: none"></div>
     </div>
 
-    <div class="row" id="statisticsPanel">
+    <div class="hidden" id="statisticsResultsPanel">
         <div class="row">
-            Общая статистика:
+            <label>Показать статистику для:</label>
+            <select id="selectedStatisticsGroups"></select>
+        </div>
+
+        <div class="row" id="statisticsPanel">
+            <div class="row">
+                Общая статистика:
+            </div>
+        </div>
+
+        <div class="row" id="frequenciesStatisticsPanel">
         </div>
     </div>
 
-    <div class="row hidden" id="frequenciesStatisticsPanel">
+    <script id="frequencySelectionTemplate" type="text/x-jquery-tmpl">
         <div class="row" style="padding-top: 20px;">
             Статистика по периодам:
-            <select id="selectFrequency"></select>
+            <select id="selectFrequency">
+                {{each frequencies}}
+                <option value="${$value.name}" {{if $value.isSelected}} selected="selected" {{/if}}>${$value.name}</option>
+                {{/each}}
+            </select>
         </div>
-    </div>
+    </script>
 
     <script id="statisticsTemplate" type="text/x-jquery-tmpl">
         <table class="grid" style="width: 1050px;">
@@ -31,14 +45,21 @@
                 <td style="width: 25%">Процент</td>
             </tr>
             {{each statistics}}
-            <tr {{if $value.isTotals}}class="totals"{{/if}}>
-                <td>${$value.name}</td>
+            <tr {{if $value.isTotals}} class="totals" {{/if}}>
+                <td>
+                    {{if $value.id>0}}
+                        <a href="http://vk.com/id${$value.id}" target="_blank">${$value.name}</a>
+                    {{else}}
+                        ${$value.name}
+                    {{/if}}
+                </td>
                 <td class="number">${$value.total}</td>
                 <td class="number">${$value.subscribed}</td>
                 <td class="number">${$value.percent}</td>
             </tr>
             {{/each}}
         </table>
+
     </script>
 
     <script id="frequencyStatisticsTemplate" type="text/x-jquery-tmpl">
@@ -51,11 +72,23 @@
             {{each rows}}
             <tr>
                 {{each $value}}
-                <td {{if $value.bad}}class="bad-result"{{/if}}
-                    {{if $value.good}}class="good-result"{{/if}}>${$value.text}</td>
+                <td {{if $value.bad}} class="bad-result" {{/if}}
+                    {{if $value.good}} class="good-result" {{/if}}>
+                    ${$value.text}
+                    {{if $value.percent}}<br/>${$value.percent}{{/if}}
+                </td>
                 {{/each}}
             </tr>
             {{/each}}
+            <tr class="totals">
+                {{each totals}}
+                <td {{if $value.bad}} class="bad-result" {{/if}}
+                    {{if $value.good}} class="good-result" {{/if}}>
+                    ${$value.text}
+                    {{if $value.percent}}<br />${$value.percent}{{/if}}
+                </td>
+                {{/each}}
+            </tr>
         </table>
     </script>
 </div>

@@ -27,14 +27,6 @@ namespace VkApp.Web.Controllers.api
         }
 
         [HttpPost]
-        [Route("initConversations")]
-        public JsonResult InitUserConversations(InitConversationsRequest request)
-        {
-            _initializationService.InitMessagesLegacy(request.SenderId, request.TargetGroupId, request.Conversations);
-            return Json(new { success = true });
-        }
-
-        [HttpPost]
         [Route("update")]
         public JsonResult UpdateUserSettings(UserSettingsRequest userSettings)
         {

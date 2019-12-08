@@ -11,6 +11,7 @@ namespace VkApp.Data.DataProviders
         void AddGroupSafe(Group group);
         IEnumerable<Group> GetAll();
         int GetPreferredGroup(int userId);
+        Group GetById(int groupId);
     }
 
     internal class GroupProvider: IGroupProvider
@@ -47,6 +48,11 @@ namespace VkApp.Data.DataProviders
                                 ORDER BY SentDate DESC")
                 .SetParameter("VkSenderId", userId)
                 .UniqueResult<int>();
+        }
+
+        public Group GetById(int groupId)
+        {
+            return _session.Get<Group>(groupId);
         }
     }
 }

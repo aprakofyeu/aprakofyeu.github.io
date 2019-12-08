@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using NHibernate.Transform;
 using VkApp.Data.Model;
 
 namespace VkApp.Data.DataProviders
@@ -10,8 +11,6 @@ namespace VkApp.Data.DataProviders
     public interface IMessagesProvider
     {
         bool AddMessage(int vkUserId, int vkTargetGroupId, int vkTargetUserId);
-        void AddMessages(IEnumerable<Message> messages);
-        bool IsUserMessagesInitialized(int userId);
         IEnumerable<int> GetUsersWithoutMessagesByGroupOrSender(int targetGroupId, int senderUserId, IEnumerable<int> userIds);
         bool HaveUserMessagesByGroupOrSender(int targetGroupId, int senderUserId, int targetUserId);
         IEnumerable<Message> GetAllMessagesByGroup(int targetGroupId);
@@ -46,50 +45,6 @@ namespace VkApp.Data.DataProviders
         private static string ToDbDate(DateTime date)
         {
             return $"'{date:yyyy-MM-dd HH:mm:ss.fff}'";
-        }
-
-        public void AddMessages(IEnumerable<Message> messages)
-        {
-            if (messages == null || !messages.Any())
-            {
-                return;
-            }
-
-            var vkTargetGroupId = messages.First().VkTargetGroupId;
-
-            var existsUsersDict = _session
-                .CreateSQLQuery("SELECT vkTargetUserId FROM Messages WHERE VkTargetGroupId=:VkTargetGroupId")
-                .SetParameter("VkTargetGroupId", vkTargetGroupId)
-                .List<int>()
-                .ToDictionary(x => x);
-
-            messages = messages.Where(x => !existsUsersDict.ContainsKey(x.VkTargetUserId));
-            if (messages.Any())
-            {
-
-                var insertSql = new StringBuilder();
-                foreach (var message in messages)
-                {
-                    insertSql.AppendLine(
-                        "INSERT INTO Messages (VkSenderId, VkTargetGroupId, VkTargetUserId, SentDate) " +
-                        $"VALUES ({message.VkSenderId},{message.VkTargetGroupId},{message.VkTargetUserId},{ToDbDate(message.SentDate)})");
-                }
-
-                _session
-                    .CreateSQLQuery(insertSql.ToString())
-                    .ExecuteUpdate();
-            }
-        }
-
-        public bool IsUserMessagesInitialized(int userId)
-        {
-            return _session
-                .CreateSQLQuery(@"SELECT CASE WHEN EXISTS 
-                                    (SELECT * FROM Messages WHERE VkSenderId = :userId)
-                                THEN CAST(1 AS BIT)
-                                ELSE CAST(0 AS BIT) END")
-                .SetParameter("userId", userId)
-                .UniqueResult<bool>();
         }
 
         public IEnumerable<int> GetUsersWithoutMessagesByGroupOrSender(int targetGroupId, int senderUserId, IEnumerable<int> userIds)

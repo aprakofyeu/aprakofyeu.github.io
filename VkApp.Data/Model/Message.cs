@@ -5,8 +5,6 @@ namespace VkApp.Data.Model
 {
     public class Message
     {
-        public Message() { }
-
         public virtual int VkSenderId { get; set; }
         public virtual int VkTargetUserId { get; set; }
         public virtual int VkTargetGroupId { get; set; }

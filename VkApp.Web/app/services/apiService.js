@@ -26,16 +26,16 @@
         initUser: function (user) {
             return post("api/user/init", user);
         },
-        initUserConversations: function (data) {
-            return post("api/user/initConversations", data);
-        },
         loadTargetGroups: function () {
             return get("api/groups/all");
         },
         addTargetGroup: function (group) {
             return post("api/groups/add", group);
         },
-        getMessagesStatistics: function () {
+        getStatisticsGroups: function() {
+            return get("api/statistics/groups", { targetGroupId: context.targetGroup.id });
+        },
+        getAllMessages: function () {
             return get("api/messages/getAll", { targetGroupId: context.targetGroup.id });
         },
         getUsersWithoutMessagesByCurrentGroup: function (userIds) {

@@ -2,9 +2,7 @@
     authenticationCompleted: "authenticationCompleted",
     authenticationError: "authenticationError",
 
-    initializationStart: "initializationStart",
     initializationStatus: "initializationStatus",
-    initializationMessagesStart: "initializationMessagesStart",
     initializationCompleted: "initializationCompleted",
     initializationError: "initializationError",
 
@@ -20,6 +18,7 @@
 
     showStatistics: "showStatistics",
     statisticsStatus: "statisticsStatus",
+    startLoadingStatistics: "startLoadingStatistics",
 
     showInstruments: "showInstruments",
 
@@ -29,6 +28,5 @@
 VkAppSteps = {
     authentication: "authentication",
     initialization: "initialization",
-    initializationProgress: "initializationProgress",
     app:"app"
 }

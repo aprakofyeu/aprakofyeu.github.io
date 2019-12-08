@@ -1,0 +1,22 @@
+﻿@model  IEnumerable<VkApp.Data.Model.Group>
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<div class="panel">
+    <label class="title">Statistics</label>
+
+    @foreach (var group in Model)
+    {
+        <div class="row">
+            @Html.ActionLink(group.Name, "ForGroup", new { groupId = group.VkGroupId })
+        </div>
+    }
+
+</div>
+
+
+
+
+
+

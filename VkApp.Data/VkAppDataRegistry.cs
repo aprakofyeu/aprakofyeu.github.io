@@ -23,10 +23,12 @@ namespace VkApp.Data
             For<IGroupProvider>().Use<GroupProvider>();
             For<IUserProvider>().Use<UserProvider>();
             For<IUserSavedMessagesProvider>().Use<UserSavedMessagesProvider>();
+            For<IStatisticsProvider>().Use<StatisticsProvider>();
 
             For<IMessagesAggregator>().Use<MessagesAggregator>();
             For<IFrequencyAggregator>().Use<DailyAggregator>();
             For<IFrequencyAggregator>().Use<MonthlyAggregator>();
+            For<IFrequencyAggregator>().Use<QuaterlyAggregator>();
         }
 
         private void RegisterDb()
