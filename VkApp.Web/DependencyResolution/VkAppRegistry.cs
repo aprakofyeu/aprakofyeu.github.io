@@ -1,6 +1,7 @@
 ﻿using StructureMap;
 using VkApp.Data;
 using VkApp.Data.DataProviders;
+using VkApp.Web.Infrastructure;
 
 namespace VkApp.Web.DependencyResolution
 {
@@ -11,6 +12,7 @@ namespace VkApp.Web.DependencyResolution
             IncludeRegistry(new VkAppDataRegistry());
 
             For<IInitializationService>().Use<InitializationService>();
+            For<IAuthValidator>().Use<AuthValidator>();
         }
     }
 }

@@ -62,7 +62,9 @@
     <Compile Include="DataProviders\GroupProvider.cs" />
     <Compile Include="DataProviders\MessagesProvider.cs" />
     <Compile Include="DataProviders\SatsisticsProvider.cs" />
+    <Compile Include="DataProviders\UserRolesProvider.cs" />
     <Compile Include="DataProviders\UserSavedMessagesProvider.cs" />
+    <Compile Include="Model\RoleDto.cs" />
     <Compile Include="Model\SavedMessage.cs" />
     <Compile Include="Model\Application.cs" />
     <Compile Include="Model\Group.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="NHibernateContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataProviders\UserProvider.cs" />
+    <Compile Include="Role.cs" />
     <Compile Include="Statistics\AggregationItem.cs" />
     <Compile Include="Statistics\CultureInfoProvider.cs" />
     <Compile Include="Statistics\DailyAggregator.cs" />

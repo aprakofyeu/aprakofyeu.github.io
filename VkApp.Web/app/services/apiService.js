@@ -4,6 +4,11 @@
         call.then(function (response) {
             deferred.resolve(response);
         }, function (response) {
+            if (response.status === 401) {
+                window.location.href = prepareUrl("login");
+                return;
+            }
+
             var error = response.status + ": " + response.statusText;
             deferred.reject(error);
         });

@@ -3,6 +3,7 @@ using VkApp.Data.DataProviders;
 
 namespace VkApp.Web.Controllers.api
 {
+    [Authorize]
     [RoutePrefix("api/statistics")]
     public class StatisticsApiController:Controller
     {

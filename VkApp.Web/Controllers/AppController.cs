@@ -4,6 +4,7 @@ using VkApp.Web.Models;
 
 namespace VkApp.Web.Controllers
 {
+    [Authorize]
     public class AppController : Controller
     {
         private readonly IApplicationsProvider _applicationsProvider;

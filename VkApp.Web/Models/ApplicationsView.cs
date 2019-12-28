@@ -7,7 +7,6 @@ namespace VkApp.Web.Models
     {
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }
-        public virtual int Count { get; set; }
     }
 
     public class ApplicationsView
@@ -24,8 +23,7 @@ namespace VkApp.Web.Models
             return new ApplicationView
             {
                 Id = application.VkAppId,
-                Name = application.Name,
-                Count = application.MessagesCount
+                Name = application.Name
             };
         }
 

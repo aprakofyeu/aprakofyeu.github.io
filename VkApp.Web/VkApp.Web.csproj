@@ -152,6 +152,8 @@
     <Compile Include="Controllers\api\UserController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PasswordsController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\TrainingController.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
@@ -159,11 +161,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="InitializationService.cs" />
+    <Compile Include="Infrastructure\AuthToken.cs" />
+    <Compile Include="Infrastructure\AuthValidator.cs" />
+    <Compile Include="Infrastructure\HashCalculator.cs" />
+    <Compile Include="Infrastructure\InitializationService.cs" />
+    <Compile Include="Infrastructure\VkAppPrincipal.cs" />
     <Compile Include="Models\ApplicationsView.cs" />
     <Compile Include="Models\AppView.cs" />
     <Compile Include="Models\ApiModels.cs" />
     <Compile Include="Models\GroupsView.cs" />
+    <Compile Include="Models\LoginView.cs" />
     <Compile Include="Models\StatisticsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -269,6 +276,8 @@
     <Content Include="Views\Statistics\Edit.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Groups\Edit.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Passwords\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VkApp.Data\VkApp.Data.csproj">
@@ -280,7 +289,9 @@
     <Content Include="app\view\initializationPanel\initializationPanel.cshtml" />
     <Content Include="app\view\appPanel\appPanel.cshtml" />
     <Content Include="app\view\appPanel\filters\filters.cshtml" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="jquery\jquery-3.3.1.slim.min.map" />
     <Content Include="jquery\jquery-3.3.1.min.map" />
   </ItemGroup>

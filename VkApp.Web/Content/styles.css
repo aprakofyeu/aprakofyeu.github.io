@@ -30,6 +30,12 @@ a, a:link, a:visited, a:hover, a:active {
     font-weight: 700;
 }
 
+    a.admin-link {
+        display: inline-block;
+        margin: 10px 20px 0 0;
+        float: right;
+    }
+
 select.invalid,
 input.invalid {
     background-color: antiquewhite;

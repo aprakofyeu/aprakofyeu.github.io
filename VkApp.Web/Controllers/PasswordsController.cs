@@ -1,0 +1,46 @@
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using VkApp.Data;
+using VkApp.Data.DataProviders;
+using VkApp.Data.Model;
+
+namespace VkApp.Web.Controllers
+{
+    [Authorize(Roles = Role.Admin)]
+    public class PasswordsController: Controller
+    {
+        private readonly IUserRolesProvider _userRolesProvider;
+
+        public PasswordsController(IUserRolesProvider userRolesProvider)
+        {
+            _userRolesProvider = userRolesProvider;
+        }
+
+        public ActionResult Index()
+        {
+            var roles = _userRolesProvider.GetUserRoles();
+
+            return View("Index", roles);
+        }
+
+        public ActionResult Remove(int id)
+        {
+            _userRolesProvider.Remove(id);
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Create(string password, string comment)
+        {
+            if (string.IsNullOrEmpty(password))
+            {
+                ViewBag.AddPasswordError = "Password should not be empty";
+                return Index();
+            }
+
+            _userRolesProvider.AddUserPassword(password, comment);
+
+            return RedirectToAction("Index");
+        }
+    }
+}

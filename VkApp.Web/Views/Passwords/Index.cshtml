@@ -1,0 +1,58 @@
+﻿@model  IEnumerable<VkApp.Data.Model.RoleDto>
+@{
+    ViewBag.Title = "User passwords";
+}
+
+<div class="panel">
+    @Html.ActionLink("Admin", "Index", "Admin") > <label class="title">User passwords</label>
+    <br />
+
+    <div class="row">
+        <table class="grid">
+            <tr class="header">
+                <td style="width: 300px">Password</td>
+                <td style="width: 500px">Comment</td>
+                <td style="width: 300px">Actions</td>
+            </tr>
+
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.Password</td>
+                    <td>@role.Comment</td>
+                    <td class="actions">
+                        @Html.ActionLink("Remove", "Remove", new { id = role.Id })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <br />
+    <div class="row">
+        @using (Html.BeginForm("Create", "Passwords"))
+        {
+            if (!string.IsNullOrEmpty(ViewBag.AddPasswordError))
+            {
+                <div class="row">
+                    <div class="summary fail visible">Error: @ViewBag.AddPasswordError</div>
+                </div>
+            }
+
+            <div class="row">
+                <label for="password">Password</label>
+                @Html.TextBox("password")
+            </div>
+
+            <div class="row">
+                <label for="comment">Comment</label>
+                @Html.TextBox("comment")
+            </div>
+
+            <div class="row">
+                <button type="submit" class="active-button">Add password</button>
+            </div>
+        }
+    </div>
+</div>
+

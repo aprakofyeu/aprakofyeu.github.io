@@ -1,0 +1,26 @@
+﻿@model VkApp.Web.Models.LoginView
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="panel">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorMessage))
+    {
+        <div class="row">
+            <div class="summary fail visible">@ViewBag.ErrorMessage</div>
+        </div>
+    }
+
+    <div class="row">
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <label for="Name">Пароль</label>
+                @Html.PasswordFor(x => x.Password)
+            </div>
+
+            <button type="submit" class="active-button">Войти</button>
+        }
+    </div>
+</div>

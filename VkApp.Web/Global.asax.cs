@@ -5,6 +5,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using StructureMap.Web.Pipeline;
 using VkApp.Web.App_Start;
+using VkApp.Web.Infrastructure;
 using NHibernateContext = VkApp.Web.DependencyResolution.NHibernateContext;
 
 namespace VkApp.Web
@@ -30,9 +31,32 @@ namespace VkApp.Web
             StructuremapConfig.StructureMapResolver.CreateNestedContainer();
         }
 
+        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        {
+            HttpCookie authCookie = Request.Cookies[AuthToken.AuthTokenKey];
+            if (authCookie != null)
+            {
+                var authToken = AuthToken.Decrypt(authCookie.Value);
+
+                var validator = StructuremapConfig.StructureMapResolver.Container.GetInstance<IAuthValidator>();
+
+                if (validator.ValidateToken(authToken))
+                {
+                    HttpContext.Current.User = new VkAppPrincipal(authToken.Role);
+                }
+            }
+        }
+
         protected void Application_EndRequest()
         {
             ShutDown();
+
+            //Redirect to login page all not API calls
+            if (Response.StatusCode == 401
+                && !Request.RawUrl.Contains("/api/"))
+            {
+                Response.Redirect("~/login");
+            }
         }
 
         protected void Application_Error(object sender, EventArgs e)

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using VkApp.Data;
 using VkApp.Data.DataProviders;
 using VkApp.Web.Models;
 
 namespace VkApp.Web.Controllers
 {
+    [Authorize(Roles = Role.Admin)]
     public class AdminController : Controller
     {
         private readonly IApplicationsProvider _applicationsProvider;

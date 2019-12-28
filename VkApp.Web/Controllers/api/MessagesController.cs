@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using VkApp.Data.DataProviders;
 using VkApp.Data.Statistics;
@@ -9,22 +7,20 @@ using VkApp.Web.Models;
 
 namespace VkApp.Web.Controllers.api
 {
+    [Authorize]
     [RoutePrefix("api/messages")]
     public class MessagesController : Controller
     {
         private readonly IMessagesProvider _messagesProvider;
-        private readonly IApplicationsProvider _applicationsProvider;
         private readonly IUserProvider _userProvider;
         private readonly IMessagesAggregator _messagesAggregator;
 
         public MessagesController(
             IMessagesProvider messagesProvider,
-            IApplicationsProvider applicationsProvider,
             IUserProvider userProvider,
             IMessagesAggregator messagesAggregator)
         {
             _messagesProvider = messagesProvider;
-            _applicationsProvider = applicationsProvider;
             _userProvider = userProvider;
             _messagesAggregator = messagesAggregator;
         }
@@ -33,8 +29,6 @@ namespace VkApp.Web.Controllers.api
         [Route("add")]
         public JsonResult AddMessage(SentMessageRequest request)
         {
-            _applicationsProvider.IncreaseApplicationCount(request.ApplicationId);
-
             var messageAdded = _messagesProvider.AddMessage(request.SenderUserId, request.TargetGroupId, request.TargetUserId);
 
             return messageAdded
@@ -78,6 +72,7 @@ namespace VkApp.Web.Controllers.api
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("undoMessage")]
         public ViewResult UndoMessage(int targetGroupId, int targetUserId)
         {

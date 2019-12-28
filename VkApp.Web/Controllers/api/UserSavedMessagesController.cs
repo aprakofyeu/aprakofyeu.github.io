@@ -7,6 +7,7 @@ using VkApp.Web.Models;
 
 namespace VkApp.Web.Controllers.api
 {
+    [Authorize]
     [RoutePrefix("api/user/savedMessages")]
     public class UserSavedMessagesController : Controller
     {

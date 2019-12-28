@@ -18,7 +18,6 @@
             <tr class="header">
                 <td style="width: 100px">Id</td>
                 <td style="width: 200px">Name</td>
-                <td style="width: 100px">Count</td>
                 <td style="width: 100px">Actions</td>
             </tr>
 
@@ -27,7 +26,6 @@
                 <tr>
                     <td><b>@application.Id</b></td>
                     <td><b>@application.Name</b></td>
-                    <td><b>@application.Count</b></td>
                     <td>@Html.ActionLink("Remove", "RemoveApplication", new { id = application.Id })</td>
                 </tr>
             }

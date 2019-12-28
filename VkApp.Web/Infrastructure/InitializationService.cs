@@ -2,7 +2,7 @@
 using VkApp.Data.Model;
 using VkApp.Web.Models;
 
-namespace VkApp.Web
+namespace VkApp.Web.Infrastructure
 {
     public interface IInitializationService
     {

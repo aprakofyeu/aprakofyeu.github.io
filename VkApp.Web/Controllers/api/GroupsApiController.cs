@@ -2,10 +2,12 @@
 using System.Web.Mvc;
 using VkApp.Data.DataProviders;
 using VkApp.Data.Model;
+using VkApp.Web.Infrastructure;
 using VkApp.Web.Models;
 
 namespace VkApp.Web.Controllers.api
 {
+    [Authorize]
     [RoutePrefix("api/groups")]
     public class GroupsApiController: Controller
     {

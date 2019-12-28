@@ -13,7 +13,6 @@ namespace VkApp.Data.DataProviders
         void Remove(int id);
         string Add(Application map);
         int GetNextApplicationId();
-        void IncreaseApplicationCount(int applicationId);
     }
 
     internal class ApplicationsProvider : IApplicationsProvider
@@ -52,15 +51,6 @@ namespace VkApp.Data.DataProviders
             var applications = GetAllApplications();
             var randomIndex = _random.Next(0, applications.Count());
             return applications.ElementAt(randomIndex).VkAppId;
-        }
-
-        public void IncreaseApplicationCount(int applicationId)
-        {
-            _session
-                .CreateSQLQuery(@"UPDATE Application SET MessagesCount = MessagesCount + 1 
-                                  WHERE VkAppId = :applicationId")
-                .SetParameter("applicationId", applicationId)
-                .ExecuteUpdate();
         }
     }
 }

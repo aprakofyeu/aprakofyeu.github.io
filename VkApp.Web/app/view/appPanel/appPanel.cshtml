@@ -1,5 +1,11 @@
-﻿<div class="panel app" step="app">
+﻿@using VkApp.Data
+<div class="panel app" step="app">
     <div id="tabs">
+        <a class="admin-link" href="@Url.Action("logout", "Login")">Выйти</a>
+        @if (User.IsInRole(Role.Admin))
+        {
+            <a class="admin-link" href="@Url.Action("Index", "Admin")">Админ</a>
+        }
         <ul>
             <li><a href="#tabMessages">Рассылка</a></li>
             <li><a href="#tabStatistics">Статистика</a></li>

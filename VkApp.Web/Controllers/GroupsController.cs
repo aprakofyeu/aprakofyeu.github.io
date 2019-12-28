@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using VkApp.Data;
 using VkApp.Data.DataProviders;
 using VkApp.Data.Model;
 using VkApp.Web.Models;
 
 namespace VkApp.Web.Controllers
 {
+    [Authorize(Roles = Role.Admin)]
     public class GroupsController: Controller
     {
         private readonly IGroupProvider _groupProvider;
