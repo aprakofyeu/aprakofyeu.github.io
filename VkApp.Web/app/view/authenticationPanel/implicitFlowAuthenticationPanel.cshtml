@@ -1,0 +1,20 @@
+﻿@model  VkApp.Web.Models.AppView
+<div class="panel implicit-flow-authentication" step="implicitFlowAuthentication">
+    <label class="title">Авторизация</label>
+
+    <div class="row">
+        <label>Перейдите на страницу <a href="@Model.AuthenticationUrl" target="_blank">авторизации</a></label>
+    </div>
+
+    <div class="row">
+        И введите результат из адресной строки сюда: <input id="authResultInput" class="url-input" type="text" />
+    </div>
+
+    <div class="row">
+        <button id="initAppButton" class="active-button">Готово</button>
+    </div>
+
+    <div class="row">
+        <div class="summary fail"></div>
+    </div>
+</div>

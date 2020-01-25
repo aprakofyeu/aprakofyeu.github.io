@@ -34,8 +34,7 @@ namespace VkApp.Web.Controllers.api
         {
             var user = _userProvider.GetUser(userSettings.UserId);
 
-            user.SaveLastMessage = userSettings.SaveLastMessage;
-            user.SendInterval = userSettings.SendInterval;
+            user.InvitesInterval = userSettings.InvitesInterval;
 
             _userProvider.Save(user);
 

@@ -30,8 +30,7 @@ namespace VkApp.Web.Infrastructure
                 VkUserId = userRequest.Id,
                 FirstName = userRequest.FirstName,
                 LastName = userRequest.LastName,
-                SendInterval = 30,
-                SaveLastMessage = true
+                InvitesInterval = 50
             };
         }
 
@@ -45,8 +44,7 @@ namespace VkApp.Web.Infrastructure
             {
                 MessagesInitialized = true,
                 PreferredGroup = _groupProvider.GetPreferredGroup(user.VkUserId),
-                SaveLastMessage = user.SaveLastMessage,
-                SendInterval = user.SendInterval
+                InvitesInterval = user.InvitesInterval
             };
         }
 

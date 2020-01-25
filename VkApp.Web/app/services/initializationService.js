@@ -1,6 +1,14 @@
 ﻿function InitializationService(apiService, callService, context, eventBroker) {
 
     return {
+        goToAuthenticationStep: function() {
+            eventBroker.publish(VkAppEvents.changeStep, VkAppSteps.authentication);
+        },
+
+        goToImplicitFlowAuthenticationStep: function() {
+            eventBroker.publish(VkAppEvents.changeStep, VkAppSteps.implicitFlowAuthentication);
+        },
+
         initApplicationByVkLogin: function () {
             var that = this;
             VK.init({
@@ -19,6 +27,7 @@
 
             });
             callService.init(accessToken);
+            context.setImplicitFlow();
         },
 
         initUser: function () {
@@ -51,7 +60,11 @@
                         context.setUser(userInfo.vkUser, userInfo.userSettings);
                         context.setSettings(userInfo.userSettings);
                         eventBroker.publish(VkAppEvents.authenticationCompleted);
-                        eventBroker.publish(VkAppEvents.changeStep, VkAppSteps.initialization);
+                        if (context.targetGroup) {
+                            eventBroker.publish(VkAppEvents.changeStep, VkAppSteps.app);
+                        } else {
+                            eventBroker.publish(VkAppEvents.changeStep, VkAppSteps.initialization);
+                        }
                     }, function (error) {
                         eventBroker.publish(VkAppEvents.authenticationError, error);
                     });

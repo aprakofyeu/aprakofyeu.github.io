@@ -14,29 +14,11 @@
         $panel.find(".summary").empty().hide();
     }
 
-    $panel.find("#initAppButton").click(function () {
-        clearErrors();
-        inputs.disable("#initAppButton");
-
-        var authValue = inputs.getValue("#authResultInput");
-        var authParameters = urlHelper.parseUrlParameters(authValue);
-        if (!authParameters) {
-            inputs.markAsInvalid("#authResultInput");
-            showError("Не введен, либо введен неверный авторизационный токен.");
-            return;
-        }
-
-        initializationService.initApplication(authParameters["access_token"]);
-        initializationService.initUser();
-    });
-
     $panel.find("#loginButton").click(function () {
         clearErrors();
         inputs.disable("#initAppButton");
         initializationService.initApplicationByVkLogin();
     });
-
-
 
     eventBroker.subscribe(VkAppEvents.authenticationError, function(error) { showError(error); });
 }

@@ -1,27 +1,22 @@
 ﻿function MessageSender(context, callService, apiService, formatter, progressBar, eventBroker) {
     function saveUserMessages(messages) {
+        messages = messages.map(function (x) {
+            return {
+                message: formatter.escape(x.message),
+                attachments: JSON.stringify(x.attachments)
+            };
+        });
 
-        if (context.settings.saveLastMessage) {
-            messages = messages.map(function (x) {
-                return {
-                    message: formatter.escape(x.message),
-                    attachments: JSON.stringify(x.attachments)
-                };
-            });
-
-            apiService.saveUserMessages(messages)
-                .then(
-                    function (result) {
-                        if (!result.success) {
-                            eventBroker.publish(VkAppEvents.saveUserMessageError, result.error);
-                        }
-                    },
-                    function (error) {
-                        eventBroker.publish(VkAppEvents.saveUserMessageError, error);
-                    });
-        } else {
-            apiService.clearUserSavedMessages();
-        }
+        apiService.saveUserMessages(messages)
+            .then(
+                function (result) {
+                    if (!result.success) {
+                        eventBroker.publish(VkAppEvents.saveUserMessageError, result.error);
+                    }
+                },
+                function (error) {
+                    eventBroker.publish(VkAppEvents.saveUserMessageError, error);
+                });
     }
 
     function sendMessage(messages, users) {

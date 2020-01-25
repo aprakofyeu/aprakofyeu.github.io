@@ -1,0 +1,58 @@
+﻿<div class="panel invites-panel">
+    <label class="title">Пригласить друзей</label>
+
+    <div class="row">
+        <label id="invitesInfoLabel"></label>
+    </div>
+
+    <div class="row">
+        <div class="summary fail"></div>
+    </div>
+
+    <div class="row">
+        <div class="summary info">Все доступные друзья успешно приглашены!</div>
+    </div>
+
+    <div id="invitesInitialLoader" class='loader'></div>
+
+    <div id="invitesPanel" class="hidden">
+        <div class="row">
+            <label id="friendsInfoLabel">
+                
+            </label>
+        </div>
+
+        <div id="implicitFlowWarningPanel" class="summary warning">
+            <b>Внимание!</b>
+            <br />
+            Для того, чтобы использовать этот функционал, необходимо переключиться в режим <b><a href="https://vk.com/dev/implicit_flow_user" target="_blank" class="warning-link">Implicit Flow</a></b>
+            <br />
+            <button id="switchToImplicitFlow" class="secondary-button">Переключиться</button>
+        </div>
+
+        <div class="row">
+            <button id="inviteButton" class="active-button" disabled="disabled">Пригласить</button>
+        </div>
+        
+        <div id="invitedUsersPanel" class="row result-users hidden">
+            <label class="title">Приглашения высланы:</label>
+        </div>
+
+        <div id="friendsInfoLoader" class='loader hidden'></div>
+
+        <script id="invitedUserTemplate" type="text/x-jquery-tmpl">
+            <div class="user">
+                <div class="avatar">
+                    <img src='${user.photo_50}' />
+                </div>
+                <div class="info-panel">
+                    <a href="https://vk.com/id${user.id}" target="_blank">${user.first_name} ${user.last_name}</a>
+                </div>
+                <div class="status-panel">
+                    {{if success}}<div class="ok" title="Приглашение выслано!"></div>{{/if}}
+                    {{if !success}}<div class="fail" title="Неудача..."></div>{{/if}}
+                </div>
+            </div>
+        </script>
+    </div>
+</div>

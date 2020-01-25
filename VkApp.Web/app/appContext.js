@@ -4,10 +4,10 @@
         applicationId: applicationId,
         maxMessagesCount: 5,
         settings: {
-            sendInterval: 30,
-            saveLastMessage: true,
-            debugMode: false
+            debugMode: false,
+            invitesInterval: 50
         },
+        implicitFlow: false,
         searchResult: {},
         conversations: {
             users: {}
@@ -21,8 +21,7 @@
         },
 
         setSettings: function (settings) {
-            this.settings.sendInterval = settings.sendInterval;
-            this.settings.saveLastMessage = settings.saveLastMessage;
+            this.settings.invitesInterval = settings.invitesInterval;
             this.settings.debugMode = !!settings.debugMode;
         },
 
@@ -40,6 +39,10 @@
 
         hasConversationsWithUser: function (userId) {
             return this.conversations.users[userId] ? true : false;
+        },
+
+        setImplicitFlow: function() {
+            this.implicitFlow = true;
         }
     };
 

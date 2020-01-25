@@ -1,24 +1,6 @@
 ﻿function SearchService(callService, apiService, context, eventBroker) {
     var batchSize = 500;
 
-    function callWithDelay(action, delay) {
-        var deferred = new $.Deferred();
-
-        if (!delay) {
-            delay = 1000;
-        }
-
-        setTimeout(function () {
-            action().then(function (result) {
-                deferred.resolve(result);
-            }, function (error) {
-                deferred.reject(error);
-            });
-        }, delay);
-
-        return deferred.promise();
-    }
-
     function distinct(users) {
         if (users && users.length > 0) {
             var usersDict = {};
@@ -130,12 +112,12 @@
                     var moreOffset = offset + batchSize;
                     if (moreOffset < totalLikesCount) {
 
-                        return callWithDelay(function () {
+                        return Utils.actionWithDelay(function () {
                             return searchInner(searchParameters, hits - users.length, moreOffset)
                                 .then(function (moreUsers) {
                                     return users.concat(moreUsers);
                                 });
-                        });
+                        }, 1000);
                     }
                 }
 

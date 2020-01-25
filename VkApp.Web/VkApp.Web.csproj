@@ -146,6 +146,7 @@
     <Compile Include="ChromeExtensionsVersionProvider.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\api\GroupsApiController.cs" />
+    <Compile Include="Controllers\api\InvitesController.cs" />
     <Compile Include="Controllers\api\MessagesController.cs" />
     <Compile Include="Controllers\api\StatisticsApiController.cs" />
     <Compile Include="Controllers\api\UserSavedMessagesController.cs" />
@@ -176,16 +177,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\services\cachedStatisticsDataLoader.js" />
+    <Content Include="app\services\invitesService.js" />
     <Content Include="app\services\manualMessageSender.js" />
     <Content Include="app\services\statisticsService.js" />
+    <Content Include="app\services\groupUsersDataLoader.js" />
     <Content Include="app\services\targetGroupsProvider.js" />
     <Content Include="app\utils\inputsHelper.js" />
     <Content Include="app\utils\progressBarHelper.js" />
+    <Content Include="app\utils\utils.js" />
     <Content Include="app\view\appPanel\appPanelController.js" />
     <Content Include="app\view\appPanel\instruments\instrumentsPanel.cshtml" />
+    <Content Include="app\view\appPanel\invites\invitesPanel.cshtml" />
     <None Include="app\view\appPanel\statistics\statisticsPanel.cshtml" />
     <Content Include="app\view\appPanel\instruments\instrumentsPanelController.js" />
+    <Content Include="app\view\appPanel\invites\invitesPanelController.js" />
     <Content Include="app\view\appPanel\statistics\statisticsPanelController.js" />
+    <Content Include="app\view\authenticationPanel\implicitFlowAuthenticationController.js" />
     <Content Include="app\view\authenticationPanel\authenticationController.js" />
     <Content Include="app\view\initializationPanel\initializationController.js" />
     <Content Include="Content\images\extension-img1.jpg" />
@@ -231,6 +238,7 @@
     <Content Include="app\view\appPanel\results\results.cshtml" />
     <Content Include="app\view\appPanel\message\message.cshtml" />
     <Content Include="app\view\appPanel\settings\settings.cshtml" />
+    <Content Include="app\view\authenticationPanel\implicitFlowAuthenticationPanel.cshtml" />
     <None Include="jquery\jquery-3.3.1.intellisense.js" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />

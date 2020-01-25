@@ -25,6 +25,7 @@ namespace VkApp.Data
             For<IUserSavedMessagesProvider>().Use<UserSavedMessagesProvider>();
             For<IStatisticsProvider>().Use<StatisticsProvider>();
             For<IUserRolesProvider>().Use<UserRolesProvider>();
+            For<IInvitesProvider>().Use<InvitesProvider>();
 
             For<IMessagesAggregator>().Use<MessagesAggregator>();
             For<IFrequencyAggregator>().Use<DailyAggregator>();

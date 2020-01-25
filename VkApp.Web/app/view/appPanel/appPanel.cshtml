@@ -9,10 +9,11 @@
         <ul>
             <li><a href="#tabMessages">Рассылка</a></li>
             <li><a href="#tabStatistics">Статистика</a></li>
+            <li><a href="#tabInvites">Пригласить друзей</a></li>
             <li><a href="#tabInstruments">Инструменты</a></li>
             <li><a href="#tabSettings">Настройки</a></li>
         </ul>
-        <div id="tabMessages">
+        <div id="tabMessages" on-activate-event="showMessages">
             @Html.Partial("~/app/view/appPanel/filters/filters.cshtml")
             @Html.Partial("~/app/view/appPanel/results/results.cshtml")
             @Html.Partial("~/app/view/appPanel/message/message.cshtml")
@@ -20,10 +21,13 @@
         <div id="tabStatistics" on-activate-event="showStatistics">
             @Html.Partial("~/app/view/appPanel/statistics/statisticsPanel.cshtml")
         </div>
+        <div id="tabInvites" on-activate-event="showInvites">
+            @Html.Partial("~/app/view/appPanel/invites/invitesPanel.cshtml")
+        </div>
         <div id="tabInstruments" on-activate-event="showInstruments">
             @Html.Partial("~/app/view/appPanel/instruments/instrumentsPanel.cshtml")
         </div>
-        <div id="tabSettings">
+        <div id="tabSettings" on-activate-event="showSettings">
             @Html.Partial("~/app/view/appPanel/settings/settings.cshtml")
         </div>
     </div>

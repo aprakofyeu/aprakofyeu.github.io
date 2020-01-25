@@ -21,12 +21,21 @@
     startLoadingStatistics: "startLoadingStatistics",
 
     showInstruments: "showInstruments",
+    showInvites: "showInvites",
+    showMessages: "showMessages",
+    showSettings: "showSettings",
+
+    invitesLoadingError: "invitesLoadingError",
+    inviteUserSuccess: "inviteUserSuccess",
+    inviteError: "inviteError",
+    inviteCompleted: "inviteCompleted",
 
     changeStep:"changeStep"
 };
 
 VkAppSteps = {
     authentication: "authentication",
+    implicitFlowAuthentication: "implicitFlowAuthentication",
     initialization: "initialization",
     app:"app"
 }

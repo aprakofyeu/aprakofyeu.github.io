@@ -37,7 +37,7 @@
         addTargetGroup: function (group) {
             return post("api/groups/add", group);
         },
-        getStatisticsGroups: function() {
+        getStatisticsGroups: function () {
             return get("api/statistics/groups", { targetGroupId: context.targetGroup.id });
         },
         getAllMessages: function () {
@@ -63,8 +63,7 @@
         updateSettings: function (settings) {
             var userSettings = {
                 userId: context.user.id,
-                sendInterval: settings.sendInterval,
-                saveLastMessage: settings.saveLastMessage
+                invitesInterval: settings.invitesInterval
             };
 
             return post("api/user/update", { userSettings: userSettings });
@@ -82,6 +81,12 @@
         },
         clearUserSavedMessages: function () {
             return post("api/user/savedMessages/clear", { userId: context.user.id });
+        },
+        getInvitedUsers: function () {
+            return get("api/invites/getInvitedUsers", { userId: context.user.id, groupId: context.targetGroup.id });
+        },
+        markAsInvited: function (userId) {
+            return post("api/invites/markAsInvited", { invitedUserId: userId, userId: context.user.id, groupId: context.targetGroup.id });
         }
     };
 }

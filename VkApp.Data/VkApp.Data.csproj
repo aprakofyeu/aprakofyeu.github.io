@@ -60,10 +60,12 @@
   <ItemGroup>
     <Compile Include="DataProviders\ApplicationsProvider.cs" />
     <Compile Include="DataProviders\GroupProvider.cs" />
+    <Compile Include="DataProviders\InvitesProvider.cs" />
     <Compile Include="DataProviders\MessagesProvider.cs" />
     <Compile Include="DataProviders\SatsisticsProvider.cs" />
     <Compile Include="DataProviders\UserRolesProvider.cs" />
     <Compile Include="DataProviders\UserSavedMessagesProvider.cs" />
+    <Compile Include="Model\Invite.cs" />
     <Compile Include="Model\RoleDto.cs" />
     <Compile Include="Model\SavedMessage.cs" />
     <Compile Include="Model\Application.cs" />

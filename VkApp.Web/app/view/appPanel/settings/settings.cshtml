@@ -1,20 +1,25 @@
 ﻿<div id="settingsDialog" class="panel settings-panel">
     <label class="title">Настройки</label>
-
-    <div class="row hidden">
-        <label for="timeInterval">Интервал между отправкой сообщений: </label>
-        <input type="number" id="timeInterval" style="width: 50px;" maxlength="2" min="1" max="999" />
-        <label> ceк.</label>
-    </div>
-    <div class="row hidden">
-        <label for="saveLastMessage">Сохранять последнее сообщение: </label>
-        <input type="checkbox" id="saveLastMessage"/>
-    </div>
     <div class="row">
         <label>Application ID: <b id="applicationId"></b></label>
     </div>
+    <div class="row">
+        <label for="invitesInterval">Интервал между отправкой приглашений в группу: </label>
+        <input type="number" id="invitesInterval" style="width: 50px;" maxlength="3" min="1" max="999" />
+        <label> дней</label>
+    </div>
     <div class="row hidden">
         <label for="debugMode">DEBUG MODE (эмуляция):</label>
-        <input type="checkbox" id="debugMode"/>
+        <input type="checkbox" id="debugMode" />
+    </div>
+
+    <div class="row"  id="settingsImplicitFlowLabel">
+        <label for="debugMode">Режим: <b><a href="https://vk.com/dev/implicit_flow_user" target="_blank" class="warning-link">Implicit Flow</a></b></label>
+    </div>
+
+    <div  class="row" id="settingsImplicitFlowSwitchPanel">
+        <label>Переключиться в режим <b><a href="https://vk.com/dev/implicit_flow_user" target="_blank" class="warning-link">Implicit Flow</a></b></label>
+        <br/>
+        <button id="switchToImplicitFlow" class="secondary-button">Переключиться</button>
     </div>
 </div>

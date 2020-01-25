@@ -63,5 +63,6 @@
                 });
         });
 
+
     eventBroker.subscribe(VkAppEvents.showInstruments, function () { refreshUi(); });
 }

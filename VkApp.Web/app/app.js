@@ -16,10 +16,12 @@
     var messageSender = new MessageSender(context, callService, apiService, formatter, progressBar, eventBroker);
     var targetGroupsProvider = new TargetGroupsProvider(callService, apiService, urlHelper, context);
     var initializationService = new InitializationService(apiService, callService, context, eventBroker);
-    var cachedStatisticsDataLoader = new CachedStatisticsDataLoader(context, callService, apiService, eventBroker);
+    var groupUsersDataLoader = new GroupUsersDataLoader(context, callService);
+    var cachedStatisticsDataLoader = new CachedStatisticsDataLoader(groupUsersDataLoader, apiService, eventBroker);
     var statisticsService = new StatisticsService(cachedStatisticsDataLoader);
+    var invitesService = new InvitesService(groupUsersDataLoader, context, callService, apiService, eventBroker);
 
-    var settingsController = new SettingsController(context, apiService, inputsHelper, eventBroker);
+    var settingsController = new SettingsController(context, apiService, initializationService, inputsHelper, eventBroker);
     var filtersController = new FiltersController(urlHelper, inputsHelper, searchService, regionsProvider, context, eventBroker);
     var messagesController = new MessagesController(formatter, messageSender, apiService, urlHelper, context, eventBroker);
     var manualMessageSender = new ManualMessageSender(context, messagesController, formatter, apiService, eventBroker);
@@ -27,16 +29,18 @@
     var stepsController = new StepsController(eventBroker);
     var initializationController = new InitializationController(initializationService, targetGroupsProvider, inputsHelper, context, eventBroker);
     var authenticationController = new AuthenticationController(initializationService, inputsHelper, urlHelper, eventBroker);
+    var implicitFlowAuthenticationController = new ImplicitFlowAuthenticationController(initializationService, inputsHelper, urlHelper, eventBroker);
     var appPanelController = new AppPanelController(eventBroker);
     var statisticsPanelController = new StatisticsPanelController(statisticsService, context, inputsHelper, progressBarHelper, eventBroker);
     var instrumentsPanelController = new InstrumentsPanelController(urlHelper, inputsHelper, callService, context, eventBroker);
+    var invitesPanelController = new InvitesPanelController(initializationService, inputsHelper, invitesService, callService, context, eventBroker);
 
 
     //end dependency injection
 
     context.baseUrl = window.location.href;
 
-    eventBroker.publish(VkAppEvents.changeStep, VkAppSteps.authentication);
+    initializationService.goToAuthenticationStep();
 
     return {
         init: function (authResponseUrl) {

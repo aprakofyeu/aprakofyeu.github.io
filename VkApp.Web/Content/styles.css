@@ -72,6 +72,14 @@ input.url-input {
         margin: 5px 10px 0 0;
     }
 
+        button.active-button[disabled="disabled"],
+        .panel button.active-button[disabled="disabled"] {
+            background-color: #86A0B7;
+            border: solid 1px #86A0B7;
+            color: #EEE;
+            cursor: default;
+        }
+
     .panel button.secondary-button {
         border: #2a5885 solid 1px;
         color: #2a5885;
@@ -364,6 +372,11 @@ input.url-input {
     display: block;
 }
 
+.summary.warning .warning-link {
+    color: #db7f00;
+}
+
+.invites-panel .loader,
 .result-users .loader {
     display: block;
     height: 100px;

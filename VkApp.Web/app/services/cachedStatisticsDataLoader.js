@@ -1,6 +1,4 @@
-﻿function CachedStatisticsDataLoader(context, callService, apiService, eventBroker) {
-    var BatchSize = 500;
-
+﻿function CachedStatisticsDataLoader(groupUsersDataLoader, apiService, eventBroker) {
     var statisticsGroupsCache, messagesCache;
     var membersCache = {};
 
@@ -36,26 +34,7 @@
     }
 
     function loadSubscribedUsers(userIds) {
-        function checkIsMember(offset, delay) {
-            var userIdsBatch = userIds.slice(offset, offset + BatchSize);
-
-            return callService.callWithDelay('groups.isMember', { group_id: context.targetGroup.id, user_ids: userIdsBatch }, delay)
-                .then(function (results) {
-                    var totalLoadedCount = offset + BatchSize;
-
-                    reportInitializationStatus(totalLoadedCount, userIds.length);
-
-                    if (totalLoadedCount < userIds.length) {
-                        return checkIsMember(totalLoadedCount, 250)
-                            .then(function (moreResults) {
-                                return results.concat(moreResults);
-                            });
-                    }
-                    return results;
-                });
-        }
-
-        return checkIsMember(0, 0)
+        return groupUsersDataLoader.checkIsMembers(userIds, false, reportInitializationStatus)
             .then(function (results) {
                 appendResultsToDict(results);
             });
