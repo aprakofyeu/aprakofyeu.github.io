@@ -40,9 +40,11 @@ namespace VkApp.Web
 
                 var validator = StructuremapConfig.StructureMapResolver.Container.GetInstance<IAuthValidator>();
 
-                if (validator.ValidateToken(authToken))
+                var permissions = validator.ValidateToken(authToken);
+
+                if (permissions!=null)
                 {
-                    HttpContext.Current.User = new VkAppPrincipal(authToken.Role);
+                    HttpContext.Current.User = new VkAppPrincipal(authToken.Role, permissions);
                 }
             }
         }

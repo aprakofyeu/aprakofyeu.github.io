@@ -3,6 +3,18 @@
     ViewBag.Title = "User passwords";
 }
 
+@helper FormatPermission(bool permission)
+{
+    if (permission)
+    {
+        <span class="allow-label">Allow</span>
+    }
+    else
+    {
+        <span  class="deny-label">Deny</span>
+    }
+}
+
 <div class="panel">
     @Html.ActionLink("Admin", "Index", "Admin") > <label class="title">User passwords</label>
     <br />
@@ -12,6 +24,9 @@
             <tr class="header">
                 <td style="width: 300px">Password</td>
                 <td style="width: 500px">Comment</td>
+                <td style="width: 200px">Messages</td>
+                <td style="width: 200px">Invites</td>
+                <td style="width: 200px">Instruments</td>
                 <td style="width: 300px">Actions</td>
             </tr>
 
@@ -20,6 +35,9 @@
                 <tr>
                     <td>@role.Password</td>
                     <td>@role.Comment</td>
+                    <td>@FormatPermission(role.Messages)</td>
+                    <td>@FormatPermission(role.Invites)</td>
+                    <td>@FormatPermission(role.Instruments)</td>
                     <td class="actions">
                         @Html.ActionLink("Remove", "Remove", new { id = role.Id })
                     </td>
@@ -47,6 +65,21 @@
             <div class="row">
                 <label for="comment">Comment</label>
                 @Html.TextBox("comment")
+            </div>
+
+            <div class="row">
+                <label for="comment">Allow messages</label>
+                @Html.CheckBox("allowMessages", true)
+            </div>
+
+            <div class="row">
+                <label for="comment">Allow invites</label>
+                @Html.CheckBox("allowInvites", true)
+            </div>
+
+            <div class="row">
+                <label for="comment">Allow instruments</label>
+                @Html.CheckBox("allowInstruments", true)
             </div>
 
             <div class="row">

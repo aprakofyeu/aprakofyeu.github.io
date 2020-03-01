@@ -376,6 +376,14 @@ input.url-input {
     color: #db7f00;
 }
 
+.allow-label {
+    color: green;
+}
+
+.deny-label {
+    color: red;
+}
+
 .invites-panel .loader,
 .result-users .loader {
     display: block;

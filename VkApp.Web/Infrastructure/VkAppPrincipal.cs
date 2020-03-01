@@ -9,9 +9,10 @@ namespace VkApp.Web.Infrastructure
     {
         private readonly IEnumerable<string> _roles;
 
-        public VkAppPrincipal(string role)
+        public VkAppPrincipal(string role, Permissions permissions)
         {
             Identity = new GenericIdentity(role);
+            Permissions = permissions;
             _roles = Role.GelAvailableRoles(role);
         }
 
@@ -21,5 +22,14 @@ namespace VkApp.Web.Infrastructure
         }
 
         public IIdentity Identity { get; }
+        public Permissions Permissions { get; }
+    }
+
+    public static class PrincipalExtensions
+    {
+        public static Permissions Permissions(this IPrincipal principal)
+        {
+            return (principal as VkAppPrincipal)?.Permissions;
+        }
     }
 }

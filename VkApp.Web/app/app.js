@@ -1,12 +1,11 @@
-﻿function VkApp(applicationId) {
+﻿function VkApp(applicationId, permissions) {
     //manual dependency injection region
-
     var urlHelper = new UrlHelper();
     var inputsHelper = new InputsHelper();
     var progressBarHelper = new ProgressBarHelper();
     var captchaService = new CaptchaService();
     var eventBroker = new EventBroker();
-    var context = new AppContext(applicationId);
+    var context = new AppContext(applicationId, permissions);
     var apiService = new ApiService(context);
     var callService = new CallService(context, captchaService);
     var searchService = new SearchService(callService, apiService, context, eventBroker);

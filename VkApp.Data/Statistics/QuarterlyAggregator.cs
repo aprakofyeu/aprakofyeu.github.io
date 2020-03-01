@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace VkApp.Data.Statistics
 {
-    class QuaterlyAggregator : FrequencyAggregatorBase
+    class QuarterlyAggregator : FrequencyAggregatorBase
     {
         private readonly ICultureInfoProvider _cultureInfoProvider;
 
-        public QuaterlyAggregator(ICultureInfoProvider cultureInfoProvider)
+        public QuarterlyAggregator(ICultureInfoProvider cultureInfoProvider)
         {
             _cultureInfoProvider = cultureInfoProvider;
         }
 
-        protected override string Frequency => "Quaterly";
+        protected override string Frequency => "Quarterly";
 
         protected override IEnumerable<DateRange> GetDateRanges()
         {

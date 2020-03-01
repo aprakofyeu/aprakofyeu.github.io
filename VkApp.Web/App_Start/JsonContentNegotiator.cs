@@ -56,11 +56,17 @@ namespace VkApp.Web
             if (Data == null)
                 return;
 
+            response.Write(Serialize(Data));
+        }
+
+        public static string Serialize(object data)
+        {
             var jsonSerializerSettings = new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
-            response.Write(JsonConvert.SerializeObject(Data, jsonSerializerSettings));
+
+            return JsonConvert.SerializeObject(data, jsonSerializerSettings);
         }
     }
 }

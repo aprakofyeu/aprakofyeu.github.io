@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using VkApp.Data;
 using VkApp.Data.DataProviders;
-using VkApp.Data.Model;
 
 namespace VkApp.Web.Controllers
 {
@@ -30,7 +28,7 @@ namespace VkApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Create(string password, string comment)
+        public ActionResult Create(string password, string comment, bool allowMessages, bool allowInvites, bool allowInstruments)
         {
             if (string.IsNullOrEmpty(password))
             {
@@ -38,7 +36,7 @@ namespace VkApp.Web.Controllers
                 return Index();
             }
 
-            _userRolesProvider.AddUserPassword(password, comment);
+            _userRolesProvider.AddUserPassword(password, comment, allowMessages, allowInvites, allowInstruments);
 
             return RedirectToAction("Index");
         }

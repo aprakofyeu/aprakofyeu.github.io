@@ -85,7 +85,6 @@
     }
 
     function appendInvitedUser(user, success) {
-        debugger;
         var $user = $invitedUserTemplate.tmpl({ user: user, success: success });
         $invitedUsersPanel.append($user);
     }

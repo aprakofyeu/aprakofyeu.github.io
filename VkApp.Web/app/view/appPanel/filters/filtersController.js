@@ -1,4 +1,7 @@
 ﻿function FiltersController(urlHelper, inputsHelper, searchService, regionsProvider, appContext, eventBroker) {
+    if (!appContext.permissions.allowMessages)
+        return;
+
     var $panel, $searchButton, inputs;
 
     function getPostParams() {

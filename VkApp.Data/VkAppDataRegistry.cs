@@ -30,7 +30,7 @@ namespace VkApp.Data
             For<IMessagesAggregator>().Use<MessagesAggregator>();
             For<IFrequencyAggregator>().Use<DailyAggregator>();
             For<IFrequencyAggregator>().Use<MonthlyAggregator>();
-            For<IFrequencyAggregator>().Use<QuaterlyAggregator>();
+            For<IFrequencyAggregator>().Use<QuarterlyAggregator>();
         }
 
         private void RegisterDb()

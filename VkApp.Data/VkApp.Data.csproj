@@ -83,7 +83,7 @@
     <Compile Include="Statistics\IFrequencyAggregator.cs" />
     <Compile Include="Statistics\MessagesAggregator.cs" />
     <Compile Include="Statistics\MonthlyAggregator.cs" />
-    <Compile Include="Statistics\QuaterlyAggregator.cs" />
+    <Compile Include="Statistics\QuarterlyAggregator.cs" />
     <Compile Include="VkAppDataRegistry.cs" />
   </ItemGroup>
   <ItemGroup>

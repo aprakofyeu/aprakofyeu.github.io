@@ -1,5 +1,6 @@
 ﻿@using VkApp.Data
-<div class="panel app" step="app">
+@using VkApp.Web.Infrastructure
+<div class="panel app" step="app"  style="display: none">
     <div id="tabs">
         <a class="admin-link" href="@Url.Action("logout", "Login")">Выйти</a>
         @if (User.IsInRole(Role.Admin))
@@ -7,26 +8,44 @@
             <a class="admin-link" href="@Url.Action("Index", "Admin")">Админ</a>
         }
         <ul>
-            <li><a href="#tabMessages">Рассылка</a></li>
-            <li><a href="#tabStatistics">Статистика</a></li>
-            <li><a href="#tabInvites">Пригласить друзей</a></li>
-            <li><a href="#tabInstruments">Инструменты</a></li>
+            @if (User.Permissions().AllowMessages)
+            {
+                <li><a href="#tabMessages">Рассылка</a></li>
+                <li><a href="#tabStatistics">Статистика</a></li>
+            }
+            @if (User.Permissions().AllowInvites)
+            {
+                <li><a href="#tabInvites">Пригласить друзей</a></li>
+            }
+            @if (User.Permissions().AllowInstruments)
+            {
+                <li><a href="#tabInstruments">Инструменты</a></li>
+            }
             <li><a href="#tabSettings">Настройки</a></li>
         </ul>
-        <div id="tabMessages" on-activate-event="showMessages">
-            @Html.Partial("~/app/view/appPanel/filters/filters.cshtml")
-            @Html.Partial("~/app/view/appPanel/results/results.cshtml")
-            @Html.Partial("~/app/view/appPanel/message/message.cshtml")
-        </div>
-        <div id="tabStatistics" on-activate-event="showStatistics">
-            @Html.Partial("~/app/view/appPanel/statistics/statisticsPanel.cshtml")
-        </div>
-        <div id="tabInvites" on-activate-event="showInvites">
-            @Html.Partial("~/app/view/appPanel/invites/invitesPanel.cshtml")
-        </div>
-        <div id="tabInstruments" on-activate-event="showInstruments">
-            @Html.Partial("~/app/view/appPanel/instruments/instrumentsPanel.cshtml")
-        </div>
+        @if (User.Permissions().AllowMessages)
+        {
+            <div id="tabMessages" on-activate-event="showMessages">
+                @Html.Partial("~/app/view/appPanel/filters/filters.cshtml")
+                @Html.Partial("~/app/view/appPanel/results/results.cshtml")
+                @Html.Partial("~/app/view/appPanel/message/message.cshtml")
+            </div>
+            <div id="tabStatistics" on-activate-event="showStatistics">
+                @Html.Partial("~/app/view/appPanel/statistics/statisticsPanel.cshtml")
+            </div>
+        }
+        @if (User.Permissions().AllowInvites)
+        {
+            <div id="tabInvites" on-activate-event="showInvites">
+                @Html.Partial("~/app/view/appPanel/invites/invitesPanel.cshtml")
+            </div>
+        }
+        @if (User.Permissions().AllowInstruments)
+        {
+            <div id="tabInstruments" on-activate-event="showInstruments">
+                @Html.Partial("~/app/view/appPanel/instruments/instrumentsPanel.cshtml")
+            </div>
+        }
         <div id="tabSettings" on-activate-event="showSettings">
             @Html.Partial("~/app/view/appPanel/settings/settings.cshtml")
         </div>

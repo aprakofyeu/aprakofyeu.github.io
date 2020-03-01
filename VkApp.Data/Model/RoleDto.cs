@@ -8,6 +8,9 @@ namespace VkApp.Data.Model
         public virtual string Name { get; set; }
         public virtual string Password { get; set; }
         public virtual string Comment { get; set; }
+        public virtual bool Messages { get; set; }
+        public virtual bool Invites { get; set; }
+        public virtual bool Instruments { get; set; }
     }
 
     public class RoleDtoMap : ClassMap<RoleDto>
@@ -20,6 +23,9 @@ namespace VkApp.Data.Model
             Map(x => x.Name, "Role");
             Map(x => x.Password);
             Map(x => x.Comment);
+            Map(x => x.Messages);
+            Map(x => x.Invites);
+            Map(x => x.Instruments);
         }
     }
 }

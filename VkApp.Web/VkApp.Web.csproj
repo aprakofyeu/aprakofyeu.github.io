@@ -166,6 +166,7 @@
     <Compile Include="Infrastructure\AuthValidator.cs" />
     <Compile Include="Infrastructure\HashCalculator.cs" />
     <Compile Include="Infrastructure\InitializationService.cs" />
+    <Compile Include="Infrastructure\Permissions.cs" />
     <Compile Include="Infrastructure\VkAppPrincipal.cs" />
     <Compile Include="Models\ApplicationsView.cs" />
     <Compile Include="Models\AppView.cs" />

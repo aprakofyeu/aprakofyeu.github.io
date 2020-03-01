@@ -5,7 +5,7 @@ namespace VkApp.Web.Infrastructure
 {
     public interface IAuthValidator
     {
-        bool ValidateToken(AuthToken token);
+        Permissions ValidateToken(AuthToken token);
     }
 
     public class AuthValidator: IAuthValidator
@@ -17,10 +17,22 @@ namespace VkApp.Web.Infrastructure
             _rolesProvider = rolesProvider;
         }
 
-        public bool ValidateToken(AuthToken token)
+        public Permissions ValidateToken(AuthToken token)
         {
-            var passwords = _rolesProvider.GetRolePasswords(token.Role);
-            return passwords.Any(x => HashCalculator.Calculate(x) == token.Token);
+            var passwords = _rolesProvider.GetRoles(token.Role);
+            var role = passwords.FirstOrDefault(x => HashCalculator.Calculate(x.Password) == token.Token);
+
+            if (role!=null)
+            {
+                return new Permissions
+                {
+                    AllowMessages = role.Messages,
+                    AllowInvites = role.Invites,
+                    AllowInstruments = role.Instruments
+                };
+            }
+
+            return null;
         }
     }
 }

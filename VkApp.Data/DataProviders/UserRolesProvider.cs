@@ -10,9 +10,9 @@ namespace VkApp.Data.DataProviders
     {
         string GetRoleByPassword(string password);
         IEnumerable<RoleDto> GetUserRoles();
-        IEnumerable<string> GetRolePasswords(string role);
+        IEnumerable<RoleDto> GetRoles(string role);
         void Remove(int id);
-        void AddUserPassword(string password, string comment);
+        void AddUserPassword(string password, string comment, bool allowMessages, bool allowInvites, bool allowInstruments);
     }
 
     class UserRolesProvider : IUserRolesProvider
@@ -42,18 +42,15 @@ namespace VkApp.Data.DataProviders
 
         public IEnumerable<RoleDto> GetUserRoles()
         {
-            return _session
-                .Query<RoleDto>()
-                .Where(x => x.Name == Role.User)
-                .ToList();
+            return GetRoles(Role.User);
         }
 
-        public IEnumerable<string> GetRolePasswords(string role)
+        public IEnumerable<RoleDto> GetRoles(string role)
         {
             return _session
-                .CreateSQLQuery("SELECT Password FROM Roles WHERE Role=:role")
-                .SetParameter("role", role)
-                .List<string>();
+                .Query<RoleDto>()
+                .Where(x => x.Name == role)
+                .ToList();
         }
 
         public void Remove(int id)
@@ -62,13 +59,16 @@ namespace VkApp.Data.DataProviders
             _session.Delete(app);
         }
 
-        public void AddUserPassword(string password, string comment)
+        public void AddUserPassword(string password, string comment, bool allowMessages, bool allowInvites, bool allowInstruments)
         {
             _session.SaveOrUpdate(new RoleDto
             {
                 Name = Role.User,
                 Password = password,
-                Comment = comment
+                Comment = comment,
+                Messages = allowMessages,
+                Invites = allowInvites,
+                Instruments = allowInstruments
             });
         }
     }

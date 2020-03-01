@@ -1,7 +1,8 @@
-﻿function AppContext(applicationId) {
+﻿function AppContext(applicationId, permissions) {
     var context = {
         baseUrl: "",
         applicationId: applicationId,
+        permissions: permissions,
         maxMessagesCount: 5,
         settings: {
             debugMode: false,
