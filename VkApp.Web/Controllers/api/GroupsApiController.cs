@@ -13,13 +13,16 @@ namespace VkApp.Web.Controllers.api
     {
         private readonly IInitializationService _initializationService;
         private readonly IGroupProvider _groupProvider;
+        private readonly IUserProvider _userProvider;
 
         public GroupsApiController(
             IInitializationService initializationService,
-            IGroupProvider groupProvider)
+            IGroupProvider groupProvider,
+            IUserProvider userProvider)
         {
             _initializationService = initializationService;
             _groupProvider = groupProvider;
+            _userProvider = userProvider;
         }
 
         [HttpPost]
@@ -36,6 +39,14 @@ namespace VkApp.Web.Controllers.api
         {
             var groups = _groupProvider.GetAll().Select(Map).ToList();
             return new JsonCamel(groups);
+        }
+
+        [HttpGet]
+        [Route("getSenderUsersByGroup")]
+        public JsonResult GetSenderUsersByGroup(int groupId)
+        {
+            var users = _userProvider.GetUsersByGroup(groupId);
+            return new JsonCamel(users.Select(x => x.VkUserId).ToList());
         }
 
         private static GroupInfo Map(Group group)

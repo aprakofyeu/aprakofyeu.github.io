@@ -35,6 +35,7 @@ namespace VkApp.Web.Controllers.api
             var user = _userProvider.GetUser(userSettings.UserId);
 
             user.InvitesInterval = userSettings.InvitesInterval;
+            user.FriendRequestsInterval = userSettings.FriendRequestsInterval;
 
             _userProvider.Save(user);
 

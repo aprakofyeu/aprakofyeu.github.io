@@ -44,7 +44,8 @@ namespace VkApp.Web.Infrastructure
             {
                 MessagesInitialized = true,
                 PreferredGroup = _groupProvider.GetPreferredGroup(user.VkUserId),
-                InvitesInterval = user.InvitesInterval
+                InvitesInterval = user.InvitesInterval,
+                FriendRequestsInterval = user.FriendRequestsInterval
             };
         }
 

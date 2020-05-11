@@ -17,6 +17,10 @@
             {
                 <li><a href="#tabInvites">Пригласить друзей</a></li>
             }
+            @if (User.Permissions().AllowFindFriends)
+            {
+                <li><a href="#tabFindFriends">Найти друзей</a></li>
+            }
             @if (User.Permissions().AllowInstruments)
             {
                 <li><a href="#tabInstruments">Инструменты</a></li>
@@ -38,6 +42,14 @@
         {
             <div id="tabInvites" on-activate-event="showInvites">
                 @Html.Partial("~/app/view/appPanel/invites/invitesPanel.cshtml")
+            </div>
+        }
+        @if (User.Permissions().AllowFindFriends)
+        {
+            <div id="tabFindFriends" on-activate-event="showFindFriends">
+                @Html.Partial("~/app/view/appPanel/friends/findFriendsFilter.cshtml")
+                @Html.Partial("~/app/view/appPanel/friends/findFriendsResults.cshtml")
+
             </div>
         }
         @if (User.Permissions().AllowInstruments)

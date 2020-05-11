@@ -1,20 +1,50 @@
-﻿function SearchService(searchHelper, context, eventBroker) {
+﻿function FriendsSearchService(searchHelper, cachedFriendRequestsDataLoader, apiService, eventBroker) {
 
     function searchInner(searchParameters, hits, offset) {
         var totalLikesCount = 0;
-        var recentlyTimeEdge = Math.floor(Date.now() / 1000) - 60 * 60 * 6; //last 6 hours
+
+        function mapToDict(userIds) {
+            var userIdsDict = {};
+            for (var i = 0; i < userIds.length; i++) {
+                userIdsDict[userIds[i]] = userIds[i];
+            }
+            return userIdsDict;
+        }
 
         return searchHelper
             .loadLikeUsersBatch(searchParameters.postInfo, offset)
             .then(function (batch) {
                 totalLikesCount = batch.totalLikesCount;
                 return batch.users.filter(function (x) {
-                    return (!searchParameters.canSendMessageOnly || x.can_write_private_message)
-                        && (!searchParameters.onlineOnly || x.online)
-                        && (!searchParameters.recenltyActivityOnly || (x.last_seen && (x.last_seen.time > recentlyTimeEdge)))
+                    return !x.is_friend && !x.deactivated
+                        && (!searchParameters.canFriendsRequest || x.can_send_friend_request)
+                        && (!searchParameters.canInvitedGroup || x.can_be_invited_group)
                         && (!searchParameters.country || (x.country && x.country.id === searchParameters.country))
                         && (!searchParameters.city || (x.city && x.city.id === searchParameters.city));
                 });
+            })
+            .then(function (users) {
+                if (searchParameters.noFriendRequestedLastTime) {
+                     return apiService.getFriendRequests()
+                        .then(function (friendRequests) {
+                            var friendRequestsDict = mapToDict(friendRequests);
+                            return users.filter(function (user) {
+                                return !friendRequestsDict[user.id];
+                            });
+                        });
+                }
+                return users;
+            })
+            .then(function (users) {
+                if (searchParameters.notInColleagueFriends) {
+                    return cachedFriendRequestsDataLoader.getColleagueFriends()
+                        .then(function(colleagueFriendsDict) {
+                            return users.filter(function (user) {
+                                return !colleagueFriendsDict[user.id];
+                            });
+                        });
+                }
+                return users;
             })
             .then(function (users) {
                 if (searchParameters.noMessagesByTargetGroup) {
@@ -50,18 +80,16 @@
             });
     }
 
-
     return {
         search: function (searchParameters) {
-            eventBroker.publish(VkAppEvents.search, searchParameters);
+            eventBroker.publish(VkAppEvents.searchFriends, searchParameters);
 
             searchInner(searchParameters, searchParameters.hits, 0)
                 .then(function (users) {
                     users = searchHelper.distinctUsers(users);
-                    context.setSearchResultUsers(users);
-                    eventBroker.publish(VkAppEvents.searchCompleted, users);
+                    eventBroker.publish(VkAppEvents.searchFriendsCompleted, users);
                 }, function (error) {
-                    eventBroker.publish(VkAppEvents.searchFailed, error);
+                    eventBroker.publish(VkAppEvents.searchFriendsFailed, error);
                 });
         }
     };

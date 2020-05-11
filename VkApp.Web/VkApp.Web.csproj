@@ -145,6 +145,7 @@
     <Compile Include="App_Start\StructuremapConfig.cs" />
     <Compile Include="ChromeExtensionsVersionProvider.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\api\FriendsController.cs" />
     <Compile Include="Controllers\api\GroupsApiController.cs" />
     <Compile Include="Controllers\api\InvitesController.cs" />
     <Compile Include="Controllers\api\MessagesController.cs" />
@@ -177,21 +178,34 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\services\cachedFriendRequestsDataLoader.js" />
     <Content Include="app\services\cachedStatisticsDataLoader.js" />
+    <Content Include="app\services\friendRequestService.js" />
     <Content Include="app\services\invitesService.js" />
     <Content Include="app\services\manualMessageSender.js" />
+    <Content Include="app\services\friendsSearchService.js" />
     <Content Include="app\services\statisticsService.js" />
     <Content Include="app\services\groupUsersDataLoader.js" />
     <Content Include="app\services\targetGroupsProvider.js" />
+    <Content Include="app\utils\deferredList.js" />
     <Content Include="app\utils\inputsHelper.js" />
     <Content Include="app\utils\progressBarHelper.js" />
+    <Content Include="app\utils\searchHelper.js" />
     <Content Include="app\utils\utils.js" />
     <Content Include="app\view\appPanel\appPanelController.js" />
+    <Content Include="app\view\appPanel\friends\findFriendsResultsController.js" />
+    <Content Include="app\view\appPanel\friends\findFriendsFilterController.js" />
     <Content Include="app\view\appPanel\instruments\instrumentsPanel.cshtml" />
     <Content Include="app\view\appPanel\invites\invitesPanel.cshtml" />
+    <Content Include="app\view\appPanel\friends\findFriendsFilter.cshtml" />
+    <Content Include="app\view\appPanel\shared\geoFilter.cshtml" />
+    <Content Include="app\view\appPanel\friends\findFriendsResults.cshtml" />
+    <Content Include="app\view\appPanel\shared\implicitFlowSwitcherController.js" />
+    <Content Include="app\view\appPanel\shared\implicitFlowSwitcher.cshtml" />
     <None Include="app\view\appPanel\statistics\statisticsPanel.cshtml" />
     <Content Include="app\view\appPanel\instruments\instrumentsPanelController.js" />
     <Content Include="app\view\appPanel\invites\invitesPanelController.js" />
+    <Content Include="app\view\appPanel\shared\geoFilterController.js" />
     <Content Include="app\view\appPanel\statistics\statisticsPanelController.js" />
     <Content Include="app\view\authenticationPanel\implicitFlowAuthenticationController.js" />
     <Content Include="app\view\authenticationPanel\authenticationController.js" />

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NHibernate;
-using NHibernate.Transform;
 using VkApp.Data.Model;
 
 namespace VkApp.Data.DataProviders

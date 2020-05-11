@@ -1,6 +1,5 @@
 ﻿function InvitesPanelController(initializationService, inputsHelper, invitesService, callService, context, eventBroker) {
     var $panel = $(".invites-panel");
-    var $implicitFlowWarningPanel = $panel.find("#implicitFlowWarningPanel");
     var $invitesPanel = $panel.find("#invitesPanel");
     var $invitedUsersPanel = $panel.find("#invitedUsersPanel");
     var inputs = inputsHelper.for($invitesPanel);
@@ -39,18 +38,8 @@
             .show();
 
         hideLoader();
-        $implicitFlowWarningPanel.hide();
         inputs.disable("#inviteButton");
         $invitesPanel.show();
-    }
-
-    function refreshImplicitFlowWarning()
-    {
-        if (context.implicitFlow) {
-            $implicitFlowWarningPanel.hide();
-        } else {
-            $implicitFlowWarningPanel.show();
-        }
     }
 
     function refreshInviteButton() {
@@ -66,7 +55,6 @@
             friendsInfo = result;
             var infoLabel = getFriendsInfoLabel(friendsInfo);
             $panel.find("#friendsInfoLabel").html(infoLabel);
-            refreshImplicitFlowWarning();
             refreshInviteButton(friendsInfo);
             hideLoader();
             $invitesPanel.show();
@@ -80,7 +68,6 @@
         }
 
         $panel.find("#invitesInfoLabel").html(getInfoLabel());
-        refreshImplicitFlowWarning();
         refreshInviteButton();
     }
 
@@ -103,12 +90,6 @@
         appendInvitedUser(user, false);
         showError(error);
     }
-
-    $panel.find("#switchToImplicitFlow").on("click",
-        function () {
-            initializationService.goToImplicitFlowAuthenticationStep();
-        });
-
 
     $panel.find("#inviteButton").on("click",
         function () {

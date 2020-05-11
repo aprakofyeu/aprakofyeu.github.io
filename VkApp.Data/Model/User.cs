@@ -8,6 +8,7 @@ namespace VkApp.Data.Model
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
         public virtual int InvitesInterval { get; set; }
+        public virtual int FriendRequestsInterval { get; set; }
     }
 
     public class UserMap : ClassMap<User>
@@ -20,6 +21,7 @@ namespace VkApp.Data.Model
             Map(x => x.FirstName);
             Map(x => x.LastName);
             Map(x => x.InvitesInterval);
+            Map(x => x.FriendRequestsInterval);
         }
     }
 }

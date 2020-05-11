@@ -16,11 +16,6 @@
         <label for="noMessagesCheckbox">и не получали сообщений от этой группы</label>
     </div>
 
-    <div class="row hidden">
-        <input type="checkbox" id="withoutConversationsWithMeCheckbox" disabled="disabled"/>
-        <label for="withoutConversationsWithMeCheckbox">только те, у кого нет переписок со мной</label>
-    </div>
-
     <div class="row">
         <input type="checkbox" checked="checked" id="canSendMessageCheckbox" />
         <label for="canSendMessageCheckbox">только те, кому я могу отправлять сообщения</label>
@@ -34,28 +29,14 @@
             <br>
             <input type="radio" name="activity" id="onlineActivityRadio" value="online">
             <label for="onlineActivityRadio">только те, кто сейчас "онлайн"</label>
-            <br/>
+            <br />
             <input type="radio" name="activity" id="allActivityRadio" value="all">
             <label for="allActivityRadio">все</label>
         </div>
     </div>
 
-    <div class="row">
-        <input type="checkbox" checked="checked" id="enableCountryCheckbox" />
-        <label for="enableCountryCheckbox">Страна:</label>
-        <select id="selectedCountry" class="hidable">
-            <option value="1">Россия</option>
-            <option value="3" selected="selected">Беларусь</option>
-            <option value="2">Украина</option>
-            <option value="4">Казахстан</option>
-            <option value="8">Израиль</option>
-            <option value="9">США</option>
-        </select>
-        <div class="row subrow">
-            <input type="checkbox" id="enableCityCheckbox" checked="checked" />
-            <label for="enableCityCheckbox">Город:</label>
-            <select id="selectedCity" class="hidable"></select>
-        </div>
+    <div class="row geo-filter">
+        @Html.Partial("~/app/view/appPanel/shared/geoFilter.cshtml")
     </div>
 
     <div class="row">

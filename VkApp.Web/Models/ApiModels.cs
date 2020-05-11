@@ -19,6 +19,7 @@
     {
         public int UserId { get; set; }
         public int InvitesInterval { get; set; }
+        public int FriendRequestsInterval { get; set; }
     }
 
     public class GroupInfo
@@ -32,6 +33,7 @@
         public bool MessagesInitialized { get; set; }
         public int PreferredGroup { get; set; }
         public int InvitesInterval { get; set; }
+        public int FriendRequestsInterval { get; set; }
     }
 
     public class UserMessageRequest

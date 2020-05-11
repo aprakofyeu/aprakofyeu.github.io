@@ -26,6 +26,7 @@
                 <td style="width: 500px">Comment</td>
                 <td style="width: 200px">Messages</td>
                 <td style="width: 200px">Invites</td>
+                <td style="width: 200px">Find friends</td>
                 <td style="width: 200px">Instruments</td>
                 <td style="width: 300px">Actions</td>
             </tr>
@@ -37,6 +38,7 @@
                     <td>@role.Comment</td>
                     <td>@FormatPermission(role.Messages)</td>
                     <td>@FormatPermission(role.Invites)</td>
+                    <td>@FormatPermission(role.FindFriends)</td>
                     <td>@FormatPermission(role.Instruments)</td>
                     <td class="actions">
                         @Html.ActionLink("Remove", "Remove", new { id = role.Id })
@@ -68,17 +70,22 @@
             </div>
 
             <div class="row">
-                <label for="comment">Allow messages</label>
+                <label for="allowMessages">Allow messages</label>
                 @Html.CheckBox("allowMessages", true)
             </div>
 
             <div class="row">
-                <label for="comment">Allow invites</label>
+                <label for="allowInvites">Allow invites</label>
                 @Html.CheckBox("allowInvites", true)
             </div>
 
             <div class="row">
-                <label for="comment">Allow instruments</label>
+                <label for="allowFindFriends">Allow find friends</label>
+                @Html.CheckBox("allowFindFriends", true)
+            </div>
+
+            <div class="row">
+                <label for="allowInstruments">Allow instruments</label>
                 @Html.CheckBox("allowInstruments", true)
             </div>
 

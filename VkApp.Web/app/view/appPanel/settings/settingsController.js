@@ -1,5 +1,5 @@
 ﻿function SettingsController(context, apiService, initializationService, inputsHelper, eventBroker) {
-    $panel = $(".settings-panel");
+    var $panel = $(".settings-panel");
     var inputs = inputsHelper.for($panel);
 
     function refreshUi() {
@@ -7,13 +7,15 @@
 
         $panel.find("#applicationId").text(context.applicationId);
         inputs.setValue("#invitesInterval", context.settings.invitesInterval);
+        inputs.setValue("#friendRequestsInterval", context.settings.friendRequestsInterval);
         inputs.setChecked("#debugMode", context.settings.debugMode);
 
         $panel.on("change", "input",
             function() {
                 var settings = {
                     debugMode: inputs.getChecked("#debugMode"),
-                    invitesInterval: inputs.getIntValue("#invitesInterval")
+                    invitesInterval: inputs.getIntValue("#invitesInterval"),
+                    friendRequestsInterval: inputs.getIntValue("#friendRequestsInterval")
                 };
 
                 return apiService.updateSettings(settings)

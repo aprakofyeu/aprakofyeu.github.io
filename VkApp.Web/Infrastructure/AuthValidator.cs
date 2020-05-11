@@ -28,6 +28,7 @@ namespace VkApp.Web.Infrastructure
                 {
                     AllowMessages = role.Messages,
                     AllowInvites = role.Invites,
+                    AllowFindFriends = role.FindFriends,
                     AllowInstruments = role.Instruments
                 };
             }

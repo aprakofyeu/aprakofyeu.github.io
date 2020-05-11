@@ -12,7 +12,7 @@ namespace VkApp.Data.DataProviders
         IEnumerable<RoleDto> GetUserRoles();
         IEnumerable<RoleDto> GetRoles(string role);
         void Remove(int id);
-        void AddUserPassword(string password, string comment, bool allowMessages, bool allowInvites, bool allowInstruments);
+        void AddUserPassword(string password, string comment, bool allowMessages, bool allowInvites, bool allowFindFriends, bool allowInstruments);
     }
 
     class UserRolesProvider : IUserRolesProvider
@@ -59,7 +59,7 @@ namespace VkApp.Data.DataProviders
             _session.Delete(app);
         }
 
-        public void AddUserPassword(string password, string comment, bool allowMessages, bool allowInvites, bool allowInstruments)
+        public void AddUserPassword(string password, string comment, bool allowMessages, bool allowInvites, bool allowFindFriends, bool allowInstruments)
         {
             _session.SaveOrUpdate(new RoleDto
             {
@@ -68,6 +68,7 @@ namespace VkApp.Data.DataProviders
                 Comment = comment,
                 Messages = allowMessages,
                 Invites = allowInvites,
+                FindFriends = allowFindFriends,
                 Instruments = allowInstruments
             });
         }

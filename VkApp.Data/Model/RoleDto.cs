@@ -11,6 +11,7 @@ namespace VkApp.Data.Model
         public virtual bool Messages { get; set; }
         public virtual bool Invites { get; set; }
         public virtual bool Instruments { get; set; }
+        public virtual bool FindFriends { get; set; }
     }
 
     public class RoleDtoMap : ClassMap<RoleDto>
@@ -26,6 +27,7 @@ namespace VkApp.Data.Model
             Map(x => x.Messages);
             Map(x => x.Invites);
             Map(x => x.Instruments);
+            Map(x => x.FindFriends);
         }
     }
 }

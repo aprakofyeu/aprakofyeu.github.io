@@ -1,0 +1,67 @@
+﻿<div class="panel find-friends-filter">
+    <label class="title">Поиск друзей</label>
+    
+    <div class="row">
+        <div class="summary fail"></div>
+    </div>
+
+    <div class="row">
+        @Html.Partial("~/app/view/appPanel/shared/implicitFlowSwitcher.cshtml")
+    </div>
+
+    <div class="row">
+        <label>Пставили лайк:</label>
+        <input type="text" class="url-input post-id" />
+    </div>
+
+    <div class="row">
+        <input type="checkbox" checked="checked" class="subscriptionEnabledCheckbox" />
+        <label class="subscriptionEnabledCheckboxLabel">не подписаны в группу: <b><span class="groupNameLabel"></span></b></label>
+    </div>
+
+    <div class="row">
+        <input type="checkbox" checked="checked" class="noMessagesCheckbox" />
+        <label class="noMessagesCheckboxLabel">и не получали сообщений от этой группы</label>
+    </div>
+
+    <div class="row">
+        <input type="checkbox" checked="checked" class="noFriendRequestedLastTimeCheckbox" />
+        <label class="noFriendRequestedLastTimeCheckboxLabel">и не получали приглашения в друзья от меня и "<span class="colleague-titled" title="те, кто хотя-бы раз делал рассылку за эту же группу">коллег по рассылке</span>" последние <b><span class="friendRequestsIntervalLabel"></span></b> дней</label>
+    </div>
+
+    <div class="row">
+        <input type="checkbox" checked="checked" class="canFriendsRequestCheckbox" />
+        <label class="canFriendsRequestCheckboxLabel">только те, кого я могу пригласить в друзья</label>
+    </div>
+
+    <div class="row">
+        <input type="checkbox" checked="checked" class="notInColleagueFriendsCheckbox" />
+        <label class="notInColleagueFriendsCheckboxLabel">только те, кого нет в друзьях у меня, и у "<span class="colleague-titled" title="те, кто хотя-бы раз делал рассылку за эту же группу">коллег по рассылке</span>"</label>
+        <span class="totalFriendsCount"><img src="~/Content/images/loading.gif" height="25" style="vertical-align: bottom; margin-left: 20px"></span>
+    </div>
+
+    <div class="row">
+        <input type="checkbox" checked="checked" class="canInvitedGroupCheckbox" />
+        <label class="canInvitedGroupCheckboxLabel">только те, кого можно приглашать в сообщества</label>
+    </div>
+
+    <div class="row geo-filter">
+        @Html.Partial("~/app/view/appPanel/shared/geoFilter.cshtml")
+    </div>
+
+    <div class="row">
+        <label>Показать первых</label>
+        <select class="hitsCount">
+            <option value="5">5</option>
+            <option value="10" selected="selected">10</option>
+            <option value="15">20</option>
+            <option value="20">30</option>
+            <option value="20">40</option>
+        </select>
+        <label>пользователей</label>
+    </div>
+
+    <div class="row buttons">
+        <button class="active-button searchButton">Искать!</button>
+    </div>
+</div>

@@ -8,7 +8,10 @@
     var context = new AppContext(applicationId, permissions);
     var apiService = new ApiService(context);
     var callService = new CallService(context, captchaService);
-    var searchService = new SearchService(callService, apiService, context, eventBroker);
+    var searchHelper = new SearchHelper(callService, apiService, context);
+    var searchService = new SearchService(searchHelper, context, eventBroker);
+    var cachedFriendRequestsDataLoader = new CachedFriendRequestsDataLoader(apiService, callService, context);
+    var friendsSearchService = new FriendsSearchService(searchHelper, cachedFriendRequestsDataLoader, apiService, eventBroker);
     var regionsProvider = new RegionsProvider(callService, eventBroker);
     var formatter = new MessagesFormatter();
     var progressBar = new MessageProgressBar(context);
@@ -19,9 +22,11 @@
     var cachedStatisticsDataLoader = new CachedStatisticsDataLoader(groupUsersDataLoader, apiService, eventBroker);
     var statisticsService = new StatisticsService(cachedStatisticsDataLoader);
     var invitesService = new InvitesService(groupUsersDataLoader, context, callService, apiService, eventBroker);
+    var friendRequestService = new FriendRequestService(callService, apiService, eventBroker);
 
+    var geoFilterController = new GeoFilterController(inputsHelper, regionsProvider);
     var settingsController = new SettingsController(context, apiService, initializationService, inputsHelper, eventBroker);
-    var filtersController = new FiltersController(urlHelper, inputsHelper, searchService, regionsProvider, context, eventBroker);
+    var filtersController = new FiltersController(urlHelper, inputsHelper, searchService, geoFilterController, context, eventBroker);
     var messagesController = new MessagesController(formatter, messageSender, apiService, urlHelper, context, eventBroker);
     var manualMessageSender = new ManualMessageSender(context, messagesController, formatter, apiService, eventBroker);
     var resultsController = new ResultsController(manualMessageSender, eventBroker);
@@ -33,6 +38,9 @@
     var statisticsPanelController = new StatisticsPanelController(statisticsService, context, inputsHelper, progressBarHelper, eventBroker);
     var instrumentsPanelController = new InstrumentsPanelController(urlHelper, inputsHelper, callService, context, eventBroker);
     var invitesPanelController = new InvitesPanelController(initializationService, inputsHelper, invitesService, callService, context, eventBroker);
+    var findFriendsFilterController = new FindFriendsFilterController(inputsHelper, urlHelper, cachedFriendRequestsDataLoader, friendsSearchService, geoFilterController, context, eventBroker);
+    var findFriendsResultsController = new FindFriendsResultsController(inputsHelper, friendRequestService, progressBarHelper, context, eventBroker);
+    var implicitFlowSwitcherController = new ImplicitFlowSwitcherController(initializationService, context, eventBroker);
 
 
     //end dependency injection

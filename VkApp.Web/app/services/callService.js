@@ -35,7 +35,8 @@
         },
 
         call: function (method, parameters) {
-            var params = $.extend(parameters, { v: "5.73" });
+            //var params = $.extend(parameters, { v: "5.73" });
+            var params = $.extend(parameters, { v: "5.89" });
             var deferred = new $.Deferred();
 
             if (VK._session && this.accessToken) {

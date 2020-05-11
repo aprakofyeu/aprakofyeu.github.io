@@ -9,6 +9,7 @@
     },
     {
       "matches": [ "http://www.sndall.ru/" ],
+      //"matches": [ "http://localhost/vkapp" ],
       "js": [ "jquery.js", "flag.js" ]
     }
   ]

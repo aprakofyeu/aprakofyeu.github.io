@@ -1,0 +1,42 @@
+﻿<div class="panel find-friends-results-panel">
+    <label class="title">Результаты</label>
+    <div class="row">
+        <div class="summary fail"></div>
+        <div class="summary info"></div>
+    </div>
+    <div class="row actions-panel">
+        <button class="active-button addAllButton">Добавить всех!</button>
+    </div>
+    <div class="row progress-panel hidden">
+        <div class="statisticsStatusBar"><div class="progress-label">Приглашаем всех в друзья...</div></div>
+    </div>
+    <div class="row result-users">
+    </div>
+
+    <script id="findFriendsUsersTemplate" type="text/x-jquery-tmpl">
+        <div class="user {{if !can_send_friend_request}}disabled{{/if}}" user-id="${id}">
+            <div class="online-panel">
+                {{if online}}<div class="online" title="online"></div>{{/if}}
+            </div>
+            <div class="avatar">
+                <img src='${photo_50}' />
+            </div>
+            <div class="info-panel">
+                <a href="https://vk.com/id${id}" target="_blank">${first_name} ${last_name}</a>
+                <div class="additional-info">
+                    {{if city}}${city.title}, {{/if}}
+                    {{if country}}${country.title}{{/if}}
+                </div>
+            </div>
+            <div class="info-panel">
+                {{if can_send_friend_request && !friendRequested}}
+                <button class="send-friend-request_button" user-id="${id}">Добавить в друзья</button>
+                {{/if}}
+            </div>
+            <div class="status-panel">
+                {{if !can_send_friend_request}}<div class="disabled"></div>{{/if}}
+                {{if friendRequested}}<div class='ok' title='Заявка отправлена!'></div>{{/if}}
+            </div>
+        </div>
+    </script>
+</div>

@@ -1,19 +1,16 @@
-﻿function FiltersController(urlHelper, inputsHelper, searchService, regionsProvider, appContext, eventBroker) {
+﻿function FiltersController(urlHelper, inputsHelper, searchService, geoFilterController, appContext, eventBroker) {
     if (!appContext.permissions.allowMessages)
         return;
 
-    var $panel, $searchButton, inputs;
+    var $panel, $searchButton, inputs, geoFilter;
 
     function getPostParams() {
         return urlHelper.parseWallUrl(inputs.getValue("#postId"));
     }
 
-    function isChecked(checkboxSelector) {
-        return $panel.find(checkboxSelector)[0].checked;
-    }
-
     function refreshUi() {
         $panel.find("#groupNameLabel").text(appContext.targetGroup.name);
+        geoFilter = geoFilterController.init($panel.find(".geo-filter"));
     }
 
     function buildSearchParameters() {
@@ -22,36 +19,28 @@
             hits: inputs.getIntValue("#hitsCount")
         };
 
-        if (isChecked("#withoutConversationsWithMeCheckbox")) {
-            parameters.withoutConversationsWithMe = true;
-        }
-
-        if (isChecked("#noMessagesCheckbox")) {
+        if (inputs.getChecked("#noMessagesCheckbox")) {
             parameters.noMessagesByTargetGroup = true;
         }
 
-        if (isChecked("#canSendMessageCheckbox")) {
+        if (inputs.getChecked("#canSendMessageCheckbox")) {
             parameters.canSendMessageOnly = true;
         }
 
-        if (isChecked("#subscriptionEnabledCheckbox")) {
+        if (inputs.getChecked("#subscriptionEnabledCheckbox")) {
             parameters.notSubscribedToTargetGroup = true;
         }
 
-        if (isChecked("#onlineActivityRadio")) {
+        if (inputs.getChecked("#onlineActivityRadio")) {
             parameters.onlineOnly = true;
         }
 
-        if (isChecked("#recentActivityRadio")) {
+        if (inputs.getChecked("#recentActivityRadio")) {
             parameters.recenltyActivityOnly = true;
         }
 
-        if (isChecked("#enableCountryCheckbox")) {
-            parameters.country = inputs.getIntValue("#selectedCountry");
-            if (isChecked("#enableCityCheckbox")) {
-                parameters.city = inputs.getIntValue("#selectedCity");
-            }
-        }
+        var geoSelections = geoFilter.getSelections();
+        $.extend(parameters, geoSelections);
 
         return parameters;
     }
@@ -64,41 +53,10 @@
         $searchButton.removeAttr("disabled");
     }
 
-    function initRegions() {
-        function refreshCities() {
-            var countryId = inputs.getIntValue("#selectedCountry");
-            regionsProvider.getCities(countryId).then(function (cities) {
-                inputsHelper.renderOptions(
-                    $panel.find("#selectedCity"),
-                    cities.items,
-                    function (x) { return x.id; },
-                    function (x) { return x.title; },
-                    function (x) { return x.important; });
-            });
-        }
-
-        refreshCities();
-
-        $panel.find("#selectedCountry").on("change", function () {
-            refreshCities();
-        });
-
-    }
-
-
     function initView() {
         $panel = $(".filter-panel");
         $searchButton = $panel.find("#searchButton");
         inputs = inputsHelper.for($panel);
-
-        function refreshRowForCheckbox($checkbox) {
-            var row = $checkbox.closest(".row");
-            if ($checkbox[0].checked) {
-                row.removeClass("disabled");
-            } else {
-                row.addClass("disabled");
-            }
-        }
 
         function isValid() {
             if (!getPostParams()) {
@@ -109,22 +67,11 @@
             return true;
         }
 
-        function initRowDisabling(checkboxId) {
-            var $checkbox = $panel.find("#" + checkboxId);
-            refreshRowForCheckbox($checkbox);
-            $checkbox.on("change", function () {
-                refreshRowForCheckbox($checkbox);
-            });
-        }
+        inputsHelper.initRowDisabling($panel.find("#subscriptionEnabledCheckbox"));
+        inputsHelper.initRowDisabling($panel.find("#noMessagesCheckbox"));
+        inputsHelper.initRowDisabling($panel.find("#canSendMessageCheckbox"));
 
-        initRowDisabling("subscriptionEnabledCheckbox");
-        //initRowDisabling("withoutConversationsWithMeCheckbox");
-        initRowDisabling("noMessagesCheckbox");
-        initRowDisabling("canSendMessageCheckbox");
-        initRowDisabling("enableCountryCheckbox");
-        initRowDisabling("enableCityCheckbox");
-
-        $panel.find("#searchButton").on("click",
+        $searchButton.on("click",
             function () {
                 if (isValid()) {
                     var searchParameters = buildSearchParameters();
@@ -137,7 +84,6 @@
         eventBroker.subscribe(VkAppEvents.search, function () { disableSearchButton(); });
         eventBroker.subscribe(VkAppEvents.searchCompleted, function () { enableSearchButton(); });
         eventBroker.subscribe(VkAppEvents.searchFailed, function () { enableSearchButton(); });
-        eventBroker.subscribe(VkAppEvents.authenticationCompleted, function () { initRegions(); });
         eventBroker.subscribe(VkAppEvents.initializationCompleted, function () { refreshUi(); });
     }
 

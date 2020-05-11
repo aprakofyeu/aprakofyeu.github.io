@@ -37,6 +37,9 @@
         addTargetGroup: function (group) {
             return post("api/groups/add", group);
         },
+        getSenderUsersByGroup: function () {
+            return get("api/groups/getSenderUsersByGroup", { groupId: context.targetGroup.id });
+        },
         getStatisticsGroups: function () {
             return get("api/statistics/groups", { targetGroupId: context.targetGroup.id });
         },
@@ -63,7 +66,8 @@
         updateSettings: function (settings) {
             var userSettings = {
                 userId: context.user.id,
-                invitesInterval: settings.invitesInterval
+                invitesInterval: settings.invitesInterval,
+                friendRequestsInterval: settings.friendRequestsInterval
             };
 
             return post("api/user/update", { userSettings: userSettings });
@@ -87,6 +91,12 @@
         },
         markAsInvited: function (userId) {
             return post("api/invites/markAsInvited", { invitedUserId: userId, userId: context.user.id, groupId: context.targetGroup.id });
+        },
+        markAsFriendRequested: function (userId) {
+            return post("api/friends/markAsFriendRequested", { friendRequestedUserId: userId, userId: context.user.id });
+        },
+        getFriendRequests: function (userId) {
+            return post("api/friends/getFriendRequests", { userId: context.user.id, groupId: context.targetGroup.id });
         }
     };
 }

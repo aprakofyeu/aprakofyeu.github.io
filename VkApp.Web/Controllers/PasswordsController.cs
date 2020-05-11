@@ -28,7 +28,7 @@ namespace VkApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Create(string password, string comment, bool allowMessages, bool allowInvites, bool allowInstruments)
+        public ActionResult Create(string password, string comment, bool allowMessages, bool allowInvites, bool allowFindFriends, bool allowInstruments)
         {
             if (string.IsNullOrEmpty(password))
             {
@@ -36,7 +36,7 @@ namespace VkApp.Web.Controllers
                 return Index();
             }
 
-            _userRolesProvider.AddUserPassword(password, comment, allowMessages, allowInvites, allowInstruments);
+            _userRolesProvider.AddUserPassword(password, comment, allowMessages, allowInvites, allowFindFriends, allowInstruments);
 
             return RedirectToAction("Index");
         }

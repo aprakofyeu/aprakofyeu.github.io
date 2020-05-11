@@ -10,6 +10,15 @@
     searchCompleted: "searchCompleted",
     searchFailed: "searchFailed",
 
+    searchFriends: "searchFriends",
+    searchFriendsCompleted: "searchFriendsCompleted",
+    searchFriendsFailed: "searchFriendsFailed",
+
+    addFriendsStart: "addFriendsStart",
+    addFriendsCompleted: "addFriendsCompleted",
+    addFriendError: "addFriendError",
+    addFriendSuccess: "addFriendSuccess",
+
     sendMessageOk: "sendMessageOk",
     sendMessageFailed: "sendMessageFailed",
     sendMessageWarning: "sendMessageWarning",
@@ -24,6 +33,7 @@
     showInvites: "showInvites",
     showMessages: "showMessages",
     showSettings: "showSettings",
+    showFindFriends: "showFindFriends",
 
     invitesLoadingError: "invitesLoadingError",
     inviteUserSuccess: "inviteUserSuccess",

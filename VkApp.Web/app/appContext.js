@@ -6,7 +6,8 @@
         maxMessagesCount: 5,
         settings: {
             debugMode: false,
-            invitesInterval: 50
+            invitesInterval: 60,
+            friendRequestsInterval: 60
         },
         implicitFlow: false,
         searchResult: {},
@@ -23,6 +24,7 @@
 
         setSettings: function (settings) {
             this.settings.invitesInterval = settings.invitesInterval;
+            this.settings.friendRequestsInterval = settings.friendRequestsInterval;
             this.settings.debugMode = !!settings.debugMode;
         },
 

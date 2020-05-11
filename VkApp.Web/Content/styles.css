@@ -376,6 +376,12 @@ input.url-input {
     color: #db7f00;
 }
 
+.colleague-titled {
+
+    font-style: italic;
+    text-decoration: underline;
+}
+
 .allow-label {
     color: green;
 }

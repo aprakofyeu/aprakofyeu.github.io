@@ -11,7 +11,7 @@
                     fields: "id,first_name,last_name,photo_50,can_be_invited_group"
                 })
                 .then(function (response) {
-                    if (offset + batchSize < response.count) {
+                    if (response.items && response.items.length > 0) {
                         return Utils.actionWithDelay(function () {
                             return loadAllFriendsInner(offset + batchSize, batchSize)
                                 .then(function (friends) {
@@ -135,9 +135,9 @@
                             }
                         }, 1000);
                     }).then(function () {
-                        },
-                    function (error) {
-                        eventBroker.publish(VkAppEvents.inviteError, friend, error);
+                    },
+                        function (error) {
+                            eventBroker.publish(VkAppEvents.inviteError, friend, error);
                         });
             }
 

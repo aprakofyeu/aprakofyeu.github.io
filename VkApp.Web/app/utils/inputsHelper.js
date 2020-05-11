@@ -7,6 +7,29 @@
 
             $element.html(optionsHtml);
         },
+
+        initRowDisabling: function ($checkbox, $label) {
+            function refreshRowForCheckbox() {
+                var row = $checkbox.closest(".row");
+                if ($checkbox[0].checked) {
+                    row.removeClass("disabled");
+                } else {
+                    row.addClass("disabled");
+                }
+            }
+
+            refreshRowForCheckbox();
+            $checkbox.on("change", function () {
+                refreshRowForCheckbox();
+            });
+
+            if ($label) {
+                $label.on("click", function () {
+                    $checkbox.click();
+                });
+            }
+        },
+
         for: function (container) {
             function clearValidation() {
                 $(this).removeClass("invalid");
@@ -22,10 +45,10 @@
                 getValue: function (selector) {
                     return container.find(selector).val();
                 },
-                setValue: function(selector, value) {
+                setValue: function (selector, value) {
                     container.find(selector).val(value);
                 },
-                clear: function(selector) {
+                clear: function (selector) {
                     container.find(selector).val("");
                 },
                 getIntValue: function (selector) {

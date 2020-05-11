@@ -59,12 +59,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataProviders\ApplicationsProvider.cs" />
+    <Compile Include="DataProviders\FriendRequestsProvider.cs" />
     <Compile Include="DataProviders\GroupProvider.cs" />
     <Compile Include="DataProviders\InvitesProvider.cs" />
     <Compile Include="DataProviders\MessagesProvider.cs" />
     <Compile Include="DataProviders\SatsisticsProvider.cs" />
     <Compile Include="DataProviders\UserRolesProvider.cs" />
     <Compile Include="DataProviders\UserSavedMessagesProvider.cs" />
+    <Compile Include="Model\FriendRequest.cs" />
     <Compile Include="Model\Invite.cs" />
     <Compile Include="Model\RoleDto.cs" />
     <Compile Include="Model\SavedMessage.cs" />
@@ -87,9 +89,18 @@
     <Compile Include="VkAppDataRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database\database_3.sql" />
-    <Content Include="Database\database_2.sql" />
-    <Content Include="Database\database_1.sql" />
+    <Content Include="Database\database_10.sql" />
+    <Content Include="Database\database_11.sql" />
+    <Content Include="Database\database_03.sql" />
+    <Content Include="Database\database_02.sql" />
+    <Content Include="Database\database_01.sql" />
+    <Content Include="Database\database_04.sql" />
+    <Content Include="Database\database_05.sql" />
+    <Content Include="Database\database_06.sql" />
+    <Content Include="Database\database_07.sql" />
+    <Content Include="Database\database_08.sql" />
+    <Content Include="Database\database_09.sql" />
+    <Content Include="Database\database_12.sql" />
     <Content Include="Database\useful scripts.sql" />
   </ItemGroup>
   <ItemGroup>
