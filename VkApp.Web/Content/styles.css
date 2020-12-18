@@ -162,6 +162,19 @@ input.url-input {
         padding: 0 5px;
     }
 
+.panel a.link-button,
+.panel a.link-button:link,
+.panel a.link-button:visited,
+.panel a.link-button:hover,
+.panel a.link-button:active {
+    color: #75a4d1;
+    cursor: pointer;
+    font-weight: normal;
+    font-style: italic;
+    text-decoration: underline;
+    vertical-align: bottom;
+}
+
 .input-message-panel {
     border-bottom: solid 1px #EEE;
     margin-bottom: 20px;
@@ -377,7 +390,6 @@ input.url-input {
 }
 
 .colleague-titled {
-
     font-style: italic;
     text-decoration: underline;
 }
@@ -391,6 +403,7 @@ input.url-input {
 }
 
 .invites-panel .loader,
+.cleanup-friends-panel .loader,
 .result-users .loader {
     display: block;
     height: 100px;

@@ -1,0 +1,59 @@
+﻿<div class="panel cleanup-friends-panel">
+    <label class="title">Удаление "собак" и "зомби"</label>
+
+    <div class="row">
+        <div class="summary fail"></div>
+    </div>
+
+    <div class="row">
+        @Html.Partial("~/app/view/appPanel/shared/implicitFlowSwitcher.cshtml")
+    </div>
+
+    <div id="cleanupInitialLoader" class='loader'></div>
+
+    <div class="cleanup-friends-actions-panel hidden">
+        <div class="row">
+            <input type="checkbox" checked="checked" class="deletedFriendsCheckbox" />
+            <label>страница удалена (<b><span class="deletedFriendsCountLabel"></span></b>)</label>
+            <a class="link-button deletedFriendsDetailsLink">подробнее</a>
+        </div>
+
+        <div class="row">
+            <input type="checkbox" checked="checked" class="bannedFriendsCheckbox" />
+            <label>страница забанена (<b><span class="bannedFriendsCountLabel"></span></b>)</label>
+            <a class="link-button bannedFriendsDetailsLink">подробнее</a>
+        </div>
+
+        <div class="row">
+            <input type="checkbox" class="noActivityFriendsCheckbox" />
+            <label>не активны более года (<b><span class="noActivityFriendsCountLabel"></span></b>)</label>
+            <a class="link-button noActivityFriendsDetailsLink">подробнее</a>
+        </div>
+        
+        <div class="row">
+            <div id="cleanupFriendsStatusBar" class="hidden"><div class="progress-label">Удаление друзей...</div></div>
+        </div>
+
+        <div class="row buttons">
+            <button class="active-button cleanupButton">Удалить!</button>
+        </div>
+    </div>
+
+    <script id="friendsDetailsTemplate" type="text/x-jquery-tmpl">
+        <div>
+            {{each friends}}
+            <div class="user" user-id="${id}">
+                <div class="avatar">
+                    <img src='${$value.photo_50}' />
+                </div>
+                <div class="info-panel">
+                    <a href="https://vk.com/id${id}" target="_blank">${$value.first_name} ${$value.last_name}</a>
+                    <div class="additional-info">
+                        {{if $value.last_seen_formatted}}Последняя активность: ${$value.last_seen_formatted}{{/if}}
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </script>
+</div>

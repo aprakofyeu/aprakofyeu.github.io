@@ -184,10 +184,12 @@
     <Content Include="app\services\invitesService.js" />
     <Content Include="app\services\manualMessageSender.js" />
     <Content Include="app\services\friendsSearchService.js" />
+    <Content Include="app\services\queuedCallServiceProxy.js" />
     <Content Include="app\services\statisticsService.js" />
     <Content Include="app\services\groupUsersDataLoader.js" />
     <Content Include="app\services\targetGroupsProvider.js" />
     <Content Include="app\utils\deferredList.js" />
+    <Content Include="app\utils\deferredQueue.js" />
     <Content Include="app\utils\inputsHelper.js" />
     <Content Include="app\utils\progressBarHelper.js" />
     <Content Include="app\utils\searchHelper.js" />
@@ -195,7 +197,9 @@
     <Content Include="app\view\appPanel\appPanelController.js" />
     <Content Include="app\view\appPanel\friends\findFriendsResultsController.js" />
     <Content Include="app\view\appPanel\friends\findFriendsFilterController.js" />
+    <None Include="app\view\appPanel\instruments\cleanupFriends.cshtml" />
     <Content Include="app\view\appPanel\instruments\instrumentsPanel.cshtml" />
+    <Content Include="app\view\appPanel\instruments\cleanupFriendsController.js" />
     <Content Include="app\view\appPanel\invites\invitesPanel.cshtml" />
     <Content Include="app\view\appPanel\friends\findFriendsFilter.cshtml" />
     <Content Include="app\view\appPanel\shared\geoFilter.cshtml" />

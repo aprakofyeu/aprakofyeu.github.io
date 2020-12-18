@@ -8,10 +8,11 @@
     var context = new AppContext(applicationId, permissions);
     var apiService = new ApiService(context);
     var callService = new CallService(context, captchaService);
+    callService = QueuedCallServiceProxy(callService, context);
     var searchHelper = new SearchHelper(callService, apiService, context);
     var searchService = new SearchService(searchHelper, context, eventBroker);
     var cachedFriendRequestsDataLoader = new CachedFriendRequestsDataLoader(apiService, callService, context);
-    var friendsSearchService = new FriendsSearchService(searchHelper, cachedFriendRequestsDataLoader, apiService, eventBroker);
+    var friendsSearchService = new FriendsSearchService(searchHelper, cachedFriendRequestsDataLoader, apiService, callService, eventBroker);
     var regionsProvider = new RegionsProvider(callService, eventBroker);
     var formatter = new MessagesFormatter();
     var progressBar = new MessageProgressBar(context);
@@ -41,6 +42,7 @@
     var findFriendsFilterController = new FindFriendsFilterController(inputsHelper, urlHelper, cachedFriendRequestsDataLoader, friendsSearchService, geoFilterController, context, eventBroker);
     var findFriendsResultsController = new FindFriendsResultsController(inputsHelper, friendRequestService, progressBarHelper, context, eventBroker);
     var implicitFlowSwitcherController = new ImplicitFlowSwitcherController(initializationService, context, eventBroker);
+    var cleanupFriendsController = new CleanupFriendsController(invitesService, inputsHelper, progressBarHelper, context, eventBroker);
 
 
     //end dependency injection

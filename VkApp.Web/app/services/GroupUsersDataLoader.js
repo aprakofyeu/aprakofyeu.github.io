@@ -4,14 +4,14 @@
     return {
         checkIsMembers: function (userIds, extended, reportStatus) {
 
-            function checkIsMember(offset, delay) {
+            function checkIsMember(offset) {
                 var userIdsBatch = userIds.slice(offset, offset + BatchSize);
 
-                return callService.callWithDelay('groups.isMember', {
+                return callService.call('groups.isMember', {
                         group_id: context.targetGroup.id,
                         user_ids: userIdsBatch,
                         extended: extended ? 1 : 0
-                    }, delay)
+                    })
                     .then(function (results) {
                         var totalLoadedCount = offset + BatchSize;
 
@@ -20,7 +20,7 @@
                         }
 
                         if (totalLoadedCount < userIds.length) {
-                            return checkIsMember(totalLoadedCount, 250)
+                            return checkIsMember(totalLoadedCount)
                                 .then(function (moreResults) {
                                     return results.concat(moreResults);
                                 });
@@ -29,7 +29,7 @@
                     });
             }
 
-            return checkIsMember(0, 0);
+            return checkIsMember(0);
         }
     };
 }

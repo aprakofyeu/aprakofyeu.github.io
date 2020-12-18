@@ -40,6 +40,10 @@
     inviteError: "inviteError",
     inviteCompleted: "inviteCompleted",
 
+    deleteFriendSuccess: "deleteFriendSuccess",
+    deleteFriendError: "deleteFriendError",
+    deleteFriendsCompleted: "deleteFriendsCompleted",
+
     changeStep:"changeStep"
 };
 

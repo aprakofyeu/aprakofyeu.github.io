@@ -36,13 +36,10 @@
                 if (users.length < hits) {
                     var moreOffset = offset + searchHelper.batchSize;
                     if (moreOffset < totalLikesCount) {
-
-                        return Utils.actionWithDelay(function () {
-                            return searchInner(searchParameters, hits - users.length, moreOffset)
-                                .then(function (moreUsers) {
-                                    return users.concat(moreUsers);
-                                });
-                        }, 1000);
+                        return searchInner(searchParameters, hits - users.length, moreOffset)
+                            .then(function (moreUsers) {
+                                return users.concat(moreUsers);
+                            });
                     }
                 }
 

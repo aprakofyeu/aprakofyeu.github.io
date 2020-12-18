@@ -81,6 +81,39 @@
 
                     return users.filter(function (x) { return !membersDict[x.id]; });
                 });
+        },
+
+        loadOutFriendRequests: function() {
+            var friendRequestsBatchSize = 1000;
+
+            function addToDict(friendsDict, friends) {
+                if (friends && friends.length > 0) {
+                    for (var i = 0; i < friends.length; i++) {
+                        friendsDict[friends[i]] = friends[i];
+                    }
+                }
+                return friendsDict;
+            }
+
+            function loadOutFriendRequests(offset) {
+                return callService.call("friends.getRequests",
+                        {
+                            out: 1,
+                            count: friendRequestsBatchSize,
+                            offset: offset
+                        })
+                    .then(function (result) {
+                        if (result.items && result.items.length > 0) {
+                            return loadOutFriendRequests(offset + friendRequestsBatchSize)
+                                .then(function(friendsDict) {
+                                    return addToDict(friendsDict, result.items);
+                                });
+                        }
+                        return addToDict({}, result.items);
+                    });
+            }
+
+            return loadOutFriendRequests(0);
         }
     };
 }

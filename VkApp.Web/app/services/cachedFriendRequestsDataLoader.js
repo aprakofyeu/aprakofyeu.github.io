@@ -17,12 +17,10 @@
                     count: 10000
                 }).then(function (friends) {
                     if (index < users.length - 1) {
-                        return Utils.actionWithDelay(function () {
-                            return loadUserFriendsInner(index + 1)
-                                .then(function (friendsDict) {
-                                    return addToDict(friendsDict, friends);
-                                });
-                        }, 300);
+                        return loadUserFriendsInner(index + 1)
+                            .then(function (friendsDict) {
+                                return addToDict(friendsDict, friends);
+                            });
                     }
                     return addToDict({}, friends);
                 });

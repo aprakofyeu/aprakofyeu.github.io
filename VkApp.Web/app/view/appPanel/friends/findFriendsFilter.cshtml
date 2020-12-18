@@ -40,11 +40,6 @@
         <span class="totalFriendsCount"><img src="~/Content/images/loading.gif" height="25" style="vertical-align: bottom; margin-left: 20px"></span>
     </div>
 
-    <div class="row">
-        <input type="checkbox" checked="checked" class="canInvitedGroupCheckbox" />
-        <label class="canInvitedGroupCheckboxLabel">только те, кого можно приглашать в сообщества</label>
-    </div>
-
     <div class="row geo-filter">
         @Html.Partial("~/app/view/appPanel/shared/geoFilter.cshtml")
     </div>
@@ -52,11 +47,11 @@
     <div class="row">
         <label>Показать первых</label>
         <select class="hitsCount">
-            <option value="5">5</option>
-            <option value="10" selected="selected">10</option>
-            <option value="15">20</option>
-            <option value="20">30</option>
-            <option value="20">40</option>
+            <option value="10">10</option>
+            <option value="20" selected="selected">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
         </select>
         <label>пользователей</label>
     </div>

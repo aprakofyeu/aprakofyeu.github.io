@@ -4,6 +4,7 @@
         applicationId: applicationId,
         permissions: permissions,
         maxMessagesCount: 5,
+        callServiceInterval: 250,
         settings: {
             debugMode: false,
             invitesInterval: 60,
@@ -25,7 +26,7 @@
         setSettings: function (settings) {
             this.settings.invitesInterval = settings.invitesInterval;
             this.settings.friendRequestsInterval = settings.friendRequestsInterval;
-            this.settings.debugMode = !!settings.debugMode;
+            //this.settings.debugMode = !!settings.debugMode;
         },
 
         setTargetGroup: function (group) {

@@ -1,4 +1,7 @@
 ﻿function FindFriendsFilterController(inputsHelper, urlHelper, cachedFriendRequestsDataLoader, friendsSearchService, geoFilterController, context, eventBroker) {
+    if (!context.permissions.allowFindFriends)
+        return;
+
     var $panel = $(".find-friends-filter");
     var $searchButton = $panel.find(".searchButton");
     var inputs = inputsHelper.for($panel);
@@ -7,7 +10,6 @@
     function initUi() {
         inputsHelper.initRowDisabling($panel.find(".subscriptionEnabledCheckbox"), $panel.find(".subscriptionEnabledCheckboxLabel"));
         inputsHelper.initRowDisabling($panel.find(".noMessagesCheckbox"), $panel.find(".noMessagesCheckboxLabel"));
-        inputsHelper.initRowDisabling($panel.find(".canInvitedGroupCheckbox"), $panel.find(".canInvitedGroupCheckboxLabel"));
         inputsHelper.initRowDisabling($panel.find(".notInColleagueFriendsCheckbox"), $panel.find(".notInColleagueFriendsCheckboxLabel"));
         inputsHelper.initRowDisabling($panel.find(".canFriendsRequestCheckbox"), $panel.find(".canFriendsRequestCheckboxLabel"));
         inputsHelper.initRowDisabling($panel.find(".noFriendRequestedLastTimeCheckbox"), $panel.find(".noFriendRequestedLastTimeCheckboxLabel"));
@@ -74,10 +76,6 @@
 
         if (inputs.getChecked(".canFriendsRequestCheckbox")) {
             parameters.canFriendsRequest = true;
-        }
-
-        if (inputs.getChecked(".canInvitedGroupCheckbox")) {
-            parameters.canInvitedGroup = true;
         }
 
         if (inputs.getChecked(".notInColleagueFriendsCheckbox")) {

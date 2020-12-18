@@ -1,4 +1,11 @@
 ﻿function CallService(context, captchaService) {
+    var handleDebugMethods = {
+        "messages.send": true,
+        "messages.delete": true,
+        "friends.delete": { success: 1 },
+        "groups.invite": true
+    };
+
     function handleError(error, method, params, deferred) {
         if (error.error_code === 14) {
             captchaService.handle(error, function (captcha) {
@@ -35,7 +42,6 @@
         },
 
         call: function (method, parameters) {
-            //var params = $.extend(parameters, { v: "5.73" });
             var params = $.extend(parameters, { v: "5.89" });
             var deferred = new $.Deferred();
 
@@ -43,30 +49,11 @@
                 VK._session.sid = this.accessToken;
             }
 
-            if (context.settings.debugMode && (method === "messages.send" || method === "messages.delete")) {
-                setTimeout(function () { deferred.resolve(); }, 1000);
+            if (context.settings.debugMode && handleDebugMethods[method]) {
+                setTimeout(function () { deferred.resolve(handleDebugMethods[method]); }, 1000);
             } else {
                 call(method, params, deferred);
             }
-
-            return deferred.promise();
-        },
-
-        callWithDelay: function (method, parameters, delay) {
-            var that = this;
-            var deferred = new $.Deferred();
-
-            if (!delay && delay !== 0) {
-                delay = 1000;
-            }
-
-            setTimeout(function () {
-                that.call(method, parameters).then(function (result) {
-                    deferred.resolve(result);
-                }, function (error) {
-                    deferred.reject(error);
-                });
-            }, delay);
 
             return deferred.promise();
         }

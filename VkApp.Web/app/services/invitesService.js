@@ -3,21 +3,19 @@
 
     function loadAllFriends() {
         function loadAllFriendsInner(offset, batchSize) {
-            return callService.call("friends.get",
+            return callService.call("friends.search",
                 {
                     offset: offset,
                     count: batchSize,
                     user_id: context.user.id,
-                    fields: "id,first_name,last_name,photo_50,can_be_invited_group"
+                    fields: "id,first_name,last_name,photo_50,can_be_invited_group,last_seen"
                 })
                 .then(function (response) {
                     if (response.items && response.items.length > 0) {
-                        return Utils.actionWithDelay(function () {
-                            return loadAllFriendsInner(offset + batchSize, batchSize)
-                                .then(function (friends) {
-                                    return response.items.concat(friends);
-                                });
-                        }, 250);
+                        return loadAllFriendsInner(offset + batchSize, batchSize)
+                            .then(function (friends) {
+                                return response.items.concat(friends);
+                            });
                     }
                     return response.items;
                 });
@@ -69,8 +67,21 @@
             var parsedMembers = parseMembers(members);
 
             var friendsDict = {};
+            var deactivatedFriendsInfo = {
+                deleted: [],
+                banned: []
+            };
+
             for (var i = 0; i < friends.length; i++) {
                 friendsDict[friends[i].id] = friends[i];
+
+                var deactivated = friends[i].deactivated;
+                if (deactivated) {
+                    if (!deactivatedFriendsInfo[deactivated])
+                        deactivatedFriendsInfo[deactivated] = [];
+
+                    deactivatedFriendsInfo[deactivated].push(friends[i]);
+                }
             }
 
             var availableToInvite = excludeInvited(parsedMembers.availableToInviteUserIds, invitedUsers, friendsDict);
@@ -78,9 +89,25 @@
             return {
                 friendsCount: totalFriendsCount,
                 friends: friendsDict,
+                deactivatedFriends: deactivatedFriendsInfo,
                 subscribedCount: parsedMembers.subscribedUsersCount,
                 availableToInviteCount: availableToInvite.length,
-                availableToInvite: availableToInvite
+                availableToInvite: availableToInvite,
+                getFriendsLastSeenLessThan: function getFriendsLastSeenLessThan(lastSeen) {
+                    var result = [];
+                    var unixTime = Math.trunc(lastSeen.getTime() / 1000);
+
+                    for (var item in this.friends) {
+                        if (this.friends.hasOwnProperty(item)) {
+                            var friend = this.friends[item];
+                            if (friend.last_seen && friend.last_seen.time < unixTime) {
+                                result.push(friend);
+                            }
+                        }
+                    }
+
+                    return result;
+                }
             };
         }
 
@@ -145,12 +172,74 @@
         });
     }
 
+    function removeFromFriendsInfo(friend) {
+        //remove from available to invite
+        var index = friendsInfo.availableToInvite.indexOf(friend.id);
+        if (index > -1) {
+            friendsInfo.availableToInvite.splice(index, 1);
+            friendsInfo.availableToInviteCount = friendsInfo.availableToInvite.length;
+        }
+
+        //remove from friends
+        delete friendsInfo.friends[friend.id];
+        friendsInfo.friendsCount--;
+
+        //remove from deactivated friends
+        index = friendsInfo.deactivatedFriends.banned.indexOf(friend);
+        if (index > -1) {
+            friendsInfo.deactivatedFriends.banned.splice(index, 1);
+        }
+        index = friendsInfo.deactivatedFriends.deleted.indexOf(friend);
+        if (index > -1) {
+            friendsInfo.deactivatedFriends.deleted.splice(index, 1);
+        }
+    }
+
+    function deleteFriends(friends) {
+        function deleteFriend(friend) {
+            return callService.call("friends.delete", { user_id: friend.id })
+                .then(function (result) {
+                    if (result.success) {
+                        removeFromFriendsInfo(friend);
+                        eventBroker.publish(VkAppEvents.deleteFriendSuccess, friend);
+                        return true;
+                    }
+
+                    eventBroker.publish(VkAppEvents.deleteFriendError, friend, "Delete friend failed..");
+                    return false;
+                });
+        }
+
+        function deleteNext(index) {
+            var friend = friends[index];
+            deleteFriend(friend)
+                .then(function (deleteSuccess) {
+                    Utils.actionWithDelay(function () {
+                        if (!deleteSuccess || index >= friends.length - 1) {
+                            eventBroker.publish(VkAppEvents.deleteFriendsCompleted);
+                        } else {
+                            deleteNext(index + 1);
+                        }
+                    }, 1000);
+                }).then(function () {
+                },
+                    function (error) {
+                        eventBroker.publish(VkAppEvents.deleteFriendError, friend, error);
+                    });
+        }
+
+        deleteNext(0);
+    }
+
     return {
         loadFriendsInfo: function () {
             return loadFriendsInfo();
         },
         inviteFriends: function () {
             inviteFriends();
+        },
+        deleteFriends: function (friends) {
+            deleteFriends(friends);
         }
     };
 }
